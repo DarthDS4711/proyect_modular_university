@@ -1,0 +1,36 @@
+{% extends 'baseView.html' %}
+{% load static %}
+<!--Bloques para inclusiones de librerias-->
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesLogin.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-card">
+    <div class="form-group card card-body" style="margin-top: 25%;">
+        <form>
+            <h2 class="title-page">{{title}}</h2>
+            <br>
+            <label>User</label>
+            <input type="email" id="" class="form-control" placeholder="username">
+            <br>
+            <label>Password</label>
+            <input type="password" id="" class="form-control">
+            <br>
+            <button type="submit" class="btn btn-danger">Log In</button>
+            <br>
+            <a id="linkReset" class="btn btn-secondary" href="#" role="button">¿Olvidaste tu contraseña?</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    $('form').on('submit', function (e) {
+        e.preventDefault();
+        location.href = "{{home}}"
+
+    });
+</script>
+{% endblock %}

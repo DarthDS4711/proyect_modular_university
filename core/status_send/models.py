@@ -1,0 +1,32 @@
+from datetime import datetime
+from django.db import models
+from django.forms import model_to_dict
+from core.sale.models import Sale
+
+
+# table for the status in the sale
+class StatusSend(models.Model):
+    description = models.CharField(verbose_name='description', max_length=180)
+
+
+    class Meta:
+        verbose_name = "StatusSend"
+        verbose_name_plural = 'StatusSends'
+        ordering = ['id']
+        db_table = 'status_send' 
+
+
+# table for the status of the send of the a sale
+class StatusSendSale(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    sale = models.ForeignKey(Sale, verbose_name='sale_id', on_delete=models.PROTECT)
+    date_arrival = models.DateField(default=datetime.now, verbose_name='date_arrival')
+    status_send = models.ForeignKey(StatusSend, verbose_name='status_send_id', on_delete=models.PROTECT)
+    delivered = models.BooleanField(default='delivered')
+
+
+    class Meta:
+        verbose_name = "StatusSendSale"
+        verbose_name_plural = 'StatusSendSales'
+        ordering = ['id']
+        db_table = 'status_send_sale' 
