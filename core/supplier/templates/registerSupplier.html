@@ -1,0 +1,42 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+<!--Bloque de archivos estáticos tales como javascript-->
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/registerSupplier.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<div class="box-layout">
+    <img src="{% static 'img/supplier.png' %}" class="img-register"/>
+    <form method="post">
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Apellidos</label>
+            <input type="text" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Correo electrónico</label>
+            <input type="email" class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label>Imagen proveedor</label>
+            <input type="file" class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label>Teléfono</label>
+            <input type="number" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <a href="#" class="btn btn-danger">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

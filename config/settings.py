@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-from config.databases import DATABASES_APPLICATION
-from config.secretkey import SECRET_KEY as SECRET_KEY_APP
 import os
-
+from config.data_access.secretkey import SECRET_KEY as SECRET_KEY_APP
+from config.data_access.databases import DATABASES_APPLICATION
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     # libraries
     # apps
     'core.product',
+    'core.homepage',
     'core.sale',
     'core.status_send',
     'core.supplier',

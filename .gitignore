@@ -1,3 +1,1 @@
-config/databases.py
-config/secretkey.py
-db.sqlite3
+config/data_access

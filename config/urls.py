@@ -21,7 +21,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', include('core.homepage.urls')),
-    path('login/', include('core.access_system.urls'))
+    # rutas relacionadas a la página principal tales como dashboard
+    path('', include('core.homepage.urls')),
+    # rutas relacionadas a los accesos del sistema, tales como ingresar, registrar
+    path('access/', include('core.access_system.urls')),
+    # rutas relacionadas a los proveedores tales como registrarlos, eliminarlos
+    path('supplier/', include('core.supplier.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
