@@ -1,0 +1,34 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesDeleteSupplier.css' %}" type="text/css" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{title}}</h1>
+    <img src="{% static 'img/trash.png' %}" id="image-style"/>
+    <div class="box">
+        <div class="alert alert-danger" role="alert">
+            <strong>Atención</strong> Estas seguro de que deseas eliminar al Proveedor <br>
+            Después de confirmar se eliminará el proveedor
+        </div>
+        <form>
+            <p>Comprendo los motivos por los cuales deseo eliminar al proveedor y acepto que lo estoy <br>
+                eliminando de manera totalmente voluntaria
+            </p>
+            <div class="form-group">
+                <label for="accept">Acepto</label>               
+                <input type="radio" value="accept" name="check" id="accept" value="accept"/>  
+            </div>
+            <div class="form-group">
+                <label ffor="decline">Declinar</label>
+                 <input type="radio" value="decline" name="check" id="decline" value="decline"/>           
+            </div>
+            <button type="submit" class="btn btn-primary">Eliminar</button>
+            <a href="#" class="btn btn-warning">Cancelar</a>
+        <form/>
+    </div>
+</div>
+{% endblock %}

@@ -1,18 +1,26 @@
 {% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesHome.css' %}">
+{% endblock head %}
+
+
 {% block content %}
 <h1>{{title}}</h1>
-<p>
-    Suspendisse potenti. Vestibulum ut porttitor massa, sed lobortis nisl. Sed cursus quam ac tellus faucibus mattis. Fusce sit amet lectus diam.
-    <br>
-    Donec blandit turpis vel massa dictum, id consequat sem hendrerit. Nullam ac purus et ligula lobortis viverra euismod eget lorem.
-    <br>
-    Fusce vestibulum sapien neque, quis luctus dui maximus vel. Ut laoreet augue non metus pretium gravida. Etiam non fermentum purus, eget lacinia ligula.
-    <br>
-    Integer pretium magna id ex aliquet, vel tempor neque fringilla. Nullam nibh ligula, congue ac maximus a, accumsan elementum massa.
-    <br>
-    Mauris viverra elit neque, in hendrerit mi tempor ac. Sed mollis iaculis sodales. Maecenas vestibulum sit amet ante at molestie.
-</p>
-<p>
-    <img src="https://concepto.de/wp-content/uploads/2015/03/paisaje-e1549600034372.jpg" alt="">
-</p>
+<div class="container">
+    <div class="main-text">
+        <p>
+            Suspendisse potenti. Vestibulum ut porttitor massa, sed lobortis nisl. Sed cursus quam ac tellus faucibus mattis. Fusce sit amet lectus diam.
+            Donec blandit turpis vel massa dictum, id consequat sem hendrerit. Nullam ac purus et ligula lobortis viverra euismod eget lorem.
+            Fusce vestibulum sapien neque, quis luctus dui maximus vel. Ut laoreet augue non metus pretium gravida. Etiam non fermentum purus, eget lacinia ligula.
+            Integer pretium magna id ex aliquet, vel tempor neque fringilla. Nullam nibh ligula, congue ac maximus a, accumsan elementum massa.
+            Mauris viverra elit neque, in hendrerit mi tempor ac. Sed mollis iaculis sodales. Maecenas vestibulum sit amet ante at molestie.
+        </p>  
+    </div>
+    <div class="main-image">
+        <img src="https://concepto.de/wp-content/uploads/2015/03/paisaje-e1549600034372.jpg" alt="">
+    </div>
+</div>
+
 {% endblock %}

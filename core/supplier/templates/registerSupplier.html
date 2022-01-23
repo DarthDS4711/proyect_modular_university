@@ -9,31 +9,31 @@
 {% block content %}
 <h1>{{title}}</h1>
 <div class="box-layout">
-    <img src="{% static 'img/supplier.png' %}" class="img-register"/>
+    <img src="{% static image %}" class="img-register"/>
     <form method="post">
         <div class="form-group">
             <label>Nombre</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control input-style" placeholder="Nombre">
         </div>
 
         <div class="form-group">
             <label>Apellidos</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control input-style" placeholder="Apellidos">
         </div>
 
         <div class="form-group">
             <label>Correo electrónico</label>
-            <input type="email" class="form-control">
+            <input type="email" class="form-control input-style" placeholder="Email">
         </div>
 
         <div class="form-group">
             <label>Imagen proveedor</label>
-            <input type="file" class="form-control"/>
+            <input type="file" class="form-control input-style"/>
         </div>
 
         <div class="form-group">
             <label>Teléfono</label>
-            <input type="number" class="form-control">
+            <input type="number" class="form-control input-style" placeholder="Teléfono celular">
         </div>
         <button type="submit" class="btn btn-primary">Registrar</button>
         <a href="#" class="btn btn-danger">Cancelar</a>

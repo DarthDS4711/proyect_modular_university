@@ -4,7 +4,6 @@
     text-align: center;
     color: white;
 }
-.styles-nav{
-    box-shadow: 3px 5px 3px lightgray;
+#nav-styles{
+    box-shadow: 2px 2px 2px gray;
 }
-
