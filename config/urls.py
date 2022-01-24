@@ -26,6 +26,8 @@ urlpatterns = [
     # rutas relacionadas a los accesos del sistema, tales como ingresar, registrar
     path('access/', include('core.access_system.urls')),
     # rutas relacionadas a los proveedores tales como registrarlos, eliminarlos
-    path('supplier/', include('core.supplier.urls'))
+    path('supplier/', include('core.supplier.urls')),
+    # rutas relacionadas a los productos tales como registrar, eliminar, actualizar
+    path('product/', include('core.product.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

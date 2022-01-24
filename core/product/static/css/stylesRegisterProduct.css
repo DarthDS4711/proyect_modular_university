@@ -1,0 +1,29 @@
+h1{
+    text-align: center;
+}
+#image-product{
+    display: block;
+    margin: 0 auto;
+}
+.rojo{
+    background-color: red;
+}
+.amarillo{
+    background-color: yellow;
+}
+.verde{
+    background-color: green;
+}
+.azul{
+    background-color: blue;
+}
+.naranja{
+    background-color: orange;
+}
+.box{
+    margin: 0 auto;
+    box-shadow: 4px 4px 5px 4px lightgray;
+    padding: 3%;
+    margin-bottom: 3%;
+    width: 80%;
+}

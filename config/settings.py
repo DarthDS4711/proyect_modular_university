@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'core.user',
     'core.warranty',
     'core.stock',
-    'core.access_system'
+    'core.access_system',
+    'core.store'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,89 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<!--Archivos estáticos propios de la página web creada-->
+<link rel="stylesheet" href="{% static 'css/stylesRegisterProduct.css' %}" type="text/css" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box">
+        <img src="{% static image %}" id="image-product"/>
+        <form>
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre producto">
+            </div>
+            <div class="form-group">
+                <label>Categoría</label>
+                <select class="form-control" name="color">
+                    <option>Ropa</option>
+                    <option>Zapateria</option>
+                    <option>Perfumes</option>
+                    <option>Maquillaje</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Seleccione los colores del producto</label>
+                <div class="">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <select class="form-control" name="color-primary">
+                                <option class="rojo">Rojo</option>
+                                <option class="verde">Verde</option>
+                                <option class="amarrillo">Amarillo</option>
+                                <option class="naranja">Naranja</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" name="color-secondary-1">
+                                <option class="rojo">Rojo</option>
+                                <option class="verde">Verde</option>
+                                <option class="amarillo">Amarillo</option>
+                                <option class="naranja">Naranja</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" name="color-secondary-2">
+                                <option class="rojo">Rojo</option>
+                                <option class="verde">Verde</option>
+                                <option class="amarillo">Amarillo</option>
+                                <option class="naranja">Naranja</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" name="color-secondary-3">
+                                <option class="rojo">Rojo</option>
+                                <option class="verde">Verde</option>
+                                <option class="amarillo">Amarillo</option>
+                                <option class="naranja">Naranja</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Precio</label>
+                    <input type="number" class="form-control" placeholder="Precio de venta al público" step="0.1">
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea name="" id="text-description" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad</label>
+                    <input type="number" class="form-control" placeholder="Cantidad productos">
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <a href="#" class="btn btn-danger">Cancelar</a>
+        </form>
+            </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script charset="utf-8" src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
