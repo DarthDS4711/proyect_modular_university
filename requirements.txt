@@ -1,0 +1,14 @@
+asgiref
+Django
+django-crum
+django-widget-tweaks
+html5lib
+psycopg2-binary==2.8.6
+Pillow
+PyPDF2
+pytz
+reportlab
+six
+sqlparse
+webencodings
+xhtml2pdf
