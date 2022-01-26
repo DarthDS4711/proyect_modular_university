@@ -27,3 +27,19 @@ h1{
     margin-bottom: 3%;
     width: 80%;
 }
+.style-box{
+    display: flex;
+}
+.box-sizes{
+    width: 47%;
+    flex-direction: column;
+}
+.box-dimentions{
+    width: 47%;
+    margin-top: 4%;
+    flex-direction: column;
+}
+.label-style{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
