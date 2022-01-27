@@ -12,5 +12,5 @@
 }
 .box-layout{
     margin-top: 5%;
-    margin-bottom: 3%;
+    min-height: calc(100vh - 50px);
 }

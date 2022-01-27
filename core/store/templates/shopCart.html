@@ -1,0 +1,61 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesShopCart.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" class="image-cart">
+        <table class="table table-striped" id="table">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>Item</th>
+                    <th>Cantidad</th>
+                    <th>Color</th>
+                    <th>Precio</th>
+                    <th>Talla</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">Camisa</td>
+                    <td>2</td>
+                    <td class="color-span"></td>
+                    <td>$33MXN</td>
+                    <td>Chica</td>
+                </tr>
+                <tr>
+                    <td scope="row">Camisa</td>
+                    <td>2</td>
+                    <td class="color-span"></td>
+                    <td>$33MXN</td>
+                    <td>Chica</td>
+                </tr>
+                <tr>
+                    <td scope="row">Camisa</td>
+                    <td>2</td>
+                    <td class="color-span"></td>
+                    <td>$33MXN</td>
+                    <td>Chica</td>
+                </tr>
+                <tr>
+                    <td scope="row">Camisa</td>
+                    <td>2</td>
+                    <td class="color-span"></td>
+                    <td>$33MXN</td>
+                    <td>Chica</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button class="btn btn-success">Comprar articulos</button>
+            <a href="#" class="btn btn-primary">Regresar a la tienda</a>
+            <button class="btn btn-danger">Cancelar compra</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesDetailProduct.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-flex">
+        <div class="image-product">
+            <img src="{% static image %}" class="image-style">
+        </div>
+        <div class="description-product">
+            <h3>Descripción</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida venenatis nulla ut
+                condimentum. Cras congue felis eget nunc pretium venenatis.
+                Suspendisse potenti. Nunc cursus sed risus vitae vestibulum. Pellentesque vehicula dictum lectus, id
+                placerat lacus imperdiet in. Donec ultrices sed metus eget dapibus.
+                Donec vulputate commodo elit a convallis. Proin ac eros tortor. Sed sit amet velit vel odio finibus
+                pretium. Duis turpis neque, malesuada eget dui a, mollis ornare metus.
+                Praesent porttitor sem nec eros fringilla, vitae auctor turpis semper. Etiam id erat et urna rutrum
+                vestibulum eu vel turpis.
+            </p>
+            <div>
+                <p><strong>Valoración: </strong>4 estrellas</p>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star checked"></span>
+                <span class="fa fa-star"></span>
+            </div>
+            <div>
+                <p><strong>Precio: </strong>$531 MXN</p>
+                <button class="btn btn-success">Agregar al carrilo</button>
+            </div>
+        </div>
+    </div>
+    <h4>Tallas disponibles</h4>
+    <div>
+        <p><strong>Chica: </strong>50cm largo 80cm ancho</p>
+        <p><strong>Mediana: </strong>50cm largo 80cm ancho</p>
+        <p><strong>Grande: </strong>50cm largo 80cm ancho</p>
+        <p><strong>Unitalla: </strong>50cm largo 80cm ancho</p>
+    </div>
+    <div>
+        <h3>Comentarios</h3>
+        <div class="main-comment">
+            <strong>Usuario user: </strong>Suspendisse potenti. Nunc cursus sed risus vitae vestibulum
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+        </div>
+        <div class="button">
+            <button class="btn btn-primary">Cargar más comentarios...</button>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

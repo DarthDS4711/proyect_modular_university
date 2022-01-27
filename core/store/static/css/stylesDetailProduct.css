@@ -1,0 +1,35 @@
+.box-flex{
+    padding: 5%;
+    display: flex;
+    width: 98%;
+}
+.image-product{
+    width: 48%;
+    flex-direction: column;
+}
+.image-style{
+    width: 65%;
+    height: 85%;
+}
+p{
+    justify-content: center;
+}
+.description-product{
+    width: 48%;
+    flex-direction: column;
+}
+.checked{
+    color: orange;
+}
+h3{
+    text-align: center;
+}
+.main-comment{
+    border: 3px solid gray;
+    padding: 1%;
+}
+.button{
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}

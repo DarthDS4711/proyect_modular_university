@@ -2,6 +2,7 @@ from datetime import datetime
 from django.db import models
 from django.forms import model_to_dict
 from core.user.models import User
+from django.contrib.postgres import fields
 
 
 # tabla categoria
@@ -38,27 +39,13 @@ class Size(models.Model):
         ordering = ['id']
         db_table = 'size'
 
-# tabla Color
-class Color(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    # nombre del color
-    color_name = models.CharField(max_length=150, verbose_name='color_name')
-    # código en hexadecimal del color
-    code_color = models.CharField(max_length=8, verbose_name='code_color', default='')
-
-    class Meta:
-        verbose_name = "Color"
-        verbose_name_plural = 'Colors'
-        ordering = ['id']
-        db_table = 'color'
-
 
 # tabla productos
 class Product(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='name', unique=True)
     # llave foranea que nos indica el color del producto, acorde a los registrados
-    color = models.ManyToManyField(Color, verbose_name="color")
+    colors = fields.ArrayField(models.CharField(max_length=8), null=True, blank=True, size=4)
     # categoria del producto en base a una relación con la tabla categoria
     category = models.ForeignKey(Category, verbose_name='category', on_delete=models.PROTECT)
     # tamanio del producto en caso de que sea una prenda representado en una relacion
