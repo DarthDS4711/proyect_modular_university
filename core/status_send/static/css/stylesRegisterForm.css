@@ -1,0 +1,13 @@
+.box-content{
+    width: 85vw;
+    box-shadow: 3px 3px 3px 3px lightgray;
+    margin: 0 auto;
+    padding: 5%;
+    margin-bottom: 5%;
+}
+#image-style{
+    width: 30%;
+    height: 30%;
+    display: block;
+    margin: 0 auto;
+}

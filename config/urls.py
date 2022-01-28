@@ -30,6 +30,8 @@ urlpatterns = [
     # rutas relacionadas a los productos tales como registrar, eliminar, actualizar
     path('product/', include('core.product.urls')),
     # rutas relacionadas a la tienda tales como visualizar producto, comprar producto
-    path('shop/', include('core.store.urls'))
+    path('shop/', include('core.store.urls')),
+    # rutas relacionadas a el estado actual de envio de los productos
+    path('send/', include('core.status_send.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,13 @@
+.box-content{
+    margin: 0 auto;
+    width: 85vw;
+    margin-bottom: 5%;
+    box-shadow: 3px 3px 3px 3px lightgray;
+    padding: 5%;
+}
+#image-delete{
+    width: 30%;
+    height: 30%;
+    display: block;
+    margin: 0 auto;
+}

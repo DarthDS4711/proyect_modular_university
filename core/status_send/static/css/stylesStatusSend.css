@@ -1,0 +1,14 @@
+.box-content{
+    box-shadow: 2px 2px 2px 2px lightgray;
+    width: 85vw;
+    margin: 0 auto;
+    padding: 5%;
+}
+#sort{
+    width: 40vw;
+}
+.buttons{
+    margin-top: 4vh;
+    display: flex;
+    justify-content: space-between;
+}

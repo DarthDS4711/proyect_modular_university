@@ -1,0 +1,60 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesStatusSend.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="form-group">
+          <select class="form-control" name="sort" id="sort">
+            <option>Ordenar</option>
+            <option value="1">Número factura</option>
+            <option value="2">Fecha inicio envio</option>
+          </select>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Número envio</th>
+                    <th>Número factura</th>
+                    <th>Fecha inicio envio</th>
+                    <th>Estado del envio</th>
+                    <th>Fecha del estado actual</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="row">1</td>
+                    <td>123456</td>
+                    <td>11/15/21</td>
+                    <td>Aduana</td>
+                    <td>12/06/21</td>
+                </tr>
+                <tr>
+                    <td scope="row">2</td>
+                    <td>123456</td>
+                    <td>11/15/21</td>
+                    <td>Aduana</td>
+                    <td>12/06/21</td>
+                </tr>
+                <tr>
+                    <td scope="row">3</td>
+                    <td>123456</td>
+                    <td>11/15/21</td>
+                    <td>Aduana</td>
+                    <td>12/06/21</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <button type="button" class="btn btn-warning">Anterior</button>
+            <button type="button" class="btn btn-success">Siguiente</button>
+            <button type="button" class="btn btn-danger">Volver al menú</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

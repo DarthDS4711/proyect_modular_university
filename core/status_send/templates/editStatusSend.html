@@ -1,0 +1,24 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesRegisterForm.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" id="image-style">
+        <form>
+            <div class="form-group">
+                <label>Descripción</label>
+                <input type="text" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar estado</button>
+            <a href="#" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

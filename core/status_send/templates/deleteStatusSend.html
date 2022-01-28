@@ -1,0 +1,23 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/sylesDeleteStatus.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" id="image-delete">
+        <div class="alert alert-danger" role="alert">
+            <strong>Alerta: </strong>Esas a punto de eliminar un estado de envio, cualquier cambio afectará a tu sistema 
+            si no actuas de manera consciente.
+        </div>
+        <form>
+            <button type="submit" class="btn btn-success">Eliminar estado</button>
+            <a href="#" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
