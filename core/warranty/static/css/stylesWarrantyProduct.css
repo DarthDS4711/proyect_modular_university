@@ -1,0 +1,10 @@
+.col-middle{
+    width: 48%;
+    flex-direction: column;
+}
+.image-style{
+    width: 53%;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+}

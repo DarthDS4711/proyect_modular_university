@@ -1,0 +1,31 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesRegisterIncidence.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" class="image-style">
+        <form>
+            <div class="form-group">
+              <label>Nombre incidencia</label>
+              <input type="text" class="form-control" placeholder="">
+            </div>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Meses Cubiertos</label>
+                <input type="number" class="form-control" placeholder="" step="1">
+            </div>
+            <button type="submit" class="btn btn-primary">Registrar Incidencia</button>
+            <a href="#" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

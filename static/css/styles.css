@@ -17,3 +17,10 @@
 h1{
     text-align: center;
 }
+.box-content{
+    box-shadow: 2px 2px 2px 2px lightgray;
+    width: 85%;
+    margin: 0 auto;
+    padding: 5%;
+    margin-bottom: 2%;
+}
