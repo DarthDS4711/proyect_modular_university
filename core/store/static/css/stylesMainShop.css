@@ -1,0 +1,45 @@
+.flex-search{
+	display: flex;
+	margin: 0 auto;
+	justify-content: center;
+}
+h1{
+	font-size: 55px;
+}
+#search-input{
+	width: 85%;
+}
+.flex-item{
+	flex-direction: column;
+}
+h2{
+	text-align: center;
+	margin-top: 2%;
+}
+.cards-box{
+	width: 90%;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+}
+.card-product{
+	width: 28%;
+	height: 30%;
+	padding: 2%;
+	flex-direction: column;
+	margin: 1%;
+}
+.image-card{
+	width: 50%;
+	height: 50%;
+}
+.row-btns{
+	padding: 3%;
+}
+h4{
+	text-align: center;
+}
+.btn-category{
+	width: 45%;
+	margin: 2%;
+}

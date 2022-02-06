@@ -1,0 +1,64 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/stylesMainShop.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+	<h1>{{title}}</h1>
+	<div class="flex-search">
+		<input type="search" name="" class="form-control" id="search-input" class="flex-item">
+		<button class="btn btn-success flex-item">Buscar</button>
+	</div>
+	<h2>Recomendados</h2>
+	<div class="cards-box">
+		<a href=""><i class="fa fa-step-backward" aria-hidden="true"></i></a>
+		<div class="card card-product">
+			<img class="card-img-top image-card" src="{% static image %}">
+			<div class="card-body">
+				<h4 class="card-title">Title</h4>
+				<p class="card-text">Text</p>
+			</div>
+			<a href="#" class="btn btn-primary">Ver</a>
+		</div>
+		<div class="card card-product">
+			<img class="card-img-top image-card" src="{% static image %}">
+			<div class="card-body">
+				<h4 class="card-title">Title</h4>
+				<p class="card-text">Text</p>
+			</div>
+			<a href="#" class="btn btn-primary">Ver</a>
+		</div>
+		<div class="card card-product">
+			<img class="card-img-top image-card" src="{% static image %}">
+			<div class="card-body">
+				<h4 class="card-title">Title</h4>
+				<p class="card-text">Text</p>
+			</div>
+			<a href="#" class="btn btn-primary">Ver</a>
+		</div>
+		<div class="card card-product">
+			<img class="card-img-top image-card" src="{% static image %}">
+			<div class="card-body">
+				<h4 class="card-title">Title</h4>
+				<p class="card-text">Text</p>
+			</div>
+			<a href="#" class="btn btn-primary">Ver</a>
+		</div>
+		<a href=""><i class="fa fa-step-forward" aria-hidden="true"></i></a>
+	</div>
+	<h4>Categorías</h4>
+	<div class="row row-btns">
+		<button type="button" class="btn btn-success btn-category">Ropa</button>
+		<button type="button" class="btn btn-danger btn-category">Zapatos</button>
+		<button type="button" class="btn btn-warning btn-category">Maquillaje</button>
+		<button type="button" class="btn btn-primary btn-category">Trajes de baño</button>
+		<button type="button" class="btn btn-success btn-category">Accesorios</button>
+		<button type="button" class="btn btn-danger btn-category">Perfumes</button>
+		<button type="button" class="btn btn-warning btn-category">Relojes</button>
+		<button type="button" class="btn btn-primary btn-category">Mochilas</button>
+	</div>
+</div>
+{% endblock %}

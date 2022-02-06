@@ -1,0 +1,25 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/user_view/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/user.png' %}" id="image-user">
+        <div class="info-user">
+            <p><strong>Nombre usuario: </strong>Username test</p>
+            <p><strong>Nombre: </strong>User</p>
+            <p><strong>Apellidos: </strong>User lastname</p>
+            <p><strong>Sexo: </strong>Female</p>
+            <p><strong>Edad: </strong>21</p>
+            <p><strong>Fecha última compra: </strong>11/25/21</p>
+        </div>
+        <a href="#" class="btn btn-success">Editar perfil</a>
+        <a href="#" class="btn btn-warning">Regresar</a>
+    </div>
+</div>
+{% endblock %}

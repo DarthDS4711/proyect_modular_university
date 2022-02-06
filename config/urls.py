@@ -34,6 +34,10 @@ urlpatterns = [
     # rutas relacionadas a el estado actual de envio de los productos
     path('send/', include('core.status_send.urls')),
     # rutas relacionadas a las garantías de los productos e incidentes
-    path('warranty/', include('core.warranty.urls'))
+    path('warranty/', include('core.warranty.urls')),
+    # rutas relacionadas a la cantidad de productos disponibles en el sistema
+    path('stock/', include('core.stock.urls')),
+    # rutas relacionadas con el usuario
+    path('user/', include('core.user.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

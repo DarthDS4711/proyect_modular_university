@@ -1,0 +1,30 @@
+.product-box{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 2%;
+}
+.card-product{
+    display: flex;
+    box-shadow: 4px 4px 4px 4px lightgray;
+    margin: 2%;
+    padding: 3%;
+}
+.card-product-item{
+    flex-direction: column;
+    width: 50%;
+}
+.image-style{
+    width: 50%;
+    height: 70%;
+}
+p{
+    text-align: justify;
+}
+.button-group{
+    display: flex;
+    margin-bottom: 2%;
+    justify-content: space-around;
+}
+.btn-item{
+    flex-direction: column;
+}

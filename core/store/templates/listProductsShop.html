@@ -1,0 +1,88 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesListProductShop.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="product-box">
+        <div class="card-product">
+            <div class="card-product-item">
+                <img src="{% static image %}" class="image-style">
+            </div>
+            <div class="card-product-item">
+                <h4>Vestido temporada</h4>
+                <p>
+                    Aenean nec euismod neque. Donec ut blandit enim. 
+                    Integer pulvinar augue quis dui sollicitudin commodo. Quisque id iaculis massa, sed volutpat odio. 
+                    Sed sollicitudin libero dui, at vulputate risus euismod nec. Donec congue egestas nulla vel mattis. 
+                    Mauris non quam vel dui placerat lobortis. Sed condimentum sapien ac felis tincidunt vehicula. 
+                    Morbi ultricies mauris turpis, eu hendrerit risus hendrerit a.
+                </p>
+                <strong>Precio: </strong>$512MXN<br>
+                <button type="button" class="btn btn-primary">Ver</button>
+            </div>
+        </div>
+        <div class="card-product">
+            <div class="card-product-item">
+                <img src="{% static image1 %}" class="image-style">
+            </div>
+            <div class="card-product-item">
+                <h4>Gorra clásica</h4>
+                <p>
+                    Aenean nec euismod neque. Donec ut blandit enim. 
+                    Integer pulvinar augue quis dui sollicitudin commodo. Quisque id iaculis massa, sed volutpat odio. 
+                    Sed sollicitudin libero dui, at vulputate risus euismod nec. Donec congue egestas nulla vel mattis. 
+                    Mauris non quam vel dui placerat lobortis. Sed condimentum sapien ac felis tincidunt vehicula. 
+                    Morbi ultricies mauris turpis, eu hendrerit risus hendrerit a.
+                </p>
+                <strong>Precio: </strong>$512MXN<br>
+                <button type="button" class="btn btn-primary">Ver</button>
+            </div>
+        </div>
+        <div class="card-product">
+            <div class="card-product-item">
+                <img src="{% static image2 %}" class="image-style">
+            </div>
+            <div class="card-product-item">
+                <h4>Jeans de temporada</h4>
+                <p>
+                    Aenean nec euismod neque. Donec ut blandit enim. 
+                    Integer pulvinar augue quis dui sollicitudin commodo. Quisque id iaculis massa, sed volutpat odio. 
+                    Sed sollicitudin libero dui, at vulputate risus euismod nec. Donec congue egestas nulla vel mattis. 
+                    Mauris non quam vel dui placerat lobortis. Sed condimentum sapien ac felis tincidunt vehicula. 
+                    Morbi ultricies mauris turpis, eu hendrerit risus hendrerit a.
+                </p>
+                <strong>Precio: </strong>$512MXN<br>
+                <button type="button" class="btn btn-primary">Ver</button>
+            </div>
+        </div>
+        <div class="card-product">
+            <div class="card-product-item">
+                <img src="{% static image3 %}" class="image-style">
+            </div>
+            <div class="card-product-item">
+                <h4>Camisa juvenil</h4>
+                <p>
+                    Aenean nec euismod neque. Donec ut blandit enim. 
+                    Integer pulvinar augue quis dui sollicitudin commodo. Quisque id iaculis massa, sed volutpat odio. 
+                    Sed sollicitudin libero dui, at vulputate risus euismod nec. Donec congue egestas nulla vel mattis. 
+                    Mauris non quam vel dui placerat lobortis. Sed condimentum sapien ac felis tincidunt vehicula. 
+                    Morbi ultricies mauris turpis, eu hendrerit risus hendrerit a.
+                </p>
+                <strong>Precio: </strong>$512MXN<br>
+                <button type="button" class="btn btn-primary">Ver</button>
+            </div>
+        </div>
+    </div>
+    <div class="button-group">
+        <button type="button" class="btn btn-warning btn-item">Anterior</button>
+        <p class="btn-item"><strong>Página actual: </strong>2</p>
+        <button type="button" class="btn btn-success btn-item">Siguiente</button>
+    </div>
+</div>
+{% endblock %}

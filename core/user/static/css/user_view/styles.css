@@ -1,0 +1,11 @@
+#image-user{
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+    height: 30%;
+}
+.info-user{
+    margin-top: 2%;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
