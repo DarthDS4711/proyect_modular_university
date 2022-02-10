@@ -1,0 +1,55 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" id="image-class">
+        <form>
+            <div class="form-group">
+                <label>Descripción</label>
+                <textarea class="form-control" id="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Meses cubiertos</label>
+                <input type="number" step="1" min="3" , max="48" id="months_covered" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Tipo de factura</label>
+                <select name="type" id="type-warranty" class="form-control">
+                    <option value="1">Venta</option>
+                    <option value="2">Compra</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Incidentes cubiertos</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        Incidente extravio
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+                    <label class="form-check-label" for="flexCheckDefault1">
+                        Incidente errores de fabricación
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                    <label class="form-check-label" for="flexCheckDefault2">
+                        Incidente poco agrado al cliente
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">{{action}}</button>
+            <a href="#" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

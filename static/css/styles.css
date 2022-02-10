@@ -24,3 +24,9 @@ h1{
     padding: 5%;
     margin-bottom: 2%;
 }
+#image-class{
+    margin: 0 auto;
+    display: block;
+    width: 30%;
+    height: 30%;
+}

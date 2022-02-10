@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from config.data_access.secretkey import SECRET_KEY as SECRET_KEY_APP
 from config.data_access.databases import DATABASES_APPLICATION
+from config.data_access.email_data import EMAIL_HOST_PASSWORD as PASSWORD
+from config.data_access.email_data import EMAIL_HOST_USER as USER
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -113,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
 
@@ -156,10 +158,10 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 
 # correo de la aplicación a usar
-EMAIL_HOST_USER = 'testkeyloogeer1@gmail.com'
+EMAIL_HOST_USER = USER
 
 # contraseña del correo de la aplicación 
-EMAIL_HOST_PASSWORD = 'D9aNvgy4Y2VFjmU'
+EMAIL_HOST_PASSWORD = PASSWORD
 
 # variable de dominio el cual contendrá el nombre del dominio cuando
 # el sitio se encuentre en la red
