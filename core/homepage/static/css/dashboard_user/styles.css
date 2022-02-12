@@ -1,0 +1,18 @@
+.main-box{
+    padding: 2%;
+}
+.image-card{
+    width: 80%;
+    height: 75%;
+}
+.card-product{
+    margin: 4%;
+    box-shadow: 3px 3px 3px 3px lightgray;
+    padding: 1%;
+}
+#graphic{
+    height: 20%;
+}
+.checked{
+    color: gold;
+}

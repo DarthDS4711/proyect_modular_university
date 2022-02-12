@@ -30,3 +30,19 @@ h1{
     width: 30%;
     height: 30%;
 }
+.flex-item{
+    display: flex;
+}
+.cols-2{
+    width: 50%;
+    margin: 1%;
+}
+.cols-3{
+    width: 33%;
+    margin: 1%;
+}
+.image-profile{
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+}

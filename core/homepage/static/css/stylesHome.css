@@ -8,3 +8,9 @@ p{
 .container{
     padding: 3%;
 }
+.main-text{
+    margin: 0%;
+}
+.main-image{
+    width: 98%;
+}
