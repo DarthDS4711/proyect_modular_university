@@ -1,0 +1,14 @@
+.box-dashboard{
+    width: 90%;
+    margin: 0 auto;
+    margin: 1%;
+}
+.chart-style{
+    padding: 2%;
+}
+.box-shadowed{
+    margin: 0 auto;
+    box-shadow: 3px 3px 3px 4px lightgray;
+    margin: 1%;
+    padding: 1%;
+}

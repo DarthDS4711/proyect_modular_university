@@ -1,0 +1,69 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/dashboard_admin/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-dashboard">
+        <h2>Opciones administrador</h2>
+        <div class="flex-item">
+            <div class="cols-3 box-shadowed">
+                <h3>Administración</h3>
+                <p>Agregar administrador <a href="#" class="btn btn-primary">Agregar</a></p>
+                <p>Modificar administrador <a href="#" class="btn btn-warning">Editar</a></p>
+                <p>Eliminar administrador <a href="#" class="btn btn-danger">Eliminar</a></p>
+                <p>Editar perfil  <a href="#" class="btn btn-success">Perfil</a></p>
+            </div>
+            <div class="cols-3 box-shadowed">
+                <h3>Usuarios</h3>
+                <p>Eliminar usuario <a href="#" class="btn btn-danger">Eliminar</a></p>
+                <p>Modificar usuario <a href="#" class="btn btn-warning">Modificar</a></p>
+                <p>Agregar usuario <a href="#" class="btn btn-success">Agregar</a></p>
+            </div>
+            <div class="cols-3 box-shadowed">
+                <h3>Otros</h3>
+                <p><a href="#" class="btn btn-danger">Provedores</a></p>
+                <p><a href="#" class="btn btn-warning">Garantías</a></p>
+                <p><a href="#" class="btn btn-success">Datos</a></p>
+            </div>
+        </div>
+        <h2>Estádisticas</h2>
+        <div class="chart-style">
+            <h3>Ventas de la semana</h3>
+            <canvas id="line-chart"></canvas>
+            <a class="btn btn-primary" href="#">Predicción de ventas</a>
+            <a class="btn btn-warning" href="#">Detalles</a>
+            <hr>
+        </div>
+        <div class="chart-style">
+            <h3>Ventas del mes</h3>
+            <canvas id="myChart"></canvas>
+            <a class="btn btn-primary" href="#">Predicción de ventas</a>
+            <a class="btn btn-warning" href="#">Detalles</a>
+            <hr>
+        </div>
+        <div class="chart-style">
+            <h3>Categorias más vendidas</h3>
+            <canvas id="graphic"></canvas>
+            <a class="btn btn-primary" href="#">Más detalles</a>
+            <a class="btn btn-warning" href="#">Administración</a>
+            <hr>
+        </div>
+        <div class="chart-style">
+            <h3>Número de usuarios de la página</h3>
+            <canvas id="bar-chart-horizontal"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/dashboard_admin/chart.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/bar_chart.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/filled_line_chart.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/line_chart.js' %}"></script>
+{% endblock %}
