@@ -3,6 +3,7 @@ from django.db import models
 from django.forms import model_to_dict
 from core.user.models import User
 from core.product.models import Product
+from core.warranty.models import WarrantySale
 
 
 # table for the sale in the app
@@ -13,6 +14,7 @@ class Sale(models.Model):
     subtotal = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='subtotal')
     iva = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='iva')
     total = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='iva')
+    warranty_id = models.ForeignKey(WarrantySale, verbose_name='warranty_sale', on_delete=models.PROTECT, null=True)
 
 
     class Meta:

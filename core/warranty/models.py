@@ -6,6 +6,7 @@ from django.forms import model_to_dict
 # table incidence
 class Incidence(models.Model):
     id = models.BigAutoField(primary_key=True)
+    name = models.CharField(verbose_name='name_incidence', max_length=40, null=True)
     description = models.CharField(verbose_name='description', max_length=150)
 
     class Meta:

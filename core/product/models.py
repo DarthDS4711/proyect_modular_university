@@ -3,6 +3,7 @@ from django.db import models
 from django.forms import model_to_dict
 from core.user.models import User
 from django.contrib.postgres import fields
+from core.supplier.models import Supplier
 
 
 # tabla categoria
@@ -59,10 +60,12 @@ class Product(models.Model):
     # status de producto activo en la base de datos
     is_active = models.BooleanField(verbose_name='is_active', default=True)
     # descripción del producto
-    desciption = models.CharField(max_length=2000, verbose_name='description', default='')
+    description = models.CharField(max_length=2000, verbose_name='description', default='')
     # valoración total del producto en base a los valoration_user 
     product_rating = models.DecimalField(
         verbose_name='rating', max_digits=3, decimal_places=2, default=0)
+    # proveedor relacionado
+    supplier_id = models.ForeignKey(Supplier, verbose_name='supplier', on_delete=models.PROTECT, null=True)
 
     class Meta:
         verbose_name = "Product"
@@ -80,6 +83,8 @@ class Comment(models.Model):
     user = models.ForeignKey(User, verbose_name='user_id', on_delete=models.PROTECT)
     # valoración (entero) del producto
     valoration_user = models.IntegerField(default=0, verbose_name='product_raiting')
+    # descripción de la valoración
+    description = models.CharField(max_length=2000, verbose_name='description', default='')
 
     class Meta:
         verbose_name = 'Comment'
