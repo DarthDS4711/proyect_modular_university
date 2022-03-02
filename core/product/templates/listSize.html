@@ -1,0 +1,54 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/list_sizes/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="image-class">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre de la talla</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for size in page_obj %}
+                <tr>
+                    <td scope="row">{{size.id}}</td>
+                    <td>{{size.size_product}}</td>
+                    <td><i class="fas fa-user-edit"></i></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{create}}" class="btn btn-primary">Agregar categoria</a>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn btn-warning">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-success">previous</a>
+                {% endif %}
+
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-success">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-danger">last &raquo;</a>
+                {% endif %}
+
+
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+            </span>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

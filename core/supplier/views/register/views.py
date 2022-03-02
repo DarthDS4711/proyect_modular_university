@@ -1,8 +1,13 @@
-from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
+
+from core.supplier.forms.supplier.form import SupplierForm
 
 
-class RegisterSupplierView(TemplateView):
+class RegisterSupplierView(CreateView):
     template_name = "registerSupplier.html"
+
+    def get_form(self):
+        return super().get_form(SupplierForm)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -1,3 +1,4 @@
+from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from core.product.forms.category.forms import CategoryForm
@@ -29,6 +30,7 @@ class RegisterCategoryView(CreateView):
 
 class RegisterSizeView(CreateView):
     template_name = 'registerSize.html'
+    success_url = reverse_lazy('product:list_sizes')
 
     def get_form(self):
         return super().get_form(SizeForm)
