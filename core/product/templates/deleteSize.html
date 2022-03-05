@@ -1,0 +1,24 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/delete_size/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/delete_status_send.png' %}" alt="" class="img-style">
+        <div class="alert alert-danger" role="alert">
+            <strong>Advertencia</strong>
+            Deseas eliminar: {{object.size_product}}, al proceder se habra eliminado de manera permanente
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button class="btn btn-success" type="submit">Eliminar</button>
+            <a href="{{list}}" class="btn btn-warning">Retroceder</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

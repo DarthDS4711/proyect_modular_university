@@ -12,3 +12,11 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 600;
 }
+.edit-a{
+    text-decoration: none;
+    color: orange;
+}
+.delete-a{
+    text-decoration: none;
+    color: red;
+}

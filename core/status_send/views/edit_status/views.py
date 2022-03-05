@@ -1,29 +1,40 @@
-from django.views.generic.base import TemplateView
-
+import django
+from django.http import JsonResponse
+from django.urls import reverse_lazy
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
+from django.views.generic.edit import UpdateView
 
 
-'''
 class UpdateStatusSendView(UpdateView):
     from_class = StatusSendForm
-    model = StatusSend
     template_name = 'editStatusSend.html'
+    model = StatusSend
+    success_url = reverse_lazy('status_send:list')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_form(self):
+        return super().get_form(StatusSendForm)
+    
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            form = self.get_form()
+            data = form.save()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Editar Estado"
         context["image"] = "img/send.png"
+        context['list'] = reverse_lazy('status_send:list')
+        context['action'] = 'update'
+        context['btn'] = 'Actualizar'
         return context
-'''
 
-class UpdateStatusSendView(TemplateView):
-    template_name = 'editStatusSend.html'
-
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = "Editar Estado de Envio"
-        context["image"] = "img/send.png"
-        return context

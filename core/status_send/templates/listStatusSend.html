@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/list_sizes/styles.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -14,24 +13,23 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre de la talla</th>
+                    <th>Descripción status</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                {% for size in page_obj %}
+                {% for status in page_obj %}
                 <tr>
-                    <td scope="row">{{size.id}}</td>
-                    <td>{{size.size_product}}</td>
-                    <td><a class="edit-a" href="../../product/update-size/{{size.id}}"><i class="fas fa-user-edit"></i></a></td>
-                    <td><a class="delete-a" href="../../product/delete-size/{{size.id}}"><i class="fas fa-trash"></i></a></td>
+                    <td scope="row">{{status.id}}</td>
+                    <td>{{status.description}}</td>
+                    <td><a class="btn btn-warning" href="../edit/{{status.id}}">Editar</a></td>
+                    <td><a class="btn btn-danger" href="../drop/{{status.id}}">Eliminar</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{create}}" class="btn btn-primary">Agregar talla</a>
+        <a href="{{create_status}}" class="btn btn-primary">Agregar nuevo status</a>
         {% include 'pagination_btns.html' %}
     </div>
-
 </div>
 {% endblock %}

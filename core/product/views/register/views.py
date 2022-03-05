@@ -38,4 +38,5 @@ class RegisterSizeView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Registrar talla"
+        context['action'] = "Guardar"
         return context

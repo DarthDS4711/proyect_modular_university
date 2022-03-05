@@ -1,10 +1,9 @@
 from django.urls import path
-from core.product.views.delete.views import DeleteProductView
-from core.product.views.edit.views import EditProductView
+from core.product.views.delete.views import DeleteProductView, DeleteSizeView
+from core.product.views.edit.views import EditProductView, EditSizeView
 from core.product.views.list.views import ListSizeView
 
 from core.product.views.register.views import RegisterCategoryView, RegisterProductView, RegisterSizeView
-
 
 app_name = "product"
 urlpatterns = [
@@ -19,6 +18,11 @@ urlpatterns = [
     # ruta para registrar una nueva talla
     path('register-size/', RegisterSizeView.as_view(), name='register_size'),
     # ruta para listar los tamaños disponibles
-    path('list-sizes/', ListSizeView.as_view(), name='list_sizes')
+    path('list-sizes/', ListSizeView.as_view(), name='list_sizes'),
+    # ruta para editar los tamaños disponibles
+    path('update-size/<pk>/', EditSizeView.as_view(), name='edit_size'),
+    # ruta para eliminar una medida
+    path('delete-size/<pk>/', DeleteSizeView.as_view(), name='delete_size')
+
 ]
 
