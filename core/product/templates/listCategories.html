@@ -1,0 +1,40 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/list_categories/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="img-style">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre categoría</th>
+                    <th>Imagen</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in page_obj %}
+                <tr>
+                    <td scope="row">{{category.id}}</td>
+                    <td>{{category.name}}</td>
+                    <td><img src="{{category.get_image}}" class="image-list"></td>
+                    <td><a class="btn btn-warning" href="../update-category/{{category.id}}">Editar</a></td>
+                    <td><a class="btn btn-danger" href="#">Eliminar</a></td>
+                    <td><a class="btn btn-success" href="#">Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{create_category}}" class="btn btn-primary">Agregar nueva categoría</a>
+        {% include 'pagination_btns.html' %}
+    </div>
+</div>
+{% endblock %}

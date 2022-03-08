@@ -49,3 +49,10 @@ h1{
 .pagination{
     margin-top: 1%;
 }
+.img-style{
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+    height: 30%;
+    margin-bottom: 2%;
+}

@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.db import models
 from django.forms import model_to_dict
+from config.settings import MEDIA_URL, STATIC_URL
 from core.user.models import User
 from django.contrib.postgres import fields
 from core.supplier.models import Supplier
@@ -19,6 +20,11 @@ class Category(models.Model):
     description = models.CharField(max_length=150, verbose_name='description')
     # status de la categoria
     is_active = models.BooleanField(verbose_name='is_active', default=True)
+
+    def get_image(self):
+        if self.image:
+            return '{}{}'.format(MEDIA_URL, self.image)
+        return '{}{}'.format(STATIC_URL, 'img/empty.png')
 
     class Meta:
         # clase meta que nos porporciona el nombre de la base de datos
