@@ -3,7 +3,7 @@ Django
 django-crum
 django-widget-tweaks
 html5lib
-psycopg2-binary==2.8.6
+psycopg2
 Pillow
 PyPDF2
 pytz

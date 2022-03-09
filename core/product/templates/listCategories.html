@@ -26,6 +26,12 @@
                     <td scope="row">{{category.id}}</td>
                     <td>{{category.name}}</td>
                     <td><img src="{{category.get_image}}" class="image-list"></td>
+                    {% if category.is_active == True %}
+                    <td><strong>Activo</strong></td>
+                    {% endif %}
+                    {% if category.is_active == False %}
+                    <td><strong>Baja</strong></td>
+                    {% endif %}
                     <td><a class="btn btn-warning" href="../update-category/{{category.id}}">Editar</a></td>
                     <td><a class="btn btn-danger" href="#">Eliminar</a></td>
                     <td><a class="btn btn-success" href="#">Detalles</a></td>
