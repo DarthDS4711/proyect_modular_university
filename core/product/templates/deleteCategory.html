@@ -1,0 +1,30 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" class="img-style">
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
+        <div class="alert alert-danger" role="alert">
+            <strong>Alerta: </strong>Esas a punto de eliminar la categoría: {{object.name}}, cualquier cambio afectará a tu sistema 
+            si no actuas de manera consciente.
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Eliminar estado</button>
+            <a href="{{list}}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

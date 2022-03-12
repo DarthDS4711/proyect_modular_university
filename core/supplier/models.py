@@ -13,6 +13,9 @@ class Supplier(models.Model):
     telephone = models.CharField(verbose_name='telephone', max_length=50)
     is_active = models.BooleanField(default=True)
 
+    def get_name(self):
+        return self.first_names + ' ' + self.last_names
+
     class Meta:
         verbose_name = "Supplier"
         verbose_name_plural = 'Supplier'

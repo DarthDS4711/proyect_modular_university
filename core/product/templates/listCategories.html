@@ -13,10 +13,10 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre categoría</th>
-                    <th>Imagen</th>
-                    <th>Estatus</th>
+                    <th class="w-5">ID</th>
+                    <th class="w-25">Nombre categoría</th>
+                    <th class="w-50">Imagen</th>
+                    <th class="w-5">Estatus</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -33,8 +33,8 @@
                     <td><strong>Baja</strong></td>
                     {% endif %}
                     <td><a class="btn btn-warning" href="../update-category/{{category.id}}">Editar</a></td>
-                    <td><a class="btn btn-danger" href="#">Eliminar</a></td>
-                    <td><a class="btn btn-success" href="#">Detalles</a></td>
+                    <td><a class="btn btn-danger" href="../delete-category/{{category.id}}">Eliminar</a></td>
+                    <td><a class="btn btn-success" href="../detail-category/{{category.id}}">Detalles</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

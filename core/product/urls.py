@@ -1,5 +1,6 @@
 from django.urls import path
-from core.product.views.delete.views import DeleteProductView, DeleteSizeView
+from core.product.views.delete.views import DeleteCategoryView, DeleteProductView, DeleteSizeView
+from core.product.views.detail.views import DetailCategoryView
 from core.product.views.edit.views import EditProductView, EditSizeView, UpdateCategoryView
 from core.product.views.list.views import ListCategoryView, ListSizeView
 
@@ -19,6 +20,10 @@ urlpatterns = [
     path('update-category/<pk>', UpdateCategoryView.as_view(), name='edit_category'),
     # ruta para listar categorías
     path('list-categories/', ListCategoryView.as_view(), name='list_cat'),
+    # ruta para visualizar una categoría
+    path('detail-category/<pk>', DetailCategoryView.as_view(), name='detail_category'),
+    # ruta para eliminar una categoría
+    path('delete-category/<pk>', DeleteCategoryView.as_view(), name='delete_category'),
     # ruta para registrar una nueva talla
     path('register-size/', RegisterSizeView.as_view(), name='register_size'),
     # ruta para listar los tamaños disponibles

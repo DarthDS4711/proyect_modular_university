@@ -1,0 +1,45 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="img-style">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre completo</th>
+                    <th>Email</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for supplier in page_obj %}
+                <tr>
+                    <td scope="row">{{supplier.id}}</td>
+                    <td>{{supplier.get_name}}</td>
+                    <td>{{supplier.email}}</td>
+                    {% if supplier.is_active == True %}
+                    <td><strong>Activo</strong></td>
+                    {% endif %}
+                    {% if supplier.is_active == False %}
+                    <td><strong>Baja</strong></td>
+                    {% endif %}
+                    <td><a class="btn btn-warning" href="#">Editar</a></td>
+                    <td><a class="btn btn-danger" href="#">Eliminar</a></td>
+                    <td><a class="btn btn-success" href="#">Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{create}}" class="btn btn-primary">Agregar nuevo proveedor</a>
+        {% include 'pagination_btns.html' %}
+    </div>
+</div>
+{% endblock %}

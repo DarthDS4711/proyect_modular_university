@@ -9,4 +9,5 @@ class DashboardAdminView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Dashboard'
         context['status'] = reverse_lazy('status_send:list')
+        context['supplier'] = reverse_lazy('supplier_app:list_supplier')
         return context
