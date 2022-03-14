@@ -2,33 +2,29 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/stylesDeleteSupplier.css' %}" type="text/css" charset="utf-8">
+<script src="{% static 'js/functions.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="box-layout">
     <h1>{{title}}</h1>
-    <img src="{% static 'img/trash.png' %}" id="image-style"/>
-    <div class="box">
+    <div class="box-content">
+        <img src="{% static image %}" class="img-style">
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
         <div class="alert alert-danger" role="alert">
-            <strong>Atención</strong> Estas seguro de que deseas eliminar al Proveedor <br>
-            Después de confirmar se eliminará el proveedor
+            <strong>Alerta: </strong>Esas a punto de eliminar al proveedor: {{object.get_name}}, cualquier cambio afectará a tu sistema 
+            si no actuas de manera consciente.
         </div>
-        <form>
-            <p>Comprendo los motivos por los cuales deseo eliminar al proveedor y acepto que lo estoy <br>
-                eliminando de manera totalmente voluntaria
-            </p>
-            <div class="form-group">
-                <label for="accept">Acepto</label>               
-                <input type="radio" value="accept" name="check" id="accept" value="accept"/>  
-            </div>
-            <div class="form-group">
-                <label ffor="decline">Declinar</label>
-                 <input type="radio" value="decline" name="check" id="decline" value="decline"/>           
-            </div>
-            <button type="submit" class="btn btn-primary">Eliminar</button>
-            <a href="#" class="btn btn-warning">Cancelar</a>
-        <form/>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Eliminar proveedor</button>
+            <a href="{{list}}" class="btn btn-danger">Cancelar</a>
+        </form>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
 {% endblock %}

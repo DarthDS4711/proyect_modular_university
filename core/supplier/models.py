@@ -2,6 +2,8 @@ from datetime import datetime
 from django.db import models
 from django.forms import model_to_dict
 
+from config.settings import MEDIA_URL, STATIC_URL
+
 
 # table for the supplier 
 class Supplier(models.Model):
@@ -12,6 +14,11 @@ class Supplier(models.Model):
     image = models.ImageField(upload_to='supplier/%Y/%m/%d', null=True, blank=True, verbose_name='image')
     telephone = models.CharField(verbose_name='telephone', max_length=50)
     is_active = models.BooleanField(default=True)
+
+    def get_image(self):
+        if self.image:
+            return '{}{}'.format(MEDIA_URL, self.image)
+        return '{}{}'.format(STATIC_URL, 'img/empty.png')
 
     def get_name(self):
         return self.first_names + ' ' + self.last_names

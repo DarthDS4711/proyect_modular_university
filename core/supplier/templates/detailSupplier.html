@@ -1,0 +1,26 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h3>{{object.get_name}}</h3>
+        <div class="flex-item">
+            <div class="cols-2">
+                <img src="{{object.get_image}}" class="img-detail">
+            </div>
+            <div class="cols-2">
+                <h4>Datos personales</h4>
+                <p><strong>Correo electronico: </strong>{{object.email}}</p>
+                <p><strong>Teléfono: </strong>{{object.telephone}}</p>
+            </div>
+        </div>
+        <h3>Productos ofertados</h3>
+    </div>
+</div>
+{% endblock %}

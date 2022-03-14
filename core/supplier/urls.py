@@ -1,5 +1,6 @@
 from django.urls import path
 from core.supplier.views.delete.views import DeleteSupplierView
+from core.supplier.views.detail.views import DetailSupplierView
 from core.supplier.views.edit.views import EditSupplierView
 from core.supplier.views.list.views import ListSupplierView
 
@@ -10,9 +11,11 @@ urlpatterns = [
     # ruta para registrar a un proveedor
     path('register/', RegisterSupplierView.as_view(), name="register_supplier"),
     # ruta para editar a un proveedor
-    path('edit/', EditSupplierView.as_view(), name="register_supplier"),
+    path('edit/<pk>', EditSupplierView.as_view(), name="edit_supplier"),
     # ruta para eliminar a un proveedor
-    path('drop/', DeleteSupplierView.as_view(), name="delete_supplier"),
+    path('drop/<pk>', DeleteSupplierView.as_view(), name="delete_supplier"),
     # ruta para listar a los proveedor 
-    path('list/', ListSupplierView.as_view(), name='list_supplier')
+    path('list/', ListSupplierView.as_view(), name='list_supplier'),
+    # ruta para visualizar a nuestro proveedor
+    path('details/<pk>', DetailSupplierView.as_view(), name='detail_supplier')
 ]
