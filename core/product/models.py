@@ -34,6 +34,9 @@ class Category(models.Model):
         ordering = ['id']
         db_table = 'category'
 
+    def __str__(self):
+        return self.name
+
 
 # tabla tamaño del producto (prendas)
 class Size(models.Model):
@@ -45,6 +48,9 @@ class Size(models.Model):
         verbose_name_plural = 'Sizes'
         ordering = ['id']
         db_table = 'size'
+    
+    def __str__(self):
+        return self.size_product
 
 
 # tabla productos
@@ -52,7 +58,9 @@ class Product(models.Model):
     id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=50, verbose_name='name', unique=True)
     # llave foranea que nos indica el color del producto, acorde a los registrados
-    colors = fields.ArrayField(models.CharField(max_length=8), null=True, blank=True, size=4)
+    primary_color = models.CharField(max_length=8, default='')
+    secondary_color = models.CharField(max_length=8, default='')
+    last_color = models.CharField(max_length=8, default='')
     # categoria del producto en base a una relación con la tabla categoria
     category = models.ForeignKey(Category, verbose_name='category', on_delete=models.PROTECT)
     # tamanio del producto en caso de que sea una prenda representado en una relacion
@@ -78,6 +86,15 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
         ordering = ['id']
         db_table = 'products'
+    
+    def get_image(self):
+        if self.image:
+            return '{}{}'.format(MEDIA_URL, self.image)
+        return '{}{}'.format(STATIC_URL, 'img/empty.png')
+    
+    def get_discount_product(self):
+        return self.discount * 100
+        
 
 
 # table comments

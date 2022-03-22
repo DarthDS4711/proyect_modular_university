@@ -1,0 +1,47 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="img-style">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre producto</th>
+                    <th>Precio</th>
+                    <th>Imagen</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in page_obj %}
+                <tr>
+                    <td scope="row">{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.pvp}}</td>
+                    <td><img src="{{product.get_image}}" class="image-list"></td>
+                    {% if product.is_active == True %}
+                    <td><strong>Activo</strong></td>
+                    {% endif %}
+                    {% if product.is_active == False %}
+                    <td><strong>Baja</strong></td>
+                    {% endif %}
+                    <td><a class="btn btn-warning" href="../edit/{{product.id}}">Editar</a></td>
+                    <td><a class="btn btn-danger" href="../delete/{{product.id}}">Eliminar</a></td>
+                    <td><a class="btn btn-success" href="../detail/{{product.id}}">Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{create}}" class="btn btn-primary">Agregar nuevo producto</a>
+        {% include 'pagination_btns.html' %}
+    </div>
+</div>
+{% endblock %}

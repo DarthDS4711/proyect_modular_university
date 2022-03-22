@@ -1,74 +1,33 @@
 {% extends 'baseView.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block head %}
-<!--Archivos estáticos propios de la página web creada-->
-<link rel="stylesheet" href="{% static 'css/stylesRegisterProduct.css' %}">
+<script src="{% static 'js/functions.js' %}"></script>
 {% endblock %}
+
 
 {% block content %}
 <div class="box-layout">
     <h1>{{title}}</h1>
-    <div class="box">
-        <img src="{% static image %}" id="image-product" />
-        <form>
+    <div class="box-content">
+        <img src="{% static 'img/product.png' %}" class="img-style">
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
             <div class="form-group">
-                <label>Nombre</label>
-                <input type="text" class="form-control" placeholder="Nombre producto">
+                <label>{{ field.label }}:</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
-            <div class="form-group">
-                <label>Categoría</label>
-                <select class="form-control" name="color">
-                    <option>Ropa</option>
-                    <option>Zapateria</option>
-                    <option>Perfumes</option>
-                    <option>Maquillaje</option>
-                </select>
-            </div>
-            <div class="form-group">
-                {% include 'colors.html' %}
-            </div>
-            <div class="form-group style-box">
-                {% include 'sizes.html' %}
-            </div>
-            <div class="form-group">
-                <label>Precio</label>
-                <input type="number" class="form-control" placeholder="Precio de venta al público" step="0.1">
-            </div>
-
-            <div class="form-group">
-                <label>Descripción</label>
-                <textarea name="" id="text-description" class="form-control"></textarea>
-            </div>
-            <div class="form-group">
-                <label>Cantidad</label>
-                <input type="number" class="form-control" placeholder="Cantidad productos">
-            </div>
-            <div class="form-group">
-                <label>Proveedor</label>
-                <select class="form-control" name="provaidor">
-                    <option>Proveedor 1</option>
-                    <option>Proveedor 2</option>
-                    <option>Proveedor 3</option>
-                    <option>Proveedor 4</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Garantía</label>
-                <select class="form-control" name="warranty">
-                    <option>Garantía 1</option>
-                    <option>Garantía 2</option>
-                    <option>Garantía 3</option>
-                    <option>Garantía 4</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Registrar</button>
-            <a href="#" class="btn btn-danger">Cancelar</a>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">{{btn}}</button>
+            <a href="{{list}}" class="btn btn-danger">Cancelar</a>
         </form>
     </div>
 </div>
 {% endblock %}
-
 {% block scripts %}
-<script charset="utf-8" src="{% static 'js/functions.js' %}"></script>
+<script src="{% static 'js/validate_action.js' %}"></script>
 {% endblock %}

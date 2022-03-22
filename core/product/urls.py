@@ -1,8 +1,8 @@
 from django.urls import path
 from core.product.views.delete.views import DeleteCategoryView, DeleteProductView, DeleteSizeView
-from core.product.views.detail.views import DetailCategoryView
-from core.product.views.edit.views import EditProductView, EditSizeView, UpdateCategoryView
-from core.product.views.list.views import ListCategoryView, ListSizeView
+from core.product.views.detail.views import DetailCategoryView, DetailProductView
+from core.product.views.edit.views import EditSizeView, UpdateCategoryView, UpdateProductView
+from core.product.views.list.views import ListCategoryView, ListProductView, ListSizeView
 
 from core.product.views.register.views import RegisterCategoryView, RegisterProductView, RegisterSizeView
 
@@ -11,9 +11,13 @@ urlpatterns = [
     # rutas para agregar un nuevo producto
     path('register/', RegisterProductView.as_view(), name="register_product"),
     # rutas para editar a un producto existente
-    path('edit/', EditProductView.as_view(), name="edit_product"),
+    path('edit/<pk>', UpdateProductView.as_view(), name="edit_product"),
     # rutas para eliminar un producto existente
-    path('drop/', DeleteProductView.as_view(), name='delete_product'),
+    path('delete/<pk>', DeleteProductView.as_view(), name='delete_product'),
+    # ruta para listar (administrador) productos
+    path('list/', ListProductView.as_view(), name='list_product'),
+    # ruta para obtener los detalles (administrador) del producto
+    path('detail/<pk>', DetailProductView.as_view(), name='detail_product'),
     # rutas para registrar una categoría
     path('register-category/', RegisterCategoryView.as_view(), name='register_cat'),
     # ruta para editar una categoría

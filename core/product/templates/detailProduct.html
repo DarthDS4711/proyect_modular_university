@@ -1,0 +1,45 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h3>{{object.name}}</h3>
+        <div class="flex-item">
+            <div class="cols-2">
+                <img src="{{object.get_image}}" class="img-detail">
+            </div>
+            <div class="cols-2">
+                <h4>Categoria {{product.category}}</h4>
+                <h4>Colores</h4>
+                <span style="background-color: {{object.primary_color}};" class="btn"></span>
+                <span style="background-color: {{object.secondary_color}};" class="btn"></span>
+                <span style="background-color: {{object.last_color}};" class="btn"></span>
+                <h4>Tamaños</h4>
+                <!--Realización de una consulta, para mostrar las relaciones de los datos
+                cuando es manytomay-->
+                {% for size in object.size.all %}
+                    <li>{{ size }}</li>
+                {% endfor %}
+                <h4>Proveedor</h4>
+                <p>{{object.supplier_id}}</p>
+            </div>
+        </div>
+        <h5>Precio</h5>
+        <p>${{object.pvp}}</p>
+        <h5>Descuento</h5>
+        <p>{{object.get_discount_product}}%</p>
+        <h5>Estado actual</h5>
+        {% if object.is_active == True %}
+            <p><strong>Activo</strong></p>
+        {% else %}
+            <p><strong>Baja</strong></p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

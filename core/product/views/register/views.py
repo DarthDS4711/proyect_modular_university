@@ -3,18 +3,43 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 from core.product.forms.category.forms import CategoryForm
+from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
-from core.product.models import Category
+from core.product.models import Category, Product
 
 
 
-class RegisterProductView(TemplateView):
+class RegisterProductView(CreateView):
     template_name = "registerProduct.html"
+    model = Product
+    success_url = reverse_lazy('product:list_product')
 
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    # sobrescritura del método post para el guardado de los datos
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            # obtención de los datos
+            form = self.get_form()
+            # guardado de los datos
+            data = form.save()
+        except Exception as e:
+            data['error'] = str(e)
+        # regreso de la respuesta del servidor
+        return JsonResponse(data, safe=False)
+
+
+    def get_form(self):
+        return super().get_form(ProductForm)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Registrar producto"
-        context["image"] = "img/product.png"
+        context['list'] = self.success_url
+        context['action'] = 'register' 
+        context['btn'] = 'Registrar producto'
         return context
 
 

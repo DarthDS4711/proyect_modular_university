@@ -3,17 +3,41 @@ from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 from core.product.forms.category.forms import CategoryForm
+from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
-from core.product.models import Category, Size
+from core.product.models import Category, Product, Size
 
 
-class EditProductView(TemplateView):
-    template_name = "editProduct.html"
+class UpdateProductView(UpdateView):
+    from_class = CategoryForm
+    template_name = 'editProduct.html'
+    model = Product
+    success_url = reverse_lazy('product:list_product')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get_form(self):
+        return super().get_form(ProductForm)
+    
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            form = self.get_form()
+            data = form.save()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Editar producto"
-        context["image"] = "img/product_edit.jpg"
+        context["image"] = "img/product.png"
+        context['list'] = self.success_url
+        context['action'] = 'update'
+        context['btn'] = 'Actualizar'
         return context
 
 

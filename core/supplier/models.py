@@ -28,3 +28,6 @@ class Supplier(models.Model):
         verbose_name_plural = 'Supplier'
         ordering = ['id']
         db_table = 'supplier'
+    
+    def __str__(self):
+        return self.first_names + '' + self.last_names
