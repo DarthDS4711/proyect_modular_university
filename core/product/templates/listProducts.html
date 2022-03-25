@@ -26,16 +26,18 @@
                     <td scope="row">{{product.id}}</td>
                     <td>{{product.name}}</td>
                     <td>{{product.pvp}}</td>
-                    <td><img src="{{product.get_image}}" class="image-list"></td>
+                    <td><img src="{{product.get_image}}" class="img-style"></td>
                     {% if product.is_active == True %}
                     <td><strong>Activo</strong></td>
                     {% endif %}
                     {% if product.is_active == False %}
                     <td><strong>Baja</strong></td>
                     {% endif %}
-                    <td><a class="btn btn-warning" href="../edit/{{product.id}}">Editar</a></td>
-                    <td><a class="btn btn-danger" href="../delete/{{product.id}}">Eliminar</a></td>
-                    <td><a class="btn btn-success" href="../detail/{{product.id}}">Detalles</a></td>
+                    <td>
+                        <a class="btn btn-warning" href="../edit/{{product.id}}">Editar</a>
+                        <a class="btn btn-danger" href="../delete/{{product.id}}">Eliminar</a>
+                        <a class="btn btn-success" href="../detail/{{product.id}}">Detalles</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

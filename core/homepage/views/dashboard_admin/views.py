@@ -11,4 +11,5 @@ class DashboardAdminView(TemplateView):
         context['status'] = reverse_lazy('status_send:list')
         context['supplier'] = reverse_lazy('supplier_app:list_supplier')
         context['products'] = reverse_lazy('product:list_product')
+        context['stock'] = reverse_lazy('stock:list_stock')
         return context

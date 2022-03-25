@@ -2,7 +2,7 @@ from django import forms
 from core.product.models import Product
 
 
-# formulario Django para la categoria
+# formulario Django para el producto
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product

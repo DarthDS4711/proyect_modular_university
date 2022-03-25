@@ -1,0 +1,46 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="img-style">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre producto</th>
+                    <th>Cantidad</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in page_obj %}
+                <tr>
+                    <td>{{stock.id}}</td>
+                    <td>{{stock.product.name}}</td>
+                    <td>{{stock.amount}}</td>
+                    {% if stock.is_activte == True %}
+                        <td><strong>Activo</strong></td>
+                    {% else %}
+                        <td><strong>Baja</strong></td>
+                    {% endif %}
+                    <td>
+                        <a href="../detail/{{stock.id}}" class="btn btn-success">Detalles</a>
+                        <a href="../edit/{{stock.id}}" class="btn btn-warning">Editar</a>
+                        <a href="../delete/{{stock.id}}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{create}}" class="btn btn-primary">Agregar nuevo stock</a>
+        {% include 'pagination_btns.html' %}
+    </div>
+</div>
+{% endblock %}

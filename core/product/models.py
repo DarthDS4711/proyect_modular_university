@@ -94,6 +94,9 @@ class Product(models.Model):
     
     def get_discount_product(self):
         return self.discount * 100
+    
+    def __str__(self):
+        return self.name
         
 
 
