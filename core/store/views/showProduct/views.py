@@ -1,11 +1,17 @@
-from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
+from core.product.models import Product
 
 
-class DetailProductView(TemplateView):
-    template_name = "detailProduct.html"
+
+class DetailProductView(DetailView):
+    template_name = "detailProductShop.html"
+    model = Product
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Vestido coleccion primavera"
-        context["image"] = "img/dress.png"
+        context["title"] = self.object.name
         return context

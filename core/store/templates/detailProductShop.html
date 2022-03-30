@@ -10,19 +10,12 @@
     <h1>{{title}}</h1>
     <div class="box-flex">
         <div class="image-product">
-            <img src="{% static image %}" class="image-style">
+            <img src="{{object.get_image}}" class="image-style">
         </div>
         <div class="description-product">
             <h3>Descripción</h3>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas gravida venenatis nulla ut
-                condimentum. Cras congue felis eget nunc pretium venenatis.
-                Suspendisse potenti. Nunc cursus sed risus vitae vestibulum. Pellentesque vehicula dictum lectus, id
-                placerat lacus imperdiet in. Donec ultrices sed metus eget dapibus.
-                Donec vulputate commodo elit a convallis. Proin ac eros tortor. Sed sit amet velit vel odio finibus
-                pretium. Duis turpis neque, malesuada eget dui a, mollis ornare metus.
-                Praesent porttitor sem nec eros fringilla, vitae auctor turpis semper. Etiam id erat et urna rutrum
-                vestibulum eu vel turpis.
+                {{object.description}}
             </p>
             <div>
                 <p><strong>Valoración: </strong>4 estrellas</p>
@@ -33,17 +26,16 @@
                 <span class="fa fa-star"></span>
             </div>
             <div>
-                <p><strong>Precio: </strong>$531 MXN</p>
+                <p><strong>Precio: </strong>${{object.pvp}} MXN</p>
                 <button class="btn btn-success">Agregar al carrilo</button>
             </div>
         </div>
     </div>
     <h4>Tallas disponibles</h4>
     <div>
-        <p><strong>Chica: </strong>50cm largo 80cm ancho</p>
-        <p><strong>Mediana: </strong>50cm largo 80cm ancho</p>
-        <p><strong>Grande: </strong>50cm largo 80cm ancho</p>
-        <p><strong>Unitalla: </strong>50cm largo 80cm ancho</p>
+        {% for size in object.size.all %}
+            <p>{{ size }}</p>
+        {% endfor %}
     </div>
     <div>
         <h3>Comentarios</h3>

@@ -1,3 +1,4 @@
+from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 
 
@@ -8,5 +9,7 @@ class MainShopView(TemplateView):
 		context = super().get_context_data(**kwargs)
 		context["title"] = "Tienda"
 		context["image"] = "img/dress.png"
+		context["category"] = reverse_lazy('shop:list_category_shop')
 		return context
+
 		

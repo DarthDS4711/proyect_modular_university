@@ -1,7 +1,6 @@
 {% extends 'baseView.html' %}
 {% load static %}
 
-
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/stylesListProductShop.css' %}">
 {% endblock %}
@@ -10,22 +9,21 @@
 <div class="box-layout">
     <h1>{{title}}</h1>
     <div class="product-box">
-        {% for product in page_obj %}
-            {% if product.is_active == True %}
+        {% for category in page_obj %}
+            {% if category.is_active == True %}
             <div class="card-product">
+                <h4>{{category.name}}</h4>
                 <div class="card-product-item">
-                    <img src="{{product.get_image}}" class="image-style">
+                    <img src="{{category.get_image}}" class="image-style">
                 </div>
                 <div class="card-product-item">
-                    <h4>{{product.name}}</h4>
-                    <p>{{product.description}}</p>
-                    <strong>Precio: </strong>${{product.pvp}}MXN<br>
-                    <a href="../detail-product/{{product.id}}" class="btn btn-primary">Ver</a>
+                    <p>{{category.description}}</p>
+                    <a href="../list/{{category.id}}" class="btn btn-primary">Ver todos los productos</a>
                 </div>
             </div>
             {% endif %}
         {% endfor %}
-
         {% include 'pagination_btns.html' %}
+    </div>
 </div>
 {% endblock %}
