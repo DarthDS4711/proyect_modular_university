@@ -11,25 +11,32 @@
     <div class="box-dashboard">
         <h2>Opciones administrador</h2>
         <div class="flex-item">
-            <div class="cols-3 box-shadowed">
+            <div class="cols-4 box-shadowed">
                 <h3>Administración</h3>
-                <p><a href="#" class="btn btn-primary">Administradores</a></p>
-                <p> <a href="#" class="btn btn-warning">Reportes de venta</a></p>
-                <p><a href="#" class="btn btn-danger">Ventas</a></p>
-                <p><a href="{{stock}}" class="btn btn-success">Stock</a></p>
+                <p><a href="#" class="btn orange-btn">Administradores</a></p>
+                <p> <a href="#" class="btn orange-btn">Reportes de venta</a></p>
+                <p><a href="#" class="btn orange-btn">Ventas</a></p>
+                <p><a href="{{stock}}" class="btn orange-btn">Stock</a></p>
             </div>
-            <div class="cols-3 box-shadowed">
+            <div class="cols-4 box-shadowed">
                 <h3>Usuarios</h3>
-                <p><a href="#" class="btn btn-danger">Administrar usuarios</a></p>
-                <p><a href="#" class="btn btn-warning">Modificar usuarios</a></p>
-                <p><a href="#" class="btn btn-success">Eliminar usuarios</a></p>
+                <p><a href="#" class="btn orange-btn">Administrar usuarios</a></p>
+                <p><a href="#" class="btn orange-btn">Modificar usuarios</a></p>
+                <p><a href="#" class="btn orange-btn">Eliminar usuarios</a></p>
             </div>
-            <div class="cols-3 box-shadowed">
+            <div class="cols-4 box-shadowed">
                 <h3>Tienda</h3>
-                <p><a href="{{supplier}}" class="btn btn-danger">Proveedores</a></p>
-                <p><a href="#" class="btn btn-warning">Garantías</a></p>
-                <p><a href="{{products}}" class="btn btn-success">Productos</a></p>
-                <p><a href="{{status}}" class="btn btn-primary">Estados de envio</a></p>
+                <p><a href="{{supplier}}" class="btn orange-btn">Proveedores</a></p>
+                <p><a href="#" class="btn orange-btn">Garantías</a></p>
+                <p><a href="{{products}}" class="btn orange-btn">Productos</a></p>
+                <p><a href="{{status}}" class="btn orange-btn">Estados de envio</a></p>
+            </div>
+            <div class="cols-4 box-shadowed">
+                <h3>Opciones</h3>
+                <p><a href="#" class="btn orange-btn">Hora respaldo</a></p>
+                <p><a href="#" class="btn orange-btn">Flujo de usuarios</a></p>
+                <p><a href="#" class="btn orange-btn">Productos</a></p>
+                <p><a href="#" class="btn orange-btn">Estados de envio</a></p>
             </div>
         </div>
         <h2>Estádisticas</h2>
@@ -60,6 +67,8 @@
         </div>
     </div>
 </div>
+
+
 {% endblock %}
 
 {% block scripts %}

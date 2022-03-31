@@ -12,11 +12,11 @@
         {% for category in page_obj %}
             {% if category.is_active == True %}
             <div class="card-product">
-                <h4>{{category.name}}</h4>
-                <div class="card-product-item">
+                <div class="cols-2">
                     <img src="{{category.get_image}}" class="image-style">
                 </div>
-                <div class="card-product-item">
+                <div class="cols-2">
+                    <h4>{{category.name}}</h4>
                     <p>{{category.description}}</p>
                     <a href="../list/{{category.id}}" class="btn btn-primary">Ver todos los productos</a>
                 </div>

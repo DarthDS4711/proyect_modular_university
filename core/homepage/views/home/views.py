@@ -15,4 +15,5 @@ class HomepageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Shop IA online"
+        context['signin'] = reverse_lazy('access:signin')
         return context

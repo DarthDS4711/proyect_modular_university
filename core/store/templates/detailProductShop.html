@@ -13,28 +13,24 @@
             <img src="{{object.get_image}}" class="image-style">
         </div>
         <div class="description-product">
-            <h3>Descripción</h3>
-            <p>
-                {{object.description}}
-            </p>
-            <div>
-                <p><strong>Valoración: </strong>4 estrellas</p>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-            </div>
-            <div>
-                <p><strong>Precio: </strong>${{object.pvp}} MXN</p>
-                <button class="btn btn-success">Agregar al carrilo</button>
-            </div>
+            <h4>Descripción</h4>
+            <p>{{object.description}}</p>
+            <h4>Colores</h4>
+            <span style="background-color: {{object.primary_color}};" class="btn"></span>
+            <span style="background-color: {{object.secondary_color}};" class="btn"></span>
+            <span style="background-color: {{object.last_color}};" class="btn"></span>
+            {% include 'rankProduct.html' %}
+            <p><strong>Precio: </strong>${{object.pvp}} MXN</p>
+            {% if stock %}
+            <button class="btn btn-success">Agregar al carrilo</button>
+            {% endif %}
+
         </div>
     </div>
     <h4>Tallas disponibles</h4>
     <div>
         {% for size in object.size.all %}
-            <p>{{ size }}</p>
+        <p>{{ size }}</p>
         {% endfor %}
     </div>
     <div>

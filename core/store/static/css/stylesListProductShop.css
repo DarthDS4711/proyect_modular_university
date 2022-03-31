@@ -8,6 +8,7 @@
     box-shadow: 4px 4px 4px 4px lightgray;
     margin: 2%;
     padding: 3%;
+    width: 100%;
 }
 .card-product-item{
     flex-direction: column;
@@ -27,4 +28,7 @@ p{
 }
 .btn-item{
     flex-direction: column;
+}
+h4{
+    width: 100%;
 }

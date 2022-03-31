@@ -1,0 +1,36 @@
+{% if object.product_rating <= 1.0%}
+<p><strong>Valoración: </strong>1 estrella</p>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+{% elif object.product_rating <= 2.0 and object.product_rating > 1.0%}
+<p><strong>Valoración: </strong>2 estrellas</p>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+{% elif object.product_rating <= 3.0 and object.product_rating > 2.0%}
+<p><strong>Valoración: </strong>3 estrellas</p>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+{% elif object.product_rating <= 4.0 and object.product_rating > 3.0%}
+<p><strong>Valoración: </strong>4 estrellas</p>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star"></span>
+{% elif object.product_rating <= 5.0 and object.product_rating >= 4.0%}
+<p><strong>Valoración: </strong>5 estrellas</p>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+<span class="fa fa-star checked"></span>
+{% endif %} 

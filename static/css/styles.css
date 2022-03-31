@@ -32,6 +32,8 @@ h1{
 }
 .flex-item{
     display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 .cols-2{
     width: 50%;
@@ -39,6 +41,10 @@ h1{
 }
 .cols-3{
     width: 33%;
+    margin: 1%;
+}
+.cols-4{
+    width: 25%;
     margin: 1%;
 }
 .image-profile{
@@ -59,4 +65,7 @@ h1{
 .img-detail{
     width: 75%;
     height: 75%;
+}
+.orange-btn{
+    background-color: #FFA500;
 }

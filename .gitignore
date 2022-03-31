@@ -1,3 +1,4 @@
 config/data_access
 .vscode/*
 media/*
+.sqlite3
