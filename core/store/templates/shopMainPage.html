@@ -15,47 +15,24 @@
 		</div>
 		<h2>Recomendados</h2>
 		<div class="cards-box">
-			<a href=""><i class="fa fa-step-backward" aria-hidden="true"></i></a>
+			{% for product in best %}
 			<div class="card card-product">
-				<img class="card-img-top image-card" src="{% static image %}">
+				<img class="image-style" src="{{product.get_image}}">
 				<div class="card-body">
-					<h4 class="card-title">Title</h4>
-					<p class="card-text">Text</p>
+					<h4 class="card-title">{{product.name}}</h4>
+					<p class="card-text">${{product.pvp}}MXN</p>
 				</div>
-				<a href="#" class="btn btn-primary">Ver</a>
+				<a href="detail-product/{{product.id}}" class="btn btn-primary">Ver</a>
 			</div>
-			<div class="card card-product">
-				<img class="card-img-top image-card" src="{% static image %}">
-				<div class="card-body">
-					<h4 class="card-title">Title</h4>
-					<p class="card-text">Text</p>
-				</div>
-				<a href="#" class="btn btn-primary">Ver</a>
-			</div>
-			<div class="card card-product">
-				<img class="card-img-top image-card" src="{% static image %}">
-				<div class="card-body">
-					<h4 class="card-title">Title</h4>
-					<p class="card-text">Text</p>
-				</div>
-				<a href="#" class="btn btn-primary">Ver</a>
-			</div>
-			<div class="card card-product">
-				<img class="card-img-top image-card" src="{% static image %}">
-				<div class="card-body">
-					<h4 class="card-title">Title</h4>
-					<p class="card-text">Text</p>
-				</div>
-				<a href="#" class="btn btn-primary">Ver</a>
-			</div>
-			<a href=""><i class="fa fa-step-forward" aria-hidden="true"></i></a>
+			{% endfor %}
 		</div>
 		<h4>Opciones tienda</h4>
 		<div class="row row-btns">
 			<a href="{{category}}" class="btn btn-category">Ver todas las categorías</a>
-			<a href="#" class="btn btn-category">Productos mejor valorados</a>
+			<a href="{{best_products}}" class="btn btn-category">Productos mejor valorados</a>
 			<a href="#" class="btn btn-category">Producto del mes</a>
-			<a href="#" class="btn btn-category">Descuentos</a>
+			<a href="{{discount}}" class="btn btn-category">Descuentos</a>
+			<a href="{{list}}" class="btn btn-category" style="width: 94%;">Todos los productos</a>
 		</div>
 	</div>
 </div>

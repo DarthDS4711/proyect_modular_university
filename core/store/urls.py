@@ -1,5 +1,8 @@
 from django.urls import path
+from core.store.views.list_all_products.views import ListAllProductsView
+from core.store.views.list_best_ranking_prod.views import ListBestProductsView
 from core.store.views.list_categories.views import ListCategoryShopView
+from core.store.views.list_discount_prod.views import ListDiscountProductView
 from core.store.views.list_products.views import ListProductsShopView
 from core.store.views.shopCart.views import ShopCartView
 
@@ -18,5 +21,11 @@ urlpatterns = [
     # vista relacionada a mostrar en lista los productos de la tienda
     path('list/<int:id_category>', ListProductsShopView.as_view(), name='list_products'),
     # vista relacionada a mostrar todas las categorías de la tienda (cliente),
-    path('list-categories/', ListCategoryShopView.as_view(), name='list_category_shop')
+    path('list-categories/', ListCategoryShopView.as_view(), name='list_category_shop'),
+    # vista para mostrar los productos con descuento
+    path('list-discount/', ListDiscountProductView.as_view(), name='list_discount'),
+    # vista relacionada a mostrar los productos con mejor valoración
+    path('list-bests/', ListBestProductsView.as_view(), name='list_best_products'),
+    # vista relacionada a ver todos los productos
+    path('list-all/', ListAllProductsView.as_view(), name='list_all')
 ]

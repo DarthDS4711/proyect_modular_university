@@ -7,16 +7,19 @@
     display: flex;
     box-shadow: 4px 4px 4px 4px lightgray;
     margin: 2%;
-    padding: 3%;
+    padding: 2%;
     width: 100%;
+    height: 2%;
 }
 .card-product-item{
     flex-direction: column;
     width: 50%;
 }
 .image-style{
+    display: block;
+    margin: 0 auto;
     width: 50%;
-    height: 70%;
+    height: 90%;
 }
 p{
     text-align: justify;
@@ -31,4 +34,7 @@ p{
 }
 h4{
     width: 100%;
+}
+.checked{
+    color: orange;
 }

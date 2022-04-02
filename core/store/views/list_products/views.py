@@ -16,4 +16,5 @@ class ListProductsShopView(ListView):
         category = Category.objects.filter(id=self.kwargs['id_category'])[0]
         context = super().get_context_data(**kwargs) 
         context["title"] = category
+        context["discount"] = False
         return context

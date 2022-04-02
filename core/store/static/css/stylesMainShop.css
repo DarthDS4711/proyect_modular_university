@@ -23,15 +23,15 @@ h2{
 	margin: 0 auto;
 }
 .card-product{
-	width: 28%;
-	height: 30%;
+	width: 25%;
 	padding: 2%;
-	flex-direction: column;
 	margin: 1%;
 }
-.image-card{
-	width: 50%;
-	height: 50%;
+.image-style{
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    height: 50%;
 }
 .row-btns{
 	padding: 3%;

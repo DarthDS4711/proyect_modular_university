@@ -95,6 +95,10 @@ class Product(models.Model):
     def get_discount_product(self):
         return self.discount * 100
     
+    def get_pvp_with_discount(self):
+        pvp_d = self.pvp - (self.pvp * self.discount)
+        return round(pvp_d, 2)
+    
     def __str__(self):
         return self.name
         
