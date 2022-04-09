@@ -167,3 +167,5 @@ EMAIL_HOST_PASSWORD = PASSWORD
 # variable de dominio el cual contendrá el nombre del dominio cuando
 # el sitio se encuentre en la red
 DOMAIN = ''
+
+LOGIN_REDIRECT_URL = '/'

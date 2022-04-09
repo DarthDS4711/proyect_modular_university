@@ -9,17 +9,16 @@
 <div class="box-layout">
     <h1>{{title}}</h1>
     <div class="box-content">
-        <img src="{% static 'img/user.png' %}" id="image-user">
+        <img src="{{request.user.get_image }}" id="image-user">
         <div class="info-user">
-            <p><strong>Nombre usuario: </strong>Username test</p>
-            <p><strong>Nombre: </strong>User</p>
-            <p><strong>Apellidos: </strong>User lastname</p>
-            <p><strong>Sexo: </strong>Female</p>
-            <p><strong>Edad: </strong>21</p>
+            <p><strong>Nombre usuario: </strong>{{request.user.username}}</p>
+            <p><strong>Nombre: </strong>{{request.user.first_name}}</p>
+            <p><strong>Apellidos: </strong>{{request.user.last_name}}</p>
+            <p><strong>Sexo: </strong>{{request.user.gender}}</p>
             <p><strong>Fecha última compra: </strong>11/25/21</p>
         </div>
         <a href="#" class="btn btn-success">Editar perfil</a>
-        <a href="#" class="btn btn-warning">Regresar</a>
+        <a href="{% url 'app_views:dashboard_user' %}" class="btn btn-warning">Regresar</a>
     </div>
 </div>
 {% endblock %}

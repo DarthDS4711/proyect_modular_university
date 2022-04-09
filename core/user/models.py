@@ -4,6 +4,7 @@ from django.db.models.expressions import F
 from django.db.models.fields import UUIDField
 from django.forms import model_to_dict
 from django.contrib.auth.models import AbstractUser
+from config.settings import MEDIA_URL, STATIC_URL
 from core.user.choises import gender_choices
 
 
@@ -18,6 +19,11 @@ class User(AbstractUser):
     token = models.UUIDField(primary_key=False, editable=False, null=True, blank=True)
     date_birthday = models.DateField(default=datetime.now, verbose_name='date_birthday')
     gender = models.CharField(verbose_name='gender', max_length=10, choices=gender_choices, default='male')
+
+    def get_image(self):
+        if self.image:
+            return '{}{}'.format(MEDIA_URL, self.image)
+        return '{}{}'.format(STATIC_URL, 'img/user.png')
 
     class Meta:
         verbose_name = 'User'

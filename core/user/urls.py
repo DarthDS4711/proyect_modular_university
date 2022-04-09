@@ -8,5 +8,5 @@ urlpatterns = [
     # ruta para poder editar el perfil del usuario
     path('edit-profile/', EditUserView.as_view(), name='profile-edit'),
     # ruta para visualizar el perfil del usuario
-    path('', ProfileUserView.as_view(), name='view_profile')
+    path('view-profile/', ProfileUserView.as_view(), name='view_profile')
 ]

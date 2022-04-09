@@ -19,7 +19,18 @@ class UserForm(forms.ModelForm):
         form = super()
         try:
             if form.is_valid():
-                form.save()
+                # obtenemos la contraseña del usuario
+                pwd = self.cleaned_data['password']
+                u = form.save(commit=False)
+                # guardamos el usuario y verificamos que exista
+                if u.pk is None:
+                    u.set_password(pwd)
+                else:
+                    user = User.objects.get(pk=u.pk)
+                    if user.password != pwd:
+                        u.set_password(pwd)
+                # obtenemos la contraseña, la encriptamos y la guardamos
+                u.save()
             else:
                 data['error'] = form.errors
         except Exception as e:

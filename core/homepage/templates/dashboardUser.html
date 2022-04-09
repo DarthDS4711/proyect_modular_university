@@ -31,14 +31,14 @@
         <h3>Perfil de usuario</h3>
         <div class="flex-item information-user">
             <div class="cols-2">
-                <img src="{% static 'img/user.png' %}" class="image-profile">
+                <img src="{{ request.user.get_image }}" class="image-profile">
             </div>
             <div class="cols-2">
                 <p><strong>Fecha primera compra: </strong>21/11/20</p>
                 <p><strong>Fecha ultíma compra: </strong>15/08/21</p>
-                <p><strong>Nombre: </strong>User test</p>
-                <p><strong>Apellidos: </strong>User test last name</p>
-                <a href="#" class="btn btn-warning">Más información</a>
+                <p><strong>Nombre: </strong>{{request.user.first_name}}</p>
+                <p><strong>Apellidos: </strong>{{request.user.last_name}}</p>
+                <a href="{% url 'user:view_profile' %}" class="btn btn-warning">Más información</a>
                 <a href="#" class="btn btn-danger">Cambiar contraseña</a>
             </div>
         </div>

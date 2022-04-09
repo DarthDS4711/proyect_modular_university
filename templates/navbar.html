@@ -16,12 +16,21 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   {% if request.user.is_authenticated %}
+                    {{request.user.username}}
+                    {%else %}
                     Perfil
+                   {% endif %}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Editar</a>
-                    <a class="dropdown-item" href="#">Cerrar sesión</a>
-                    <a class="dropdown-item" href="/dashboard-admin/">Dashboard</a>
+                    {% if request.user.is_authenticated %}
+                    <a class="dropdown-item" href="{% url 'access:logout'%}">Cerrar sesión</a>
+                    {% else %}
+                    <a class="dropdown-item" href="{% url 'access:Login' %}">Iniciar sesión</a>
+                    {% endif %}
+                    <a class="dropdown-item" href="/dashboard-admin/">Dashboard Admin</a>
+                    <a class="dropdown-item" href="{% url 'app_views:dashboard_user' %}">Dashboard User</a>
                 </div>
             </li>
         </ul>
