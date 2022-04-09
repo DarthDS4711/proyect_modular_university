@@ -9,7 +9,7 @@ urlpatterns = [
     # paths for the mainpage
     path('', HomepageView.as_view(), name='homepage'),
     # ruta para el dashboard del usuario
-    path('dashboard-user/', DashboardUserView.as_view(), name='dashboard-user'),
+    path('dashboard-user/', DashboardUserView.as_view(), name='dashboard_user'),
     # ruta para el dashboard del administrador
-    path('dashboard-admin/', DashboardAdminView.as_view(), name='dashboard-admin')
+    path('dashboard-admin/', DashboardAdminView.as_view(), name='dashboard_admin')
 ]

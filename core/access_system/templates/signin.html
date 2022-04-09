@@ -1,9 +1,11 @@
 {% extends 'baseView.html'%}
 {% load static %}
+{% load widget_tweaks %}
 
 <!-- bloque de archivos estaticos a cargar -->
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/signin/styles.css' %}">
+<script src="{% static 'js/functions.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -13,49 +15,23 @@
         <div class="image">
             <img src="{% static 'img/user.png' %}" id="user-image">
         </div>
+        <input type="hidden" id="value" value="{{success}}">
+        <input type="hidden" id="action" value="{{action}}">
         <form method="post">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
             <div class="form-group">
-                <label>Nombre/s</label>
-                <input type="text" class="form-control input-style" placeholder="Name">
+                <label>{{ field.label }}:</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
-            <div class="form-group">
-                <label>Apellidos</label>
-                <input type="text" class="form-control input-style" placeholder="Last name">
-            </div>
-            <div class="form-group">
-                <label>Correo electrónico</label>
-                <input type="email" class="form-control input-style" placeholder="email">
-            </div>
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control input-style" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <label>Imagen de perfil</label>
-                <input type="file" class="form-control input-style">
-            </div>
-            <div class="form-group">
-                <label>Contraseña</label>
-                <input type="password" class="form-control input-style" placeholder="password">
-            </div>
-            <div class="form-group">
-                <label>Repetir contraseña</label>
-                <input type="password" class="form-control input-style" placeholder="password">
-            </div>
-            <div class="form-group">
-                <label>Genéro</label>
-                <select class="form-control input-style" name="select">
-                    <option value="male">Masculino</option>
-                    <option value="female">Femenino</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Fecha nacimiento</label>
-                <input type="date" class="form-control input-style"/>
-            </div>
-            <button type="submit" class="btn btn-primary">{{btn_action}}</button>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Crear</button>
             <a href="#" class="btn btn-danger">Cancelar</a>
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
 {% endblock %}

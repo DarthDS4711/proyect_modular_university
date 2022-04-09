@@ -31,9 +31,9 @@
                     {% if supplier.is_active == False %}
                     <td><strong>Baja</strong></td>
                     {% endif %}
-                    <td><a class="btn btn-warning" href="../edit/{{supplier.id}}">Editar</a></td>
-                    <td><a class="btn btn-danger" href="../drop/{{supplier.id}}">Eliminar</a></td>
-                    <td><a class="btn btn-success" href="../details/{{supplier.id}}">Detalles</a></td>
+                    <td><a class="btn btn-warning" href="../edit/{{supplier.id}}">Editar</a>
+                    <a class="btn btn-danger" href="../drop/{{supplier.id}}">Eliminar</a>
+                    <a class="btn btn-success" href="../details/{{supplier.id}}">Detalles</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

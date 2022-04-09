@@ -32,9 +32,9 @@
                     {% if category.is_active == False %}
                     <td><strong>Baja</strong></td>
                     {% endif %}
-                    <td><a class="btn btn-warning" href="../update-category/{{category.id}}">Editar</a></td>
-                    <td><a class="btn btn-danger" href="../delete-category/{{category.id}}">Eliminar</a></td>
-                    <td><a class="btn btn-success" href="../detail-category/{{category.id}}">Detalles</a></td>
+                    <td><a class="btn btn-warning" href="../update-category/{{category.id}}">Editar</a>
+                    <a class="btn btn-danger" href="../delete-category/{{category.id}}">Eliminar</a>
+                    <a class="btn btn-success" href="../detail-category/{{category.id}}">Detalles</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
