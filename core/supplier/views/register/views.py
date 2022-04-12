@@ -1,15 +1,16 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from core.supplier.forms.supplier.form import SupplierForm
 from core.supplier.models import Supplier
 
 
-class RegisterSupplierView(CreateView):
+class RegisterSupplierView(LoginRequiredMixin, CreateView):
     template_name = "registerSupplier.html"
     model = Supplier
     success_url = reverse_lazy('supplier_app:list_supplier')
+    login_url = reverse_lazy('access:Login')
 
     def get_form(self):
         return super().get_form(SupplierForm)

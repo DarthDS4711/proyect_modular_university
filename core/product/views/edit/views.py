@@ -1,18 +1,19 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.views.generic.base import TemplateView
 from django.views.generic.edit import UpdateView
 from core.product.forms.category.forms import CategoryForm
 from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
 from core.product.models import Category, Product, Size
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class UpdateProductView(UpdateView):
+class UpdateProductView(LoginRequiredMixin, UpdateView):
     from_class = CategoryForm
     template_name = 'editProduct.html'
     model = Product
     success_url = reverse_lazy('product:list_product')
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -41,11 +42,11 @@ class UpdateProductView(UpdateView):
         return context
 
 
-class EditSizeView(UpdateView):
+class EditSizeView(LoginRequiredMixin, UpdateView):
     template_name = 'editSize.html'
     model = Size
     success_url = reverse_lazy('product:list_sizes')
-    
+    login_url = reverse_lazy('access:Login')
 
     def get_form(self):
         return super().get_form(SizeForm)
@@ -57,11 +58,12 @@ class EditSizeView(UpdateView):
         context['action'] = "Editar"
         return context
 
-class UpdateCategoryView(UpdateView):
+class UpdateCategoryView(LoginRequiredMixin, UpdateView):
     from_class = CategoryForm
     template_name = 'editCategory.html'
     model = Category
     success_url = reverse_lazy('product:list_cat')
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

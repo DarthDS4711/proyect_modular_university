@@ -30,4 +30,4 @@ class Supplier(models.Model):
         db_table = 'supplier'
     
     def __str__(self):
-        return self.first_names + '' + self.last_names
+        return self.first_names + ' ' + self.last_names

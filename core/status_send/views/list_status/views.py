@@ -1,13 +1,14 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from core.status_send.models import StatusSend
 
 
-class ListStatusView(ListView):
+class ListStatusView(LoginRequiredMixin, ListView):
     model = StatusSend
     paginate_by = 4
     template_name = 'listStatusSend.html'
+    login_url = reverse_lazy('access:Login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

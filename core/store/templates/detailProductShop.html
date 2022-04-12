@@ -20,7 +20,11 @@
             <span style="background-color: {{object.secondary_color}};" class="btn"></span>
             <span style="background-color: {{object.last_color}};" class="btn"></span>
             {% include 'rankProduct.html' %}
+            {% if object.discount > 0.0 %}
+            <p><strong>Precio: </strong>${{object.get_pvp_with_discount}} MXN</p>
+            {% else %}
             <p><strong>Precio: </strong>${{object.pvp}} MXN</p>
+            {% endif %}
             {% if stock %}
             <button class="btn btn-success">Agregar al carrilo</button>
             {% endif %}

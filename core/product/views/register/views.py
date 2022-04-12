@@ -1,18 +1,19 @@
 from django.http import JsonResponse
-from django.urls import reverse, reverse_lazy
-from django.views.generic.base import TemplateView
+from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from core.product.forms.category.forms import CategoryForm
 from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
 from core.product.models import Category, Product
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-class RegisterProductView(CreateView):
+class RegisterProductView(LoginRequiredMixin, CreateView):
     template_name = "registerProduct.html"
     model = Product
     success_url = reverse_lazy('product:list_product')
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -43,10 +44,11 @@ class RegisterProductView(CreateView):
         return context
 
 
-class RegisterCategoryView(CreateView):
+class RegisterCategoryView(LoginRequiredMixin, CreateView):
     template_name = 'registerCategory.html'
     model = Category
     success_url = reverse_lazy('product:list_cat')
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -77,9 +79,10 @@ class RegisterCategoryView(CreateView):
         return context
 
 
-class RegisterSizeView(CreateView):
+class RegisterSizeView(LoginRequiredMixin, CreateView):
     template_name = 'registerSize.html'
     success_url = reverse_lazy('product:list_sizes')
+    login_url = reverse_lazy('access:Login')
 
     def get_form(self):
         return super().get_form(SizeForm)

@@ -3,6 +3,7 @@
 
 
 {% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesListProductShop.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -21,6 +22,8 @@
             </div>
         </div>
         <h3>Productos ofertados</h3>
+        {% include 'productsOfSupplier.html' %}
+        <a href="../list-product/{{object.id}}" class="btn btn-success">Ver todos los productos</a>
     </div>
 </div>
 {% endblock %}

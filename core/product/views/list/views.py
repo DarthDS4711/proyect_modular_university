@@ -1,13 +1,14 @@
-from multiprocessing import context
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.product.models import Category, Product, Size
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListSizeView(ListView):
+class ListSizeView(LoginRequiredMixin, ListView):
     model = Size
     paginate_by = 3
     template_name = 'listSize.html'
+    login_url = reverse_lazy('access:Login')
 
 
     def get_context_data(self, **kwargs):
@@ -18,10 +19,11 @@ class ListSizeView(ListView):
         return context
 
 
-class ListCategoryView(ListView):
+class ListCategoryView(LoginRequiredMixin, ListView):
     model = Category
     paginate_by = 4
     template_name = 'listCategories.html'
+    login_url = reverse_lazy('access:Login')
 
 
     def get_context_data(self, **kwargs):
@@ -32,10 +34,11 @@ class ListCategoryView(ListView):
         context['create_category'] = reverse_lazy('product:register_cat')
         return context
 
-class ListProductView(ListView):
+class ListProductView(LoginRequiredMixin, ListView):
     model = Product
     paginate_by = 5
     template_name = 'listProducts.html'
+    login_url = reverse_lazy('access:Login')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

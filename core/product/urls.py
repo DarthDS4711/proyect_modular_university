@@ -3,6 +3,7 @@ from core.product.views.delete.views import DeleteCategoryView, DeleteProductVie
 from core.product.views.detail.views import DetailCategoryView, DetailProductView
 from core.product.views.edit.views import EditSizeView, UpdateCategoryView, UpdateProductView
 from core.product.views.list.views import ListCategoryView, ListProductView, ListSizeView
+from core.product.views.options.views import OptionsProductView
 
 from core.product.views.register.views import RegisterCategoryView, RegisterProductView, RegisterSizeView
 
@@ -36,5 +37,7 @@ urlpatterns = [
     path('update-size/<pk>/', EditSizeView.as_view(), name='edit_size'),
     # ruta para eliminar una medida
     path('delete-size/<pk>/', DeleteSizeView.as_view(), name='delete_size'),
+    # ruta de opciones de administración de los productos
+    path('options/', OptionsProductView.as_view(), name='options'),
 ]
 

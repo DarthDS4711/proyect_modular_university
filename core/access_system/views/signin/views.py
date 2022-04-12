@@ -9,7 +9,7 @@ from core.user.models import User
 
 class SignInView(CreateView):
     model = User
-    success_url = reverse_lazy('app_views:dashboard_user')
+    success_url = reverse_lazy('app_views:homepage')
     template_name = 'signin.html'
 
     def get_form(self):

@@ -3,14 +3,16 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from core.stock.models import Stock
 from core.stock.form.forms import StockForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # clase para crear los stock
-class CreateStockView(CreateView):
+class CreateStockView(LoginRequiredMixin, CreateView):
     template_name = 'createStock.html'
     model = Stock
     success_url = reverse_lazy('stock:list_stock')
     form_class = StockForm
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)

@@ -7,11 +7,13 @@ from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class RegisterStatusView(CreateView):
+class RegisterStatusView(LoginRequiredMixin, CreateView):
     model = StatusSend
     template_name = 'registerStatusSend.html'
     success_url = reverse_lazy('status_send:list')
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)

@@ -4,13 +4,15 @@ from django.urls import reverse_lazy
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
 from django.views.generic.edit import UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class UpdateStatusSendView(UpdateView):
+class UpdateStatusSendView(LoginRequiredMixin, UpdateView):
     from_class = StatusSendForm
     template_name = 'editStatusSend.html'
     model = StatusSend
     success_url = reverse_lazy('status_send:list')
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

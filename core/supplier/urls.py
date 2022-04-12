@@ -1,8 +1,9 @@
+from os import name
 from django.urls import path
 from core.supplier.views.delete.views import DeleteSupplierView
 from core.supplier.views.detail.views import DetailSupplierView
 from core.supplier.views.edit.views import EditSupplierView
-from core.supplier.views.list.views import ListSupplierView
+from core.supplier.views.list.views import ListAllProductSupplierView, ListSupplierView
 
 from core.supplier.views.register.views import RegisterSupplierView
 
@@ -17,5 +18,7 @@ urlpatterns = [
     # ruta para listar a los proveedor 
     path('list/', ListSupplierView.as_view(), name='list_supplier'),
     # ruta para visualizar a nuestro proveedor
-    path('details/<pk>', DetailSupplierView.as_view(), name='detail_supplier')
+    path('details/<pk>', DetailSupplierView.as_view(), name='detail_supplier'),
+    # ruta para visualizar los productos de nuestro proveedor
+    path('list-product/<int:id_supplier>', ListAllProductSupplierView.as_view(), name='list_products')
 ]

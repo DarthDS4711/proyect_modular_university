@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 class LoginView(FormView):
     template_name = 'login.html'
     form_class = AuthenticationForm
-    success_url = reverse_lazy('app_views:homepage')
+    success_url = reverse_lazy('app_views:dashboard_user')
 
 
     def dispatch(self, request, *args, **kwargs):

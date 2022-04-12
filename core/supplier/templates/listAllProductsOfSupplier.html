@@ -1,0 +1,15 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesListProductShop.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    {% include 'productsOfSupplier.html' %}
+    {% include 'pagination_btns.html' %}
+</div>
+{% endblock %}

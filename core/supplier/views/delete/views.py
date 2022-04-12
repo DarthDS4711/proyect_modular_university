@@ -2,13 +2,15 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import DeleteView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from core.supplier.models import Supplier
 
-class DeleteSupplierView(DeleteView):
+
+class DeleteSupplierView(LoginRequiredMixin, DeleteView):
     template_name = 'deleteSupplier.html'
     success_url = reverse_lazy('supplier_app:list_supplier')
     model = Supplier
+    login_url = reverse_lazy('access:Login')
 
     # sobrescritura del método dispach para obtener el objeto en cuestión (evitar duplicados)
     def dispatch(self, request, *args, **kwargs):

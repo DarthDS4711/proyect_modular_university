@@ -1,11 +1,14 @@
+from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.product.models import Category, Product
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListProductsShopView(ListView):
+class ListProductsShopView(LoginRequiredMixin, ListView):
     template_name = 'listProductsShop.html'
     model = Product
     paginate_by = 10
+    login_url = reverse_lazy('access:Login')
     
     def get_queryset(self):
         # sobreescritura del método get_query_set para obtener los productos relacionados a la categoría

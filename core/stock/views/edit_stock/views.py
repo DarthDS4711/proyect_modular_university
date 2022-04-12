@@ -3,14 +3,16 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.stock.models import Stock
 from core.stock.form.forms import StockEditForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # clase para crear los stock
-class UpdateStockView(UpdateView):
+class UpdateStockView(LoginRequiredMixin, UpdateView):
     template_name = 'editStock.html'
     model = Stock
     success_url = reverse_lazy('stock:list_stock')
     form_class = StockEditForm
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
