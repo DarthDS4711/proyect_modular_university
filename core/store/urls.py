@@ -4,6 +4,7 @@ from core.store.views.list_best_ranking_prod.views import ListBestProductsView
 from core.store.views.list_categories.views import ListCategoryShopView
 from core.store.views.list_discount_prod.views import ListDiscountProductView
 from core.store.views.list_products.views import ListProductsShopView
+from core.store.views.list_search_prod.views import ListSearchProductView
 from core.store.views.shopCart.views import ShopCartView
 
 from core.store.views.showProduct.views import DetailProductView
@@ -27,5 +28,8 @@ urlpatterns = [
     # vista relacionada a mostrar los productos con mejor valoración
     path('list-bests/', ListBestProductsView.as_view(), name='list_best_products'),
     # vista relacionada a ver todos los productos
-    path('list-all/', ListAllProductsView.as_view(), name='list_all')
+    path('list-all/', ListAllProductsView.as_view(), name='list_all'),
+    # vista relacionada a desplegar los productos relacionados a la búsqueda
+    path('list-search/', ListSearchProductView.as_view(), name='list_search'),
+    path('list-search/<str:name>', ListSearchProductView.as_view(), name='list_search_s'),
 ]

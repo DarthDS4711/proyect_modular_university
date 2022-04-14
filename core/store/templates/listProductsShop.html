@@ -10,27 +10,14 @@
 <div class="box-layout">
     <h1>{{title}}</h1>
     <div class="product-box">
-        {% for object in page_obj %}
-        {% if object.is_active == True %}
-        <div class="card-product">
-            <div class="card-product-item">
-                <img src="{{object.get_image}}" class="image-style">
-            </div>
-            <div class="card-product-item">
-                <h4>{{object.name}}</h4>
-                <p>{{object.description}}</p>
-                {% if discount == True %}
-                <strong>Precio: </strong>${{object.get_pvp_with_discount}}MXN<br>
-                {% else %}
-                <strong>Precio: </strong>${{object.pvp}}MXN<br>
-                {% endif %}
-                {% include 'rankProduct.html' %}
-                <a href="../detail-product/{{object.id}}" class="btn btn-primary">Ver</a>
-            </div>
+        {% include 'selectOrder.html' %}
+        <input type="hidden" id="search-input" value="{{url}}" >
+        <div id="list-prod">
+            {% include 'productList_and_btns.html' %}
         </div>
-        {% endif %}
-        {% endfor %}
     </div>
 </div>
-{% include 'pagination_btns.html' %}
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/order.js' %}"></script>
 {% endblock %}

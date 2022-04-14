@@ -1,0 +1,13 @@
+<form action="{{url}}" method="get">
+  <div class="form-group">
+    <label>Ordenar por</label>
+    <select class="form-control" name="order" id="options">
+      <option value="1">Precio (menor-mayor)</option>
+      <option value="2">Precio (mayor menor)</option>
+      <option value="3">Nombre</option>
+      <option value="4">Puntuación</option>
+    </select>
+  </div>
+  <input type="hidden" value="{{name}}" name="name">
+  <button class="btn btn-primary" type="submit">Ordenar</button>
+</form>

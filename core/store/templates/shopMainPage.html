@@ -11,7 +11,7 @@
 	<div class="box-content">
 		<div class="flex-search">
 			<input type="search" name="" class="form-control" id="search-input" class="flex-item">
-			<button class="btn btn-success flex-item">Buscar</button>
+			<button class="btn btn-success flex-item" id="btn-submit">Buscar</button>
 		</div>
 		<h2>Recomendados</h2>
 		<div class="cards-box">
@@ -36,4 +36,7 @@
 		</div>
 	</div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/search.js' %}"></script>
 {% endblock %}
