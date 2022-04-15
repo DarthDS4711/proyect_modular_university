@@ -5,9 +5,9 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import DeleteView
 from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.classes.obtain_color import ObtainColorMixin
 
-
-class DeleteSizeView(LoginRequiredMixin, DeleteView):
+class DeleteSizeView(LoginRequiredMixin, ObtainColorMixin, DeleteView):
     model = Size
     success_url = reverse_lazy('product:list_sizes')
     template_name = 'deleteSize.html'
@@ -17,9 +17,10 @@ class DeleteSizeView(LoginRequiredMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Eliminar talla"
         context['list'] = reverse_lazy('product:list_sizes')
+        context['color'] = self.get_number_color()
         return context
 
-class DeleteCategoryView(LoginRequiredMixin, DeleteView):
+class DeleteCategoryView(LoginRequiredMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteCategory.html'
     success_url = reverse_lazy('product:list_cat')
     model = Category
@@ -45,10 +46,11 @@ class DeleteCategoryView(LoginRequiredMixin, DeleteView):
         context["image"] = "img/delete_status_send.png"
         context['list'] = self.success_url
         context['action'] = 'delete'
+        context['color'] = self.get_number_color()
         return context
 
 
-class DeleteProductView(LoginRequiredMixin, DeleteView):
+class DeleteProductView(LoginRequiredMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteProduct.html'
     success_url = reverse_lazy('product:list_product')
     model = Product
@@ -74,4 +76,5 @@ class DeleteProductView(LoginRequiredMixin, DeleteView):
         context["image"] = "img/delete_status_send.png"
         context['list'] = self.success_url
         context['action'] = 'delete'
+        context['color'] = self.get_number_color()
         return context

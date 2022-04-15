@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'core.stock',
     'core.access_system',
     'core.store',
-    'core.purchase'
+    'core.purchase',
+    'core.colorpage'
 ]
 
 MIDDLEWARE = [

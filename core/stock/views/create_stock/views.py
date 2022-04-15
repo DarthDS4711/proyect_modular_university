@@ -1,13 +1,14 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from core.classes.obtain_color import ObtainColorMixin
 from core.stock.models import Stock
 from core.stock.form.forms import StockForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # clase para crear los stock
-class CreateStockView(LoginRequiredMixin, CreateView):
+class CreateStockView(LoginRequiredMixin, ObtainColorMixin, CreateView):
     template_name = 'createStock.html'
     model = Stock
     success_url = reverse_lazy('stock:list_stock')
@@ -38,4 +39,5 @@ class CreateStockView(LoginRequiredMixin, CreateView):
         context['list'] = self.success_url
         context['action'] = 'register' 
         context['btn'] = 'Registrar stock'
+        context['color'] = self.get_number_color()
         return context

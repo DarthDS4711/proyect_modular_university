@@ -9,7 +9,7 @@
 <div class="box-layout">
     <h1>Registrar una talla</h1>
     <div class="box-content">
-        <img src="{% static 'img/size.png' %}" alt="">
+        <img src="{% static 'img/size.png' %}" class="img-style">
         <form action="" method="post">
             {% csrf_token %}
             {% for field in form.visible_fields %}
@@ -19,7 +19,7 @@
             </div>
             {% endfor %}
             <button type="submit" class="btn btn-primary">{{action}}</button>
-            <a href="#" class="btn btn-danger">Cancelar</a>
+            <a href="{{list}}" class="btn btn-danger">Cancelar</a>
         </form>
     </div>
 </div>

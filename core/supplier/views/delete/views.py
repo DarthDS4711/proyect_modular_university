@@ -1,12 +1,12 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.views.generic.base import TemplateView
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.classes.obtain_color import ObtainColorMixin
 from core.supplier.models import Supplier
 
 
-class DeleteSupplierView(LoginRequiredMixin, DeleteView):
+class DeleteSupplierView(LoginRequiredMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteSupplier.html'
     success_url = reverse_lazy('supplier_app:list_supplier')
     model = Supplier
@@ -32,5 +32,6 @@ class DeleteSupplierView(LoginRequiredMixin, DeleteView):
         context["image"] = "img/delete_status_send.png"
         context['list'] = self.success_url
         context['action'] = 'delete'
+        context['color'] = self.get_number_color()
         return context
 

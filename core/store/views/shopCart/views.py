@@ -1,9 +1,10 @@
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.classes.obtain_color import ObtainColorMixin
 
 
-class ShopCartView(LoginRequiredMixin, TemplateView):
+class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
     template_name = "shopCart.html"
     login_url = reverse_lazy('access:Login')
 
@@ -11,4 +12,5 @@ class ShopCartView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Carrito de compra"
         context["image"] = "img/shop-cart.png"
+        context['color'] = self.get_number_color()
         return context

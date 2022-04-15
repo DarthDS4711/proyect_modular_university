@@ -1,10 +1,11 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
+from core.classes.obtain_color import ObtainColorMixin
 from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListSizeView(LoginRequiredMixin, ListView):
+class ListSizeView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Size
     paginate_by = 3
     template_name = 'listSize.html'
@@ -16,10 +17,11 @@ class ListSizeView(LoginRequiredMixin, ListView):
         context["title"] = "Listado de tamaños disponibles"
         context["create"] = reverse_lazy('product:register_size')
         context["image"] = 'img/list.png'
+        context['color'] = self.get_number_color()
         return context
 
 
-class ListCategoryView(LoginRequiredMixin, ListView):
+class ListCategoryView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Category
     paginate_by = 4
     template_name = 'listCategories.html'
@@ -32,9 +34,10 @@ class ListCategoryView(LoginRequiredMixin, ListView):
         context["create"] = reverse_lazy('product:register_cat')
         context["image"] = 'img/list.png'
         context['create_category'] = reverse_lazy('product:register_cat')
+        context['color'] = self.get_number_color()
         return context
 
-class ListProductView(LoginRequiredMixin, ListView):
+class ListProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
     paginate_by = 5
     template_name = 'listProducts.html'
@@ -46,4 +49,5 @@ class ListProductView(LoginRequiredMixin, ListView):
         context["create"] =  reverse_lazy('product:register_product')
         context["image"] = 'img/list.png'
         context['create_category'] = reverse_lazy('product:register_product')
+        context['color'] = self.get_number_color()
         return context

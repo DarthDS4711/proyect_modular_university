@@ -38,6 +38,8 @@ urlpatterns = [
     # rutas relacionadas a la cantidad de productos disponibles en el sistema
     path('stock/', include('core.stock.urls')),
     # rutas relacionadas con el usuario
-    path('user/', include('core.user.urls'))
+    path('user/', include('core.user.urls')),
+    # rutas relacionadas al color de la página
+    path('color-page/', include('core.colorpage.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

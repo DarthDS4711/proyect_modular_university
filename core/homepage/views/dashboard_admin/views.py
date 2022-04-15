@@ -1,9 +1,10 @@
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.classes.obtain_color import ObtainColorMixin
 
 
-class DashboardAdminView(LoginRequiredMixin, TemplateView):
+class DashboardAdminView(LoginRequiredMixin, ObtainColorMixin,TemplateView):
     template_name = 'dashboardAdmin.html'
     login_url = reverse_lazy('access:Login')
 
@@ -15,4 +16,5 @@ class DashboardAdminView(LoginRequiredMixin, TemplateView):
         context['products'] = reverse_lazy('product:list_product')
         context['stock'] = reverse_lazy('stock:list_stock')
         context['store'] = reverse_lazy('shop:main-shop')
+        context['color'] = self.get_number_color()
         return context

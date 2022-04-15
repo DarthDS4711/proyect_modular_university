@@ -10,7 +10,21 @@
 <div class="box-layout">
     <h1>{{title}}</h1>
     <div class="product-box">
-        {% include 'selectOrder.html' %}
+        <form action="{{url}}" method="get">
+            <div class="form-group">
+              <label>Ordenar por</label>
+              <select class="form-control" name="order" id="options">
+                <option value="1">Precio (menor-mayor)</option>
+                <option value="2">Precio (mayor menor)</option>
+                <option value="3">Nombre</option>
+                <option value="4">Puntuación</option>
+              </select>
+            </div>
+            {% block name %}
+            {% endblock %}
+            <button class="btn btn-primary" type="submit">Ordenar</button>
+          </form>
+          
         <input type="hidden" id="search-input" value="{{url}}" >
         <div id="list-prod">
             {% include 'productList_and_btns.html' %}

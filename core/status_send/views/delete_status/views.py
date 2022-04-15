@@ -2,10 +2,11 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.classes.obtain_color import ObtainColorMixin
 from core.status_send.models import StatusSend
 
 
-class DeleteStatusSendView(LoginRequiredMixin, DeleteView):
+class DeleteStatusSendView(LoginRequiredMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteStatusSend.html'
     success_url = reverse_lazy('status_send:list')
     model = StatusSend
@@ -31,4 +32,5 @@ class DeleteStatusSendView(LoginRequiredMixin, DeleteView):
         context["image"] = "img/delete_status_send.png"
         context['list'] = self.success_url
         context['action'] = 'delete'
+        context['color'] = self.get_number_color()
         return context

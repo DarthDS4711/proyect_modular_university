@@ -1,12 +1,13 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from core.classes.obtain_color import ObtainColorMixin
 from core.supplier.forms.supplier.form import SupplierForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.supplier.models import Supplier
 
     
-class EditSupplierView(LoginRequiredMixin, UpdateView):
+class EditSupplierView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
     template_name = "editSupplier.html"
     model = Supplier
     success_url = reverse_lazy('supplier_app:list_supplier')
@@ -39,4 +40,5 @@ class EditSupplierView(LoginRequiredMixin, UpdateView):
         context['list'] = self.success_url
         context['action'] = 'register' 
         context['btn'] = 'Registrar proovedor'
+        context['color'] = self.get_number_color()
         return context

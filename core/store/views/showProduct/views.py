@@ -1,12 +1,16 @@
+from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
+from core.classes.obtain_color import ObtainColorMixin
 from core.product.models import Product
 from core.stock.models import Stock
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-class DetailProductView(DetailView):
+class DetailProductView(LoginRequiredMixin, ObtainColorMixin ,DetailView):
     template_name = "detailProductShop.html"
     model = Product
+    login_url = reverse_lazy('access:Login')
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -27,4 +31,5 @@ class DetailProductView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = self.object.name
         context['stock'] = self.return_status_stock()
+        context['color'] = self.get_number_color()
         return context

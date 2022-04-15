@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from core.classes.obtain_color import ObtainColorMixin
 from core.product.forms.category.forms import CategoryForm
 from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
@@ -8,7 +9,7 @@ from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class UpdateProductView(LoginRequiredMixin, UpdateView):
+class UpdateProductView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
     from_class = CategoryForm
     template_name = 'editProduct.html'
     model = Product
@@ -39,10 +40,11 @@ class UpdateProductView(LoginRequiredMixin, UpdateView):
         context['list'] = self.success_url
         context['action'] = 'update'
         context['btn'] = 'Actualizar'
+        context['color'] = self.get_number_color()
         return context
 
 
-class EditSizeView(LoginRequiredMixin, UpdateView):
+class EditSizeView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
     template_name = 'editSize.html'
     model = Size
     success_url = reverse_lazy('product:list_sizes')
@@ -56,9 +58,11 @@ class EditSizeView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = "Editar categoría"
         context['action'] = "Editar"
+        context['list'] = self.success_url
+        context['color'] = self.get_number_color()
         return context
 
-class UpdateCategoryView(LoginRequiredMixin, UpdateView):
+class UpdateCategoryView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
     from_class = CategoryForm
     template_name = 'editCategory.html'
     model = Category
@@ -89,5 +93,6 @@ class UpdateCategoryView(LoginRequiredMixin, UpdateView):
         context['list'] = self.success_url
         context['action'] = 'update'
         context['btn'] = 'Actualizar'
+        context['color'] = self.get_number_color()
         return context
 

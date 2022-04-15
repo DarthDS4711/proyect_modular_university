@@ -1,11 +1,12 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
+from core.classes.obtain_color import ObtainColorMixin
 from core.stock.models import Stock
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class DeleteStockView(LoginRequiredMixin, DeleteView):
+class DeleteStockView(LoginRequiredMixin, ObtainColorMixin, DeleteView):
     model = Stock
     success_url = reverse_lazy('stock:list_stock')
     template_name = 'deleteStock.html'
@@ -31,4 +32,5 @@ class DeleteStockView(LoginRequiredMixin, DeleteView):
         context["image"] = "img/delete_status_send.png"
         context['list'] = self.success_url
         context['action'] = 'delete'
+        context['color'] = self.get_number_color()
         return context

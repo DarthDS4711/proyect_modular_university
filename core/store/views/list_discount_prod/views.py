@@ -1,10 +1,11 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
+from core.classes.obtain_color import ObtainColorMixin
 from core.product.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListDiscountProductView(LoginRequiredMixin, ListView):
+class ListDiscountProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
     paginate_by = 5
     template_name = 'listDiscountProd.html'
@@ -39,4 +40,6 @@ class ListDiscountProductView(LoginRequiredMixin, ListView):
         context['title'] = 'Mejores descuentos'
         context['discount'] = True
         context['url'] = reverse_lazy('shop:list_discount')
+        context['color'] = self.get_number_color()
+        context['order'] = self.return_value_of_order()
         return context

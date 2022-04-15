@@ -3,13 +3,16 @@ from pyexpat import model
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from core.classes.obtain_color import ObtainColorMixin
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class RegisterStatusView(LoginRequiredMixin, CreateView):
+
+
+class RegisterStatusView(LoginRequiredMixin, ObtainColorMixin, CreateView):
     model = StatusSend
     template_name = 'registerStatusSend.html'
     success_url = reverse_lazy('status_send:list')
@@ -41,4 +44,5 @@ class RegisterStatusView(LoginRequiredMixin, CreateView):
         context['list'] = reverse_lazy('status_send:list')
         context['action'] = 'register'
         context['btn'] = 'Registrar'
+        context['color'] = self.get_number_color()
         return context

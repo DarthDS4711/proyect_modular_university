@@ -4,10 +4,11 @@ from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
+from core.classes.obtain_color import ObtainColorMixin
 
 
 
-class LoginView(FormView):
+class LoginView(FormView, ObtainColorMixin):
     template_name = 'login.html'
     form_class = AuthenticationForm
     success_url = reverse_lazy('app_views:dashboard_user')
@@ -36,5 +37,6 @@ class LoginView(FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Login"
+        context['color'] = self.get_number_color()
         return context
     

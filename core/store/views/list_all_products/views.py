@@ -1,13 +1,14 @@
+from unicodedata import name
 from urllib import request
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
+from core.classes.obtain_color import ObtainColorMixin
 from core.product.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
 
 
-class ListAllProductsView(LoginRequiredMixin, ListView):
+
+class ListAllProductsView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
     paginate_by = 3
     template_name = 'listAllProducts.html'
@@ -42,5 +43,7 @@ class ListAllProductsView(LoginRequiredMixin, ListView):
         context["title"] = "Todos los productos"
         context["discount"] = False
         context['url'] = reverse_lazy('shop:list_all')
+        context['color'] = self.get_number_color()
+        context['order'] = self.return_value_of_order()
         return context
 

@@ -1,13 +1,13 @@
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from core.access_system.forms.form import UserForm
 from core.user.models import User
+from core.classes.obtain_color import ObtainColorMixin
 
 
 
-class SignInView(CreateView):
+class SignInView(CreateView, ObtainColorMixin):
     model = User
     success_url = reverse_lazy('app_views:homepage')
     template_name = 'signin.html'
@@ -34,4 +34,5 @@ class SignInView(CreateView):
         context['cancel'] = reverse_lazy('app_views:homepage')
         context['success'] = self.success_url
         context['action'] = 'register' 
+        context['color'] = self.get_number_color()
         return context

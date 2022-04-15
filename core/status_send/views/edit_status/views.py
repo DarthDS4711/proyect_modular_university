@@ -1,13 +1,14 @@
 import django
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+from core.classes.obtain_color import ObtainColorMixin
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class UpdateStatusSendView(LoginRequiredMixin, UpdateView):
+class UpdateStatusSendView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
     from_class = StatusSendForm
     template_name = 'editStatusSend.html'
     model = StatusSend
@@ -38,5 +39,6 @@ class UpdateStatusSendView(LoginRequiredMixin, UpdateView):
         context['list'] = reverse_lazy('status_send:list')
         context['action'] = 'update'
         context['btn'] = 'Actualizar'
+        context['color'] = self.get_number_color()
         return context
 

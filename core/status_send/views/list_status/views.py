@@ -1,10 +1,11 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.classes.obtain_color import ObtainColorMixin
 from core.status_send.models import StatusSend
 
 
-class ListStatusView(LoginRequiredMixin, ListView):
+class ListStatusView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = StatusSend
     paginate_by = 4
     template_name = 'listStatusSend.html'
@@ -14,4 +15,5 @@ class ListStatusView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de estatus de envio'
         context['create_status'] = reverse_lazy('status_send:register')
+        context['color'] = self.get_number_color()
         return context

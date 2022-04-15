@@ -2,13 +2,14 @@ from multiprocessing import context
 from urllib import request
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from core.classes.obtain_color import ObtainColorMixin
 from core.product.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.core.paginator import Paginator
 
 
-class ListSearchProductView(LoginRequiredMixin, ListView):
+class ListSearchProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
     paginate_by = 2
     template_name = 'listSearchProduct.html'
@@ -38,8 +39,7 @@ class ListSearchProductView(LoginRequiredMixin, ListView):
     def return_value_of_order(self):
         if 'order' in self.request.GET.keys():
             return int(self.request.GET['order'])
-        else:
-            return 1
+        return 1
     
     def get_queryset(self):
         type_of_order = self.return_value_of_order()
@@ -52,4 +52,6 @@ class ListSearchProductView(LoginRequiredMixin, ListView):
         context['discount'] = True
         context['url'] = reverse_lazy('shop:list_search')
         context['name'] = self.return_name()
+        context['color'] = self.get_number_color()
+        context['order'] = self.return_value_of_order()
         return context

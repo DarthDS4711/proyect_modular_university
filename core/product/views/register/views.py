@@ -6,10 +6,11 @@ from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
 from core.product.models import Category, Product
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.classes.obtain_color import ObtainColorMixin
 
 
 
-class RegisterProductView(LoginRequiredMixin, CreateView):
+class RegisterProductView(LoginRequiredMixin, ObtainColorMixin, CreateView):
     template_name = "registerProduct.html"
     model = Product
     success_url = reverse_lazy('product:list_product')
@@ -41,10 +42,11 @@ class RegisterProductView(LoginRequiredMixin, CreateView):
         context['list'] = self.success_url
         context['action'] = 'register' 
         context['btn'] = 'Registrar producto'
+        context['color'] = self.get_number_color()
         return context
 
 
-class RegisterCategoryView(LoginRequiredMixin, CreateView):
+class RegisterCategoryView(LoginRequiredMixin, ObtainColorMixin, CreateView):
     template_name = 'registerCategory.html'
     model = Category
     success_url = reverse_lazy('product:list_cat')
@@ -76,10 +78,11 @@ class RegisterCategoryView(LoginRequiredMixin, CreateView):
         context['list'] = self.success_url
         context['action'] = 'register' 
         context['btn'] = 'Registrar categoria'
+        context['color'] = self.get_number_color()
         return context
 
 
-class RegisterSizeView(LoginRequiredMixin, CreateView):
+class RegisterSizeView(LoginRequiredMixin, ObtainColorMixin, CreateView):
     template_name = 'registerSize.html'
     success_url = reverse_lazy('product:list_sizes')
     login_url = reverse_lazy('access:Login')
@@ -92,4 +95,6 @@ class RegisterSizeView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context["title"] = "Registrar talla"
         context['action'] = "Guardar"
+        context['color'] = self.get_number_color()
+        context['list'] = self.success_url
         return context
