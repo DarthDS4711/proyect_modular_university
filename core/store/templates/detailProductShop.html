@@ -3,6 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/stylesDetailProduct.css' %}">
+<script src="{% static 'js/obtain_data_radio_input.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,23 +21,21 @@
             <span style="background-color: {{object.secondary_color}};" class="btn"></span>
             <span style="background-color: {{object.last_color}};" class="btn"></span>
             {% include 'rankProduct.html' %}
-            {% if object.discount > 0.0 %}
             <p><strong>Precio: </strong>${{object.get_pvp_with_discount}} MXN</p>
-            {% else %}
-            <p><strong>Precio: </strong>${{object.pvp}} MXN</p>
-            {% endif %}
+            <input type="hidden" id="price" value="{{object.get_pvp_with_discount}}">
             {% if stock %}
-            <button class="btn btn-success">Agregar al carrito</button>
+            <button class="btn btn-success" id="btn-buy">Agregar al carrito</button>
             {% endif %}
 
         </div>
+        {% include 'modal_buy.html' %}
     </div>
     <h4>Tallas disponibles</h4>
-    <div>
+    <ul>
         {% for size in object.size.all %}
-        <p>{{ size }}</p>
+        <li>{{ size }}</li>
         {% endfor %}
-    </div>
+    </ul>
     <div>
         <h3>Comentarios</h3>
         <div class="main-comment">
@@ -53,4 +52,7 @@
     </div>
 
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/modal_local_storage.js' %}"></script>
 {% endblock %}

@@ -25,7 +25,6 @@ class ListSearchProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
     # método que nos retorna, según el caso, el orden del arreglo
     def return_data_order(self, option):
         name = self.return_name()
-        print(name)
         match option:
             case 1:
                 return Product.objects.filter(name__icontains=name).order_by('pvp')

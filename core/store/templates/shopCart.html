@@ -3,6 +3,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/stylesShopCart.css' %}">
+<script src="{% static 'js/obtain_data_localstorage.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,40 +21,13 @@
                     <th>Talla</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td scope="row">Camisa</td>
-                    <td>2</td>
-                    <td class="color-span"></td>
-                    <td>$33MXN</td>
-                    <td>Chica</td>
-                </tr>
-                <tr>
-                    <td scope="row">Camisa</td>
-                    <td>2</td>
-                    <td class="color-span"></td>
-                    <td>$33MXN</td>
-                    <td>Chica</td>
-                </tr>
-                <tr>
-                    <td scope="row">Camisa</td>
-                    <td>2</td>
-                    <td class="color-span"></td>
-                    <td>$33MXN</td>
-                    <td>Chica</td>
-                </tr>
-                <tr>
-                    <td scope="row">Camisa</td>
-                    <td>2</td>
-                    <td class="color-span"></td>
-                    <td>$33MXN</td>
-                    <td>Chica</td>
-                </tr>
+            <tbody id="t_data">
+                
             </tbody>
         </table>
         <div class="buttons">
             <button class="btn btn-success">Comprar articulos</button>
-            <a href="#" class="btn btn-primary">Regresar a la tienda</a>
+            <a href="{% url 'shop:main-shop' %}" class="btn btn-primary">Regresar a la tienda</a>
             <button class="btn btn-danger">Cancelar compra</button>
         </div>
     </div>
