@@ -3,7 +3,9 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/stylesShopCart.css' %}">
+<script src="{% static 'js/edit_drop_data_cart.js' %}"></script>
 <script src="{% static 'js/obtain_data_localstorage.js' %}"></script>
+<script src="{% static 'js/obtain_data_radio_input.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -11,25 +13,36 @@
     <h1>{{title}}</h1>
     <div class="box-content">
         <img src="{% static image %}" class="image-cart">
+        <input type="hidden" id="url" value="{% url 'shop:shop_cart' %}">
         <table class="table table-striped" id="table">
-            <thead class="thead-inverse">
+            <thead class="thead-dark">
                 <tr>
-                    <th>Item</th>
-                    <th>Cantidad</th>
-                    <th>Color</th>
-                    <th>Precio</th>
-                    <th>Talla</th>
+                    <th>Nombre</th>
+                    <th class="col-sm-4">Imagen</th>
+                    <th class="col-sm-1">Cantidad</th>
+                    <th class="col-sm-1">Color</th>
+                    <th class="col-sm-2">Precio</th>
+                    <th class="col-sm-2">Talla</th>
+                    <th class="col-sm-3">Acciones</th>
                 </tr>
             </thead>
             <tbody id="t_data">
                 
             </tbody>
         </table>
+        <h5>Subtotal</h5>
+        <p id="subtotal"></p>
+        <h5>Total (IVA 16%)</h5>
+        <p id="total"></p>
         <div class="buttons">
             <button class="btn btn-success">Comprar articulos</button>
             <a href="{% url 'shop:main-shop' %}" class="btn btn-primary">Regresar a la tienda</a>
             <button class="btn btn-danger">Cancelar compra</button>
         </div>
     </div>
+    {% include 'modal_edit_data.html' %}
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/update_localstorage.js' %}"></script>
 {% endblock %}
