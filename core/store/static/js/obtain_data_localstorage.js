@@ -37,6 +37,7 @@ $(document).ready(function () {
             let column7 = document.createElement('td');//acciones
             let buttonEdit = document.createElement('button');//acciones
             let buttonDrop = document.createElement('button');//acciones
+            let buttonDetail = document.createElement('a');
             let image_html = document.createElement('img');
             get_image(key, url, image_html, column1);
             image_html.className = "img-style";
@@ -51,6 +52,9 @@ $(document).ready(function () {
             buttonDrop.value = parseInt(key);
             buttonEdit.className = "btn btn-secondary";
             buttonDrop.className = "btn btn-danger";
+            buttonDetail.href = "../../shop/detail-product/" + parseInt(key);
+            buttonDetail.className = "btn btn-primary";
+            buttonDetail.innerHTML = "Detalles";
             subtotal += parseFloat(data_cart.price) * parseFloat(data_cart.amount);
             //función que nos renderiza el modal, de acuerdo al producto a modificar
             buttonEdit.onclick = function () {
@@ -67,10 +71,12 @@ $(document).ready(function () {
             };
             //boton que nos ayuda a eliminar del local storage el item en cuestion
             buttonDrop.onclick = function () {
-                alert(buttonEdit.value);
+                localStorage.removeItem(key);
+                location.reload();
             };
             column7.appendChild(buttonEdit);
             column7.appendChild(buttonDrop);
+            column7.appendChild(buttonDetail);
             row_data.appendChild(column1);
             row_data.appendChild(column2);
             row_data.appendChild(column3);

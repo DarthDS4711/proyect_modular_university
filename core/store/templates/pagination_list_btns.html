@@ -1,14 +1,14 @@
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
-        <a href="?page=1&order={{order}}" class="btn btn-warning">&laquo; first</a>
-        <a href="?page={{ page_obj.previous_page_number }}&order={{order}}" class="btn btn-success">previous</a>
+        <a href="?page=1&order={{order}}&name={{name}}" class="btn btn-warning">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}&order={{order}}&name={{name}}" class="btn btn-success">previous</a>
         {% endif %}
 
 
         {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}&order={{order}}" class="btn btn-success">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}&order={{order}}" class="btn btn-danger">last &raquo;</a>
+        <a href="?page={{ page_obj.next_page_number }}&order={{order}}&name={{name}}" class="btn btn-success">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}&order={{order}}&name={{name}}" class="btn btn-danger">last &raquo;</a>
         {% endif %}
 
 
