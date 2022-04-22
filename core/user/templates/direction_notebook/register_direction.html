@@ -1,0 +1,33 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/direccion.png' %}" class="img-style">
+        <input type="hidden" id="value" value="{% url 'user:list_directions' %}">
+        <input type="hidden" id="action" value="{{action}}">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label>{{ field.label }}:</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">{{btn}}</button>
+            <a href="{% url 'user:list_directions' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

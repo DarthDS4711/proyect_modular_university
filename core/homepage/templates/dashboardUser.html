@@ -39,6 +39,7 @@
                 <p><strong>Nombre: </strong>{{request.user.first_name}}</p>
                 <p><strong>Apellidos: </strong>{{request.user.last_name}}</p>
                 <a href="{% url 'user:view_profile' %}" class="btn btn-warning">Más información</a>
+                <a href="{% url 'user:list_directions' %}" class="btn btn-primary">Agenda direcciones</a>
                 <a href="#" class="btn btn-danger">Cambiar contraseña</a>
             </div>
         </div>

@@ -1,3 +1,6 @@
+*{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
 .footer-class{
     background-color: darkorange;
     height: 6vh;
@@ -18,12 +21,12 @@ h1{
     text-align: center;
 }
 .box-content{
-    box-shadow: 2px 2px 2px 2px lightgray;
+    box-shadow: 3px 3px 3px 5px gray;
     width: 85%;
     margin: 0 auto;
     padding: 5%;
     margin-bottom: 2%;
-    border-radius: 15px;
+    border-radius: 28px;
 }
 #image-class{
     margin: 0 auto;

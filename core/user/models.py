@@ -1,8 +1,5 @@
 from datetime import datetime
 from django.db import models
-from django.db.models.expressions import F
-from django.db.models.fields import UUIDField
-from django.forms import model_to_dict
 from django.contrib.auth.models import AbstractUser
 from config.settings import MEDIA_URL, STATIC_URL
 from core.user.choises import gender_choices
@@ -30,4 +27,22 @@ class User(AbstractUser):
         verbose_name_plural = 'Users'
         ordering = ['id']
         db_table = 'user'
+
+
+#Modelo relacionado a la agenda de direcciones del usuario
+class DirectionUser(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    direction = models.CharField(max_length=150, blank=True, verbose_name='direction')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    is_active = models.BooleanField(verbose_name='is_active', default=True)
+
+
+    def __str__(self):
+        return f'{self.direction}'
     
+
+    class Meta:
+        verbose_name = 'DirectionUser'
+        verbose_name_plural = 'DirectionUsers'
+        ordering = ['id']
+        db_table = 'directionuser'

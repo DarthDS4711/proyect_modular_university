@@ -8,9 +8,10 @@
 }
 .box-shadowed{
     margin: 0 auto;
-    box-shadow: 3px 3px 3px 4px lightgray;
+    box-shadow: 3px 3px 3px 5px rgb(173, 173, 173);
     margin: 1%;
     padding: 1%;
+    border-radius: 15px;
 }
 .btn-style{
     width: 90%;
