@@ -23,11 +23,10 @@ $(document).ready(function () {
     let subtotal = 0.0;
     let tbody = document.getElementById('t_data');
     let url = document.getElementById('url').value;
-    for (const key in localStorage) {
+    for (const key in sessionStorage) {
         let row_data = document.createElement('tr');
-        if (localStorage.hasOwnProperty(key)) {
-            const data_cart = JSON.parse(localStorage.getItem(key));
-            console.log(data_cart);
+        if (sessionStorage.hasOwnProperty(key)) {
+            const data_cart = JSON.parse(sessionStorage.getItem(key));
             let column1 = document.createElement('td');//nombre
             let column2 = document.createElement('td');//imagen
             let column3 = document.createElement('td');//Cantidad
@@ -71,7 +70,7 @@ $(document).ready(function () {
             };
             //boton que nos ayuda a eliminar del local storage el item en cuestion
             buttonDrop.onclick = function () {
-                localStorage.removeItem(key);
+                sessionStorage.removeItem(key);
                 location.reload();
             };
             column7.appendChild(buttonEdit);

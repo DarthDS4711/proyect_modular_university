@@ -5,7 +5,7 @@
 }
 .card-product{
     display: flex;
-    box-shadow: 4px 4px 4px 4px lightgray;
+    box-shadow: 10px 5px 15px 15px lightgray;
     margin: 2%;
     padding: 2%;
     width: 100%;

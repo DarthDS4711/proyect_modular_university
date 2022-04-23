@@ -5,8 +5,8 @@ $(document).ready(function () {
         const id_product = document.getElementById('id_product').value;
         const color = return_data_color();
         const ammout = document.getElementById('amount').value;
-        const value_edit =  JSON.parse(localStorage.getItem(id_product));
-        localStorage.setItem(id_product, JSON.stringify({
+        const value_edit =  JSON.parse(sessionStorage.getItem(id_product));
+        sessionStorage.setItem(id_product, JSON.stringify({
             amount : ammout,
             color : color,
             size : value_edit.size,

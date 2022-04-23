@@ -1,4 +1,6 @@
 from django.urls import path
+from core.store.views.add_comment.views import AddComentProduct
+from core.store.views.list_all_comments_products.views import ListAllCommentsProduct
 from core.store.views.list_all_products.views import ListAllProductsView
 from core.store.views.list_best_ranking_prod.views import ListBestProductsView
 from core.store.views.list_categories.views import ListCategoryShopView
@@ -32,4 +34,8 @@ urlpatterns = [
     # vista relacionada a desplegar los productos relacionados a la búsqueda
     path('list-search/', ListSearchProductView.as_view(), name='list_search'),
     path('list-search/<str:name>', ListSearchProductView.as_view(), name='list_search_s'),
+    # vista relacionada a agregar los comentarios de un producto
+    path('add-comment-product/<int:id_product>', AddComentProduct.as_view(), name='add_comment'),
+    # vista relacionada a mostrar los comentarios de un producto
+    path('view-comments-product/<int:id_product>', ListAllCommentsProduct.as_view(), name='list_comments')
 ]

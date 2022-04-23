@@ -1,0 +1,67 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/stylesAddComment.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/ranking.png' %}" class="img-style">
+        <input type="hidden" id="value" value="../detail-product/{{id_product}}">
+        <input type="hidden" id="action" value="{{action}}">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h6><strong>Valoración</strong></h6>
+            <div class="rating" id="rating_product">
+                <label>
+                    <input type="radio" name="stars" value="1" />
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="2" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="3" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="4" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+                <label>
+                    <input type="radio" name="stars" value="5" />
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                    <span class="icon">★</span>
+                </label>
+            </div>
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label>{{ field.label }}:</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">{{btn}}</button>
+            <a href="../detail-product/{{id_product}}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

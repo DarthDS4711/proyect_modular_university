@@ -30,6 +30,14 @@
                 
             </tbody>
         </table>
+        <div class="form-group">
+            <h5>Dirección de envio</h5>
+            <select id="direction" class="form-control">
+                {% for direction_user in directions %}
+                    <option value="{{direction_user.direction}}">{{direction_user.direction}}</option>
+                {% endfor %}
+            </select>
+        </div>
         <h5>Subtotal</h5>
         <p id="subtotal"></p>
         <h5>Total (IVA 16%)</h5>

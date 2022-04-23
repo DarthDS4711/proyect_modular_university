@@ -1,5 +1,3 @@
-from unicodedata import name
-from urllib import request
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin

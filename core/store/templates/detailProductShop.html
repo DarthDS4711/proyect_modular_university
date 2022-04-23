@@ -26,6 +26,7 @@
             {% if stock %}
             <button class="btn btn-success" id="btn-buy">Agregar al carrito</button>
             {% endif %}
+            <a class="btn btn-warning" id="btn-comment" href="../add-comment-product/{{object.id}}">Valorar producto</a>
 
         </div>
         {% include 'modal_buy.html' %}
@@ -38,17 +39,16 @@
     </ul>
     <div>
         <h3>Comentarios</h3>
+        {% if comment != "None" %}
         <div class="main-comment">
-            <strong>Usuario user: </strong>Suspendisse potenti. Nunc cursus sed risus vitae vestibulum
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star checked"></span>
-            <span class="fa fa-star"></span>
+            <h4>Usuario {{comment.user.username}}:</h4>
+            <p>{{comment.description}}</p>
+            {% include 'rank_comment_product.html' %}
         </div>
         <div class="button">
-            <button class="btn btn-primary">Cargar más comentarios...</button>
+            <a class="btn btn-primary" href="../view-comments-product/{{object.id}}">Cargar más comentarios...</a>
         </div>
+        {% endif %}
     </div>
 
 </div>

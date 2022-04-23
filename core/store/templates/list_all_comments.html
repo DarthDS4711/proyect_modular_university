@@ -1,0 +1,24 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesListProductShop.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="product-box">
+        {% for comment in page_obj %}
+        <div class="card-product">
+            <div class="cols-1">
+                <h4>{{comment.user.username}}</h4>
+                <p>{{comment.description}}</p>
+                {% include 'rank_comment_product.html' %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% include 'pagination_btns.html' %}
+{% endblock %}

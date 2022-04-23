@@ -18,7 +18,7 @@ $(document).ready(function () {
             price : parseFloat(price_product.replace(',','.')),
         });
         //guardado del item en el local storage
-        localStorage.setItem(id_product.toString(), value_to_cart);
+        sessionStorage.setItem(id_product.toString(), value_to_cart);
         $('#myModal').modal('hide');
     });
 });

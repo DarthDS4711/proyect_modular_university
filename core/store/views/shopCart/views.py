@@ -6,6 +6,7 @@ from core.classes.obtain_color import ObtainColorMixin
 from django.views.decorators.csrf import csrf_exempt
 
 from core.product.models import Product
+from core.user.models import DirectionUser
 
 
 class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
@@ -41,5 +42,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
         context["title"] = "Carrito de compra"
         context["image"] = "img/shop-cart.png"
         context['color'] = self.get_number_color()
+        context['directions'] = DirectionUser.objects.filter(user=self.request.user)
         return context
     

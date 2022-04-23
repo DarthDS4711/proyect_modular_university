@@ -37,6 +37,7 @@
     {% elif color == 4 %}
     <link rel="stylesheet" href="{% static 'css/orange_btn.css' %}">
     {% endif %}
+
     {% block head %}
     <!--Librerias que otras plantillas pueden modificar para cambiar el comportamiento-->
     {% endblock %}
@@ -48,6 +49,7 @@
     <!--Bloque principal de la plantilla-->
     {% endblock %}
 
+    <script src="{% static 'js/delete_localstorage.js' %}"></script>
 
 </body>
 <!--Bloque del footer-->

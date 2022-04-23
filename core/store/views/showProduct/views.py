@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from core.classes.obtain_color import ObtainColorMixin
-from core.product.models import Product
+from core.product.models import Comment, Product
 from core.stock.models import Stock
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -32,4 +32,12 @@ class DetailProductView(LoginRequiredMixin, ObtainColorMixin ,DetailView):
         context["title"] = self.object.name
         context['stock'] = self.return_status_stock()
         context['color'] = self.get_number_color()
+        # obtención del comentario de la mejor valoración
+        len_comments = Comment.objects.filter(
+            product = self.object).order_by('-valoration_user').count()
+        if len_comments > 0:
+            context['comment'] = Comment.objects.filter(
+                product = self.object).order_by('-valoration_user')[0]
+        else:
+            context['comment'] = "None"
         return context
