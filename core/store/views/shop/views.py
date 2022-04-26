@@ -12,12 +12,11 @@ class MainShopView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context["title"] = "Tienda"
-		context["image"] = "img/dress.png"
 		context["category"] = reverse_lazy('shop:list_category_shop')
 		context["discount"] = reverse_lazy('shop:list_discount')
 		context["best_products"] = reverse_lazy('shop:list_best_products')
 		context["list"] = reverse_lazy('shop:list_all')
-		context['best'] = Product.objects.all()[0:4]
+		context['best'] = Product.objects.all().order_by('-product_rating')[0:4]
 		context['color'] = self.get_number_color()
 		return context
 

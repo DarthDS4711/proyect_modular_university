@@ -1,3 +1,4 @@
+from itertools import product
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
@@ -14,8 +15,8 @@ class AddComentProduct(LoginRequiredMixin, ObtainColorMixin, CreateView):
     model = Comment
     success_url = ''
 
-    def __return_avg_valoration_of_product(self):
-        valoration = Comment.objects.all().aggregate(Avg('valoration_user'))
+    def __return_avg_valoration_of_product(self, product_evaluate):
+        valoration = Comment.objects.filter(product = product_evaluate).aggregate(Avg('valoration_user'))
         print(valoration)
         return valoration['valoration_user__avg']
 
@@ -37,7 +38,7 @@ class AddComentProduct(LoginRequiredMixin, ObtainColorMixin, CreateView):
             comment_product.save()
             # sección de actualización de la valoración del producto
             product = Product.objects.get(id = self.kwargs['id_product'])
-            product.product_rating = self.__return_avg_valoration_of_product()
+            product.product_rating = self.__return_avg_valoration_of_product(product_evaluate = product)
             product.save()
         except Exception as e:
             data['error'] = str(e)

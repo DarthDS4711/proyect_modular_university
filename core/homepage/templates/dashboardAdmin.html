@@ -28,7 +28,7 @@
             <div class="cols-4 box-shadowed">
                 <h3>Tienda</h3>
                 <p><a href="{{supplier}}" class="btn orange-btn btn-style">Proveedores</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Garantías</a></p>
+                <p><a href="{% url 'warranty:options_warranty' %}" class="btn orange-btn btn-style">Garantías</a></p>
                 <p><a href="{% url 'product:options' %}" class="btn orange-btn btn-style">Productos</a></p>
                 <p><a href="{{status}}" class="btn orange-btn btn-style">Estados de envio</a></p>
             </div>
