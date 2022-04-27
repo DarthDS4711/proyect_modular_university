@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # libraries
     'widget_tweaks',
+    'django_crontab',
     # apps
     'core.product',
     'core.homepage',
@@ -65,7 +66,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'crum.CurrentRequestUserMiddleware'
+    'crum.CurrentRequestUserMiddleware',
+    # personal middleware
+    'django_session_timeout.middleware.SessionTimeoutMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -170,3 +173,10 @@ EMAIL_HOST_PASSWORD = PASSWORD
 DOMAIN = ''
 
 LOGIN_REDIRECT_URL = '/'
+
+# sección de la duración de la sesión en la página
+# hacer que la sesión despues de un periodo de inactividad comience 
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+# tiempo (minutos) que dura la sesión despues de no tener actividad (24 horas en este caso) 
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY_GRACE_PERIOD = 1440

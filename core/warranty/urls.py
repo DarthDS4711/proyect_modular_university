@@ -1,21 +1,23 @@
 from django.urls import path
 from core.warranty.views.create_warranty.views import CreateWarrantyView
+from core.warranty.views.create_warranty_product.views import CreateWarrantyProductView
 from core.warranty.views.delete_incidence.views import DeleteIncidenceView
 from core.warranty.views.delete_warranty.views import DeleteWarrantyView
 from core.warranty.views.edit_incidence.views import EditIncidenceView
 from core.warranty.views.edit_warranty.views import EditWarrantyView
+from core.warranty.views.edit_warranty_product.views import UpdateWarrantyProductView
 from core.warranty.views.list_incidences.views import ListIncidencesView
+from core.warranty.views.list_warrantyproduct.views import ListWarrantyProductView
 from core.warranty.views.list_warrantys.views import ListWarrantyView
 from core.warranty.views.options_warranty.views import OptionsWarrantyView
 from core.warranty.views.register_incidence.views import RegisterIncidenceView
-
-from core.warranty.views.view_warranty.views import ShowWarrantyProductView
+from core.warranty.views.view_warranty.views import DetailWarrantyView
 
 
 app_name = "warranty"
 urlpatterns = [
     # ruta para visualizar la garantía del producto
-    path('show-warranty/', ShowWarrantyProductView.as_view(), name='show-warranty'),
+    path('show-warranty/<pk>', DetailWarrantyView.as_view(), name='show-warranty'),
     # ruta para registrar una incidencia 
     path('register-incidence/', RegisterIncidenceView.as_view(), name='register_incidence'),
     # ruta para editar una incidencia 
@@ -33,5 +35,11 @@ urlpatterns = [
     # ruta para mostrar las opciones de las garantías
     path('options-warranty/', OptionsWarrantyView.as_view(), name='options_warranty'),
     # ruta para mostrar el listado de garantías 
-    path('list/', ListWarrantyView.as_view(), name='list_warranty')
+    path('list/', ListWarrantyView.as_view(), name='list_warranty'),
+    # ruta para listar la garantía de los productos
+    path('list-warranty-product/', ListWarrantyProductView.as_view(), name='list_warrantyproduct'),
+    # ruta para registrar la garantía junto con el producto
+    path('create-warranty-product/', CreateWarrantyProductView.as_view(), name='create_warranty_product'),
+    # ruta para editar una garantía junto al producto
+    path('edit-warranty-product/<pk>', UpdateWarrantyProductView.as_view(), name='edit_warranty_product')
 ]

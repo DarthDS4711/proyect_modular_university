@@ -1,9 +1,7 @@
 from datetime import datetime
 from django.db import models
-from django.forms import model_to_dict
 from core.supplier.models import Supplier
 from core.product.models import Product
-from core.warranty.models import WarrantyPurchase
 
 
 # table for the purchase
@@ -14,8 +12,6 @@ class Purchase(models.Model):
     subtotal = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='subtotal')
     iva = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='iva')
     total = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='iva')
-    warranty_id = models.ForeignKey(WarrantyPurchase, verbose_name='warranty_purchase', on_delete=models.PROTECT, null=True)
-
 
     class Meta:
         verbose_name = "Purchase"

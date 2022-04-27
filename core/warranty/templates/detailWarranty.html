@@ -1,0 +1,31 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="flex-item">
+            <div class="cols-2">
+                <img src="{% static 'img/warranty.png' %}">
+            </div>
+            <div class="cols-2">
+                <h4>Descripción</h4>
+                <p>{{object.description}}</p>
+                <h4>Meses cubiertos</h4>
+                <p>{{object.months_coverred}}</p>
+                <h4>Incidencias cubiertas</h4>
+                <ul>
+                    {% for incidence in object.incidence.all %}
+                    <li>{{incidence}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

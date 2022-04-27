@@ -34,25 +34,16 @@ class WarrantySale(models.Model):
         verbose_name_plural = 'WarrantySales'
         ordering = ['id']
         db_table = 'warranty_sale'
+    
+    def __str__(self):
+        return f'{self.name}'
 
-# table warranty for admin of the application
-class WarrantyPurchase(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    description = models.CharField(verbose_name='description', max_length=150)
-    months_coverred = models.IntegerField(default=3, verbose_name='months_covered')
-    incidence = models.ManyToManyField(Incidence, verbose_name='incidence_id')
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        verbose_name = "WarrantyPurchase"
-        verbose_name_plural = 'WarrantyPurchases'
-        ordering = ['id']
-        db_table = 'warranty_purchase'
 
 # table for create a relation between product and warranty
 class WarrantyProduct(models.Model):
     id = models.BigAutoField(primary_key=True)
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True)
+    # el producto no puede tener más de una garantía, pero la garantía si puede aparecer más veces
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, unique=True)
     warranty = models.ForeignKey(WarrantySale, on_delete=models.PROTECT, null=True)
 
     class Meta:
@@ -60,6 +51,7 @@ class WarrantyProduct(models.Model):
         verbose_name_plural = 'WarrantyProduct'
         ordering = ['id']
         db_table = 'warranty_product'
+    
 
 
 
