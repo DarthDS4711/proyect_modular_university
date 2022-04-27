@@ -1,15 +1,17 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListSizeView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Size
-    paginate_by = 3
+    paginate_by = 10
     template_name = 'listSize.html'
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
 
     def get_context_data(self, **kwargs):
@@ -21,11 +23,12 @@ class ListSizeView(LoginRequiredMixin, ObtainColorMixin, ListView):
         return context
 
 
-class ListCategoryView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Category
     paginate_by = 4
     template_name = 'listCategories.html'
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
 
     def get_context_data(self, **kwargs):
@@ -37,11 +40,12 @@ class ListCategoryView(LoginRequiredMixin, ObtainColorMixin, ListView):
         context['color'] = self.get_number_color()
         return context
 
-class ListProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Product
-    paginate_by = 5
+    paginate_by = 10
     template_name = 'listProducts.html'
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

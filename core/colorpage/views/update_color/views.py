@@ -4,11 +4,13 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
 from core.colorpage.models import ColorPage
+from core.mixins.mixins import ValidateSessionGroupMixin
 
 
-class UpdateColorPage(LoginRequiredMixin, ObtainColorMixin, TemplateView):
+class UpdateColorPage(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
     template_name = 'updateColorPage.html'
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):

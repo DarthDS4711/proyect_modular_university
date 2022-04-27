@@ -3,15 +3,17 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.forms.form_incidence.form import IncidenceForm
 from core.warranty.models import Incidence
 
 
-class EditIncidenceView(LoginRequiredMixin, ObtainColorMixin ,UpdateView):
+class EditIncidenceView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin ,UpdateView):
     template_name = 'editIncidence.html'
     model = Incidence
     login_url = reverse_lazy('access:Login')
     success_url = reverse_lazy('warranty:list_incidences')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

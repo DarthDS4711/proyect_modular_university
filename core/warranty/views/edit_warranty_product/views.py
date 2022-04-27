@@ -2,16 +2,18 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.forms.form_warranty_product.forms import WarrantyProductForm
 from core.warranty.models import WarrantyProduct
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class UpdateWarrantyProductView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class UpdateWarrantyProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     template_name = 'edit_warrantyProduct.html'
     model = WarrantyProduct
     login_url = reverse_lazy('access:Login')
     success_url = reverse_lazy('warranty:list_warrantyproduct')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

@@ -3,14 +3,16 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.status_send.models import StatusSend
 
 
-class DeleteStatusSendView(LoginRequiredMixin, ObtainColorMixin, DeleteView):
+class DeleteStatusSendView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteStatusSend.html'
     success_url = reverse_lazy('status_send:list')
     model = StatusSend
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     # sobrescritura del método dispach para obtener el objeto en cuestión (evitar duplicados)
     def dispatch(self, request, *args, **kwargs):

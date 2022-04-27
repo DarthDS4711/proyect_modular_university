@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.forms.category.forms import CategoryForm
 from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
@@ -9,12 +10,13 @@ from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class UpdateProductView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class UpdateProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     from_class = CategoryForm
     template_name = 'editProduct.html'
     model = Product
     success_url = reverse_lazy('product:list_product')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -44,11 +46,12 @@ class UpdateProductView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
         return context
 
 
-class EditSizeView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class EditSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     template_name = 'editSize.html'
     model = Size
     success_url = reverse_lazy('product:list_sizes')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def get_form(self):
         return super().get_form(SizeForm)
@@ -62,12 +65,13 @@ class EditSizeView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
         context['color'] = self.get_number_color()
         return context
 
-class UpdateCategoryView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class UpdateCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     from_class = CategoryForm
     template_name = 'editCategory.html'
     model = Category
     success_url = reverse_lazy('product:list_cat')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

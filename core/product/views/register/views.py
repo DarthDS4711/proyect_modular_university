@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.forms.category.forms import CategoryForm
 from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
@@ -10,11 +11,12 @@ from core.classes.obtain_color import ObtainColorMixin
 
 
 
-class RegisterProductView(LoginRequiredMixin, ObtainColorMixin, CreateView):
+class RegisterProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = "registerProduct.html"
     model = Product
     success_url = reverse_lazy('product:list_product')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -46,11 +48,12 @@ class RegisterProductView(LoginRequiredMixin, ObtainColorMixin, CreateView):
         return context
 
 
-class RegisterCategoryView(LoginRequiredMixin, ObtainColorMixin, CreateView):
+class RegisterCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = 'registerCategory.html'
     model = Category
     success_url = reverse_lazy('product:list_cat')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
@@ -82,10 +85,11 @@ class RegisterCategoryView(LoginRequiredMixin, ObtainColorMixin, CreateView):
         return context
 
 
-class RegisterSizeView(LoginRequiredMixin, ObtainColorMixin, CreateView):
+class RegisterSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = 'registerSize.html'
     success_url = reverse_lazy('product:list_sizes')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def get_form(self):
         return super().get_form(SizeForm)

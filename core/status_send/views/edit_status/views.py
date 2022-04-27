@@ -2,18 +2,20 @@ import django
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class UpdateStatusSendView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class UpdateStatusSendView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     from_class = StatusSendForm
     template_name = 'editStatusSend.html'
     model = StatusSend
     success_url = reverse_lazy('status_send:list')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

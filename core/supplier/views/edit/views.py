@@ -2,16 +2,18 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.supplier.forms.supplier.form import SupplierForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.supplier.models import Supplier
 
     
-class EditSupplierView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class EditSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     template_name = "editSupplier.html"
     model = Supplier
     success_url = reverse_lazy('supplier_app:list_supplier')
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def get_form(self):
         return super().get_form(SupplierForm)

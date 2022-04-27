@@ -3,15 +3,17 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Product
 from core.supplier.models import Supplier
 
 
-class ListSupplierView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Supplier # modelo a usar para la consulta del ListView
-    paginate_by = 4 # número de elementos a mostrar por pagina
+    paginate_by = 8 # número de elementos a mostrar por pagina
     template_name = 'listSupplier.html'
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -2,11 +2,14 @@ from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from django.contrib.auth.models import Group
+from core.mixins.mixins import ValidateSessionGroupMixin
 
 
-class DashboardAdminView(LoginRequiredMixin, ObtainColorMixin,TemplateView):
+class DashboardAdminView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin,TemplateView):
     template_name = 'dashboardAdmin.html'
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

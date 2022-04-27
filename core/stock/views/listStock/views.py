@@ -1,15 +1,17 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.stock.models import Stock
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListStockView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Stock
     template_name = 'listStock.html'
-    paginate_by = 6
+    paginate_by = 20
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
 
     def get_context_data(self, **kwargs):

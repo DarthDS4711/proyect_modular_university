@@ -1,5 +1,6 @@
 from django import forms
 from core.user.models import User
+from django.contrib.auth.models import Group
 
 
 class UserForm(forms.ModelForm):
@@ -31,6 +32,9 @@ class UserForm(forms.ModelForm):
                         u.set_password(pwd)
                 # obtenemos la contraseña, la encriptamos y la guardamos
                 u.save()
+                # asignamos un grupo por defecto en los usuarios
+                client_group = Group.objects.get(name = 'Client')
+                u.groups.add(client_group)
             else:
                 data['error'] = form.errors
         except Exception as e:

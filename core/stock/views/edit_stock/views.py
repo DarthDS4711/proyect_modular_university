@@ -2,18 +2,20 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.stock.models import Stock
 from core.stock.form.forms import StockEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # clase para crear los stock
-class UpdateStockView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     template_name = 'editStock.html'
     model = Stock
     success_url = reverse_lazy('stock:list_stock')
     form_class = StockEditForm
     login_url = reverse_lazy('access:Login')
+    group_permisson = 'Administrator'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()

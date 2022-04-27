@@ -2,16 +2,18 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.forms.form_warranty_product.forms import WarrantyProductForm
 from core.warranty.models import WarrantyProduct
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class CreateWarrantyProductView(LoginRequiredMixin, ObtainColorMixin, CreateView):
+class CreateWarrantyProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = 'createWarrantyProduct.html'
     model = WarrantyProduct
     login_url = reverse_lazy('access:Login')
     success_url = reverse_lazy('warranty:list_warrantyproduct')
+    group_permisson = 'Administrator'
 
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
