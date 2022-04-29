@@ -3,9 +3,13 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
+from core.product.models import Product
 from core.stock.models import Stock
 from core.stock.form.forms import StockForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.csrf import csrf_exempt
+from core.stock.models import Stock, StockProductSize
+from django.db import transaction
 
 
 # clase para crear los stock
@@ -17,22 +21,51 @@ class CreateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
+    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
     def get_form(self):
         return super().get_form(self.form_class)
-    
+
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
-            # obtención de los datos
-            form = self.get_form()
-            # guardado de los datos
-            data = form.save()
-        except Exception as e:
-            data['error'] = str(e)
-        # regreso de la respuesta del servidor
+        if request.POST['action'] == 'obtain':
+            id_product = int(request.POST['id_product'])
+            product = Product.objects.get(id = id_product)
+            sizes_product = product.size.all()
+            data = []
+            for size in sizes_product:
+                data.append(size.to_json())
+        elif request.POST['action'] == 'register':
+            product = Product.objects.get(id = int(request.POST['product']))
+            is_active = True if request.POST['is_activte'] is 'on' else False
+            try:
+                with transaction.atomic():
+                    stock = Stock()
+                    stock.product = product
+                    stock.is_activte = is_active
+                    list_ammounts = []
+                    sizes_product = product.size.all()
+                    for size in sizes_product:
+                        name_field = size.size_product.lower()
+                        name_field = f'id_{name_field}'
+                        ammount_size = int(request.POST[name_field])
+                        list_ammounts.append(ammount_size)
+                    
+                    # stock.save()
+                    number_ammounts = 0
+                    for size in sizes_product:
+                        size_prod_size = StockProductSize()
+                        size_prod_size.size = size
+                        size_prod_size.amount = list_ammounts[number_ammounts]
+                        # size_prod_size.save()
+                        number_ammounts += 1
+                    stock.amount = sum(list_ammounts)
+                    # stock.save()
+            except Exception as e:
+                data['error'] = str(e)
+
         return JsonResponse(data, safe=False)
     
     def get_context_data(self, **kwargs):

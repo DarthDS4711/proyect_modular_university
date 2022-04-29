@@ -12,15 +12,19 @@
     <div class="box-content">
         <img src="{% static 'img/product.png' %}" class="img-style">
         <input type="hidden" id="value" value="{{list}}">
-        <input type="hidden" id="action" value="{{action}}">
+        <input type="hidden" name="url" value="{% url 'stock:create_stock' %}" id="url">
         <form action="" method="post">
             {% csrf_token %}
+            <input type="hidden" id="action" value="{{action}}" name="action">
             {% for field in form.visible_fields %}
             <div class="form-group">
                 <label>{{ field.label }}:</label>
                 {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
             {% endfor %}
+            <h5>Stock por talla</h5>
+            <div class="form-group" id="stock">
+            </div>
             <button type="submit" class="btn btn-primary">{{btn}}</button>
             <a href="{{list}}" class="btn btn-danger">Cancelar</a>
         </form>
@@ -29,5 +33,6 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{% static 'js/obtain_list_sizes.js' %}"></script>
 <script src="{% static 'js/validate_action.js' %}"></script>
 {% endblock %}

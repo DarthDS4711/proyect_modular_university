@@ -11,7 +11,6 @@ $('form').on('submit', function (e) {
         message = '¿Estas seguro de que quierer realizar el borrado de los datos?';
     }
     var data = new FormData(this);
-    console.log(link);
     submit_with_ajax(window.location.pathname, 'Notificación', message, data, function () {
         location.href = link;
     });

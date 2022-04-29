@@ -29,8 +29,10 @@ class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
         try:
             # obtención de los datos
             form = self.get_form()
+            print(request.POST)
             # guardado de los datos
-            data = form.save()
+            # data = form.save()
+            data['error'] = 'str(e)'
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor

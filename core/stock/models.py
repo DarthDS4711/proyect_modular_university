@@ -1,7 +1,9 @@
+from asyncio.windows_events import NULL
 from datetime import datetime
 from django.db import models
 from django.forms import model_to_dict
 from core.product.models import Product, Size
+from django.contrib.postgres.fields import ArrayField
 
 # table stock
 class Stock(models.Model):
@@ -21,7 +23,7 @@ class Stock(models.Model):
 # stock por el tamaño de la prenda
 class StockProductSize(models.Model):
     id = models.BigAutoField(primary_key=True)
-    product = models.ForeignKey(Product, verbose_name='product', on_delete=models.PROTECT)
+    stock = models.ForeignKey(Stock, verbose_name='stock', on_delete=models.PROTECT, null=True)
     size = models.ForeignKey(Size, verbose_name='size', on_delete=models.PROTECT)
     amount = models.IntegerField(default=0, verbose_name='amount')
 

@@ -49,6 +49,11 @@ class Size(models.Model):
         ordering = ['id']
         db_table = 'size'
     
+
+    def to_json(self):
+        item = model_to_dict(self)
+        return item
+    
     def __str__(self):
         return self.size_product
 
