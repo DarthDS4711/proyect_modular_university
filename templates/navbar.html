@@ -34,7 +34,6 @@
                     {% else %}
                     <a class="dropdown-item" href="{% url 'access:Login' %}">Iniciar sesión</a>
                     {% endif %}
-                    <a class="dropdown-item" href="#">{{ request.session.group }}</a>
                     <a class="dropdown-item" href="/dashboard-admin/">Dashboard Admin</a>
                     <a class="dropdown-item" href="{% url 'app_views:dashboard_user' %}">Dashboard User</a>
                 </div>

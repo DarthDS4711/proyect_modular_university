@@ -1,3 +1,4 @@
+from turtle import st
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
@@ -39,7 +40,7 @@ class CreateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
                 data.append(size.to_json())
         elif request.POST['action'] == 'register':
             product = Product.objects.get(id = int(request.POST['product']))
-            is_active = True if request.POST['is_activte'] is 'on' else False
+            is_active = True if request.POST['is_activte'] == 'on' else False
             try:
                 with transaction.atomic():
                     stock = Stock()
@@ -49,23 +50,21 @@ class CreateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
                     sizes_product = product.size.all()
                     for size in sizes_product:
                         name_field = size.size_product.lower()
-                        name_field = f'id_{name_field}'
                         ammount_size = int(request.POST[name_field])
-                        list_ammounts.append(ammount_size)
-                    
-                    # stock.save()
+                        list_ammounts.append(ammount_size)      
+                    stock.save()
                     number_ammounts = 0
                     for size in sizes_product:
                         size_prod_size = StockProductSize()
                         size_prod_size.size = size
+                        size_prod_size.stock = stock
                         size_prod_size.amount = list_ammounts[number_ammounts]
-                        # size_prod_size.save()
+                        size_prod_size.save()
                         number_ammounts += 1
                     stock.amount = sum(list_ammounts)
-                    # stock.save()
+                    stock.save()
             except Exception as e:
                 data['error'] = str(e)
-
         return JsonResponse(data, safe=False)
     
     def get_context_data(self, **kwargs):

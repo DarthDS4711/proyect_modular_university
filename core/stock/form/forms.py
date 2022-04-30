@@ -6,7 +6,7 @@ from core.stock.models import Stock
 class StockForm(forms.ModelForm):
     class Meta:
         model = Stock
-        fields = '__all__'
+        exclude = ['amount']
 
     def save(self, commit=True):
         data = {}
