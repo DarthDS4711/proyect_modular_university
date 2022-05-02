@@ -3,10 +3,12 @@
 $(document).ready(function () {
     $('#btn-add').on('click', function(){
         const id_product = document.getElementById('id_product').value;
+        const id_local = document.getElementById('id_local').value;
         const color = return_data_color();
         const ammout = document.getElementById('amount').value;
-        const value_edit =  JSON.parse(sessionStorage.getItem(id_product));
-        sessionStorage.setItem(id_product, JSON.stringify({
+        let value_edit =  JSON.parse(sessionStorage.getItem(id_local));
+        sessionStorage.setItem(id_local, JSON.stringify({
+            id : id_product,
             amount : ammout,
             color : color,
             size : value_edit.size,

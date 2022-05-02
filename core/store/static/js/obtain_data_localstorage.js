@@ -38,7 +38,7 @@ $(document).ready(function () {
             let buttonDrop = document.createElement('button');//acciones
             let buttonDetail = document.createElement('a');
             let image_html = document.createElement('img');
-            get_image(key, url, image_html, column1);
+            get_image(data_cart.id, url, image_html, column1);
             image_html.className = "img-style";
             column2.appendChild(image_html);
             column3.innerHTML = data_cart.amount;
@@ -51,7 +51,7 @@ $(document).ready(function () {
             buttonDrop.value = parseInt(key);
             buttonEdit.className = "btn btn-secondary";
             buttonDrop.className = "btn btn-danger";
-            buttonDetail.href = "../../shop/detail-product/" + parseInt(key);
+            buttonDetail.href = "../../shop/detail-product/" + parseInt(data_cart.id);
             buttonDetail.className = "btn btn-primary";
             buttonDetail.innerHTML = "Detalles";
             subtotal += parseFloat(data_cart.price) * parseFloat(data_cart.amount);
@@ -61,11 +61,11 @@ $(document).ready(function () {
                     type: "POST",
                     url: url,
                     data: {
-                        'data': buttonEdit.value,
+                        'data': data_cart.id,
                         'action': 'obtain'
                     }
                 }).done(function (response) {
-                    edit_modal(response, buttonEdit.value);
+                    edit_modal(response, data_cart.id, key);
                 });
             };
             //boton que nos ayuda a eliminar del local storage el item en cuestion

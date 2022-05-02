@@ -11,14 +11,16 @@ $(document).ready(function () {
         const size_product = document.getElementById('size').value;
         const price_product = document.getElementById('price').value;
         //conversión de json a string del objeto 
-        let value_to_cart = JSON.stringify({
+        const value_to_cart = JSON.stringify({
+            id : id_product,
             amount : value_ammount,
             color : value_color,
             size : size_product,
             price : parseFloat(price_product.replace(',','.')),
         });
+        const len_cart = (sessionStorage.length + 1).toString();
         //guardado del item en el local storage
-        sessionStorage.setItem(id_product.toString(), value_to_cart);
+        sessionStorage.setItem(len_cart, value_to_cart);
         $('#myModal').modal('hide');
     });
 });

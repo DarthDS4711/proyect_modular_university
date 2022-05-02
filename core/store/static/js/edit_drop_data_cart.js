@@ -1,5 +1,5 @@
 //función que nos edita el modal en base a los datos obtenidos de la petición ajax
-function edit_modal(response, id_product) {
+function edit_modal(response, id_product, id_local) {
     document.getElementById('color1').value = response.color1;
     document.getElementById('color2').value = response.color2;
     document.getElementById('color3').value = response.color3;
@@ -20,5 +20,6 @@ function edit_modal(response, id_product) {
         count++;
     }
     document.getElementById('id_product').value = id_product;
+    document.getElementById('id_local').value = id_local;
     $('#modal').modal();
 }
