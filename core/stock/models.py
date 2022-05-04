@@ -19,6 +19,9 @@ class Stock(models.Model):
         ordering = ['id']
         # nombre de la tabla en la base de datos
         db_table = 'stock'
+    
+    def __str__(self):
+        return f'Stock producto: {self.product.name}'
 
 # stock por el tamaño de la prenda
 class StockProductSize(models.Model):

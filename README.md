@@ -57,7 +57,6 @@ Proximamente...
 _Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
 
 * **Daniel Santiago Alatorre** - *Documentación, desarrollo, diseño* - [DarthDS4711](https://github.com/DarthDS4711)
-* **Ían Noe Prieto Puga** - *Documentación, desarrollo, pruebas,* - [Wifi13](https://github.com/Wifi13)
 
 
 ## Licencia 📄

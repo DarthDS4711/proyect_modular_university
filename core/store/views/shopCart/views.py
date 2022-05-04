@@ -21,6 +21,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
     # sobrescritura del método post para la obtención y guardado de datos
     def post(self, request, *args, **kwargs):
         data = {}
+        print(request.POST)
         # caso de obtención de los colores de un producto en particular
         if request.POST['action'] == 'obtain':
             id_prod = int(request.POST['data'])
