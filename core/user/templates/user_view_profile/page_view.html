@@ -17,7 +17,7 @@
             <p><strong>Sexo: </strong>{{request.user.gender}}</p>
             <p><strong>Fecha última compra: </strong>11/25/21</p>
         </div>
-        <a href="#" class="btn btn-success">Editar perfil</a>
+        <a href="{% url 'user:profile_edit' %}" class="btn btn-success">Editar perfil</a>
         <a href="{% url 'user:list_directions' %}" class="btn btn-primary">Libreta de direcciones</a>
         <a href="{% url 'app_views:dashboard_user' %}" class="btn btn-warning">Regresar</a>
     </div>

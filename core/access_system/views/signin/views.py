@@ -35,4 +35,5 @@ class SignInView(CreateView, ObtainColorMixin):
         context['success'] = self.success_url
         context['action'] = 'register' 
         context['color'] = self.get_number_color()
+        context['btn'] = 'Crear'
         return context

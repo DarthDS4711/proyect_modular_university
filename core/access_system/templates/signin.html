@@ -25,8 +25,8 @@
                 {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
             </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary">Crear</button>
-            <a href="#" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-primary">{{btn}}</button>
+            <a href="{{cancel}}" class="btn btn-danger">Cancelar</a>
         </form>
     </div>
 </div>

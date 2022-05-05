@@ -3,13 +3,13 @@ from core.user.views.edit_direction.views import UpdateUserDirectionView
 from core.user.views.list_directions.views import ListDirectionUserView
 from core.user.views.register_direction.views import RegisterDirectionUser
 
-from core.user.views.user_edit.views import EditUserView
+from core.user.views.user_edit.views import UpdateUserView
 from core.user.views.user_view.views import ProfileUserView
 
 app_name = 'user'
 urlpatterns = [
     # ruta para poder editar el perfil del usuario
-    path('edit-profile/', EditUserView.as_view(), name='profile-edit'),
+    path('edit-profile/', UpdateUserView.as_view(), name='profile_edit'),
     # ruta para visualizar el perfil del usuario
     path('view-profile/', ProfileUserView.as_view(), name='view_profile'),
     # ruta para listar las direcciones registradas del usuario

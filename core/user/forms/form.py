@@ -27,3 +27,4 @@ class DirectionUserForm(forms.ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+

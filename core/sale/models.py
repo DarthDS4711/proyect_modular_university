@@ -2,8 +2,7 @@ from datetime import datetime
 from django.db import models
 from django.forms import model_to_dict
 from core.user.models import User
-from core.product.models import Product
-from core.warranty.models import WarrantySale
+from core.product.models import Product, Size
 
 
 # table for the sale in the app
@@ -12,9 +11,8 @@ class Sale(models.Model):
     user = models.ForeignKey(User, verbose_name='user_id', on_delete=models.PROTECT)
     date_sale = models.DateField(default=datetime.now, verbose_name='date_sale')
     subtotal = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='subtotal')
-    iva = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='iva')
+    iva = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='iva', default=0.16)
     total = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='iva')
-    warranty_id = models.ForeignKey(WarrantySale, verbose_name='warranty_sale', on_delete=models.PROTECT, null=True)
 
 
     class Meta:
@@ -31,6 +29,8 @@ class DetailSale(models.Model):
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='price')
     ammount = models.IntegerField(default=0, verbose_name='ammount')
     subtotal = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='subtotal')
+    color = models.CharField(max_length=8, default='')
+    size = models.ForeignKey(Size, verbose_name='size_id', on_delete=models.PROTECT, null=True)
 
     class Meta:
         verbose_name = "DetailSale"

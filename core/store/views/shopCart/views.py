@@ -1,11 +1,14 @@
+import json
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
 from django.views.decorators.csrf import csrf_exempt
-
-from core.product.models import Product
+from django.db import transaction
+from core.product.models import Product, Size
+from core.stock.models import Stock, StockProductSize
+from core.sale.models import DetailSale, Sale
 from core.user.models import DirectionUser
 
 
@@ -21,7 +24,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
     # sobrescritura del método post para la obtención y guardado de datos
     def post(self, request, *args, **kwargs):
         data = {}
-        print(request.POST)
         # caso de obtención de los colores de un producto en particular
         if request.POST['action'] == 'obtain':
             id_prod = int(request.POST['data'])
@@ -35,6 +37,42 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             product_return = Product.objects.get(id=id_prod)
             data['image'] = product_return.get_image()
             data['name'] = product_return.name
+        elif request.POST['action'] == 'buy':
+            # petición post que realiza con una transacción atómica
+            # la venta al sistema
+            # print(request.POST)
+            try:
+                products = json.loads(request.POST['products'])
+                with transaction.atomic():
+                    sale = Sale()
+                    sale.user = self.request.user
+                    sale.subtotal = float(request.POST['subtotal'])
+                    sale.total = float(request.POST['total'])
+                    sale.save()
+                    for product in products:
+                        detail_sale = DetailSale()
+                        detail_sale.sale = sale
+                        product_sale = Product.objects.get(id = int(product['id']))
+                        detail_sale.product = product_sale
+                        detail_sale.ammount = int(product['amount'])
+                        detail_sale.color = product['color']
+                        size_sale = Size.objects.get(size_product = product['size'])
+                        detail_sale.size = size_sale
+                        detail_sale.price = float(product['price']) / detail_sale.ammount
+                        detail_sale.subtotal = float(product['price'])
+                        detail_sale.save()
+                        new_stock = Stock.objects.get(product = product_sale)
+                        print(new_stock)
+                        new_stocks_size = StockProductSize.objects.get(stock = new_stock, size = size_sale)
+                        print(f'{new_stocks_size.amount}')
+                        new_stocks_size.amount = new_stocks_size.amount - detail_sale.ammount
+                        new_stocks_size.save()
+                        new_stock.amount = new_stock.amount - detail_sale.ammount
+                        new_stock.save()
+                      
+            except Exception as e:
+                data['error'] = str(e)
+            
         # retorno de la información como JSON al front-end
         return JsonResponse(data, safe=False)
 

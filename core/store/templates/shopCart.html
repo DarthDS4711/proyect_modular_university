@@ -6,6 +6,7 @@
 <script src="{% static 'js/edit_drop_data_cart.js' %}"></script>
 <script src="{% static 'js/obtain_data_localstorage.js' %}"></script>
 <script src="{% static 'js/obtain_data_radio_input.js' %}"></script>
+<script src="{% static 'js/make_json_array_product.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -43,7 +44,7 @@
         <h5>Total (IVA 16%)</h5>
         <p id="total"></p>
         <div class="buttons">
-            <button class="btn btn-success">Comprar articulos</button>
+            <button class="btn btn-success" id="btn-purchase">Comprar articulos</button>
             <a href="{% url 'shop:main-shop' %}" class="btn btn-primary">Regresar a la tienda</a>
             <button class="btn btn-danger">Cancelar compra</button>
         </div>
@@ -54,4 +55,5 @@
 {% block scripts %}
 <script src="{% static 'js/modal_local_storage.js' %}"></script>
 <script src="{% static 'js/update_localstorage.js' %}"></script>
+<script src="{% static 'js/do_the_purchase.js' %}"></script>
 {% endblock %}
