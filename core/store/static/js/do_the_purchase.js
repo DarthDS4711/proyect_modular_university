@@ -1,3 +1,5 @@
+//archivo javascript que nos realiza la compra de los productos solicitados por medio
+//de una petición ajax
 $(document).ready(function () {
     $('#btn-purchase').on('click', function(){
         const url = document.getElementById('url').value;

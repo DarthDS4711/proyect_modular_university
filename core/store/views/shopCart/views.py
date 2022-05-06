@@ -40,7 +40,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
         elif request.POST['action'] == 'buy':
             # petición post que realiza con una transacción atómica
             # la venta al sistema
-            # print(request.POST)
             try:
                 products = json.loads(request.POST['products'])
                 with transaction.atomic():
@@ -49,6 +48,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                     sale.subtotal = float(request.POST['subtotal'])
                     sale.total = float(request.POST['total'])
                     sale.save()
+                    # recorrido de los productos solicitados para su procesamiento
                     for product in products:
                         detail_sale = DetailSale()
                         detail_sale.sale = sale
@@ -62,9 +62,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                         detail_sale.subtotal = float(product['price'])
                         detail_sale.save()
                         new_stock = Stock.objects.get(product = product_sale)
-                        print(new_stock)
                         new_stocks_size = StockProductSize.objects.get(stock = new_stock, size = size_sale)
-                        print(f'{new_stocks_size.amount}')
                         new_stocks_size.amount = new_stocks_size.amount - detail_sale.ammount
                         new_stocks_size.save()
                         new_stock.amount = new_stock.amount - detail_sale.ammount
