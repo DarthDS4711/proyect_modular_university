@@ -15,7 +15,7 @@
                 <h3>Perfil</h3>
                 <p><a href="{% url 'user:view_profile' %}" class="btn orange-btn btn-style">Ver perfil</a></p>
                 <p> <a href="{% url 'user:profile_edit' %}" class="btn orange-btn btn-style">Editar perfil</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Cambiar contraseña</a></p>
+                <p><a href="{% url 'user:edit_password' %}" class="btn orange-btn btn-style">Cambiar contraseña</a></p>
                 <p><a href="{% url 'user:list_directions' %}" class="btn orange-btn btn-style">Agenda de direcciones</a></p>
             </div>
             <div class="cols-3 box-shadowed">

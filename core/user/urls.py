@@ -1,5 +1,6 @@
 from django.urls import path
 from core.user.views.edit_direction.views import UpdateUserDirectionView
+from core.user.views.edit_password_login.views import EditPasswordLoginView
 from core.user.views.list_directions.views import ListDirectionUserView
 from core.user.views.register_direction.views import RegisterDirectionUser
 
@@ -17,5 +18,7 @@ urlpatterns = [
     # ruta para registrar las direcciones del usuario
     path('register-direction/', RegisterDirectionUser.as_view(), name='register_direction'),
     # ruta para editar una dirección del usuario
-    path('edit-direction/<int:pk>', UpdateUserDirectionView.as_view(), name='edit_direction')
+    path('edit-direction/<int:pk>', UpdateUserDirectionView.as_view(), name='edit_direction'),
+    # ruta para actualizar la contraseña del usuario
+    path('edit-password/', EditPasswordLoginView.as_view(), name='edit_password')
 ]

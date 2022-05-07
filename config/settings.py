@@ -174,6 +174,8 @@ DOMAIN = ''
 
 LOGIN_REDIRECT_URL = '/'
 
+LOGOUT_REDIRECT_URL = "/"  # new
+
 # sección de la duración de la sesión en la página
 # hacer que la sesión despues de un periodo de inactividad comience 
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
