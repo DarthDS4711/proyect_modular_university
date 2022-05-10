@@ -10,9 +10,7 @@ $(document).ready(function () {
       url: url,
       data: {
         products: return_json_array_products(),
-        action: "buy",
-        subtotal: subtotal,
-        total: total,
+        action: "validate_buy",
       },
     }).done(function (response) {
       if (response.error) {
@@ -28,7 +26,7 @@ $(document).ready(function () {
           html: '<p>Compra realizada exitosamente!</p>',
           icon: "success",
         });
-        sessionStorage.clear();
+        //sessionStorage.clear();
         location.reload();
       }
     });

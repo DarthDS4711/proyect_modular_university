@@ -47,12 +47,36 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             product_return = Product.objects.get(id=id_prod)
             data['image'] = product_return.get_image()
             data['name'] = product_return.name
+        elif request.POST['action'] == 'validate_buy':
+            # request que nos valida primero la compra mediante la deteccion de 
+            # faltantes en el stock por medio de bases de datos distribuidas
+            try:
+                products = json.loads(request.POST['products'])
+                validate_transaction = True
+                with transaction.atomic():
+                    for product in products:
+                        product_sale = Product.objects.get(id = int(product['id']))
+                        ammount_product_size = int(product['amount'])
+                        size_sale = Size.objects.get(size_product = product['size'])
+                        new_stock = Stock.objects.using('stock_product').get(product = product_sale)
+                        new_stocks_size = StockProductSize.objects.using('stock_product').get(stock = new_stock, size = size_sale)
+                        new_stocks_size.amount = new_stocks_size.amount - ammount_product_size
+                        new_stocks_size.save(using='stock_product')
+                        new_stock.amount = new_stock.amount - ammount_product_size
+                        new_stock.save(using='stock_product')
+                        if new_stocks_size.amount < 0:
+                            validate_transaction = False 
+                            break
+                    transaction.set_rollback(True, using='stock_product')
+                    if validate_transaction == False: 
+                        data['error'] = 'Stock insuficiente en alguno de tus productos'
+            except Exception as e:
+                data['error'] = str(e)
         elif request.POST['action'] == 'buy':
             # petición post que realiza con una transacción atómica
             # la venta al sistema
             try:
                 products = json.loads(request.POST['products'])
-                validate_transaction = True
                 with transaction.atomic():
                     sale = Sale()
                     sale.user = self.request.user
@@ -76,16 +100,10 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                         new_stocks_size = StockProductSize.objects.get(stock = new_stock, size = size_sale)
                         new_stocks_size.amount = new_stocks_size.amount - detail_sale.ammount
                         new_stocks_size.save()
+                        new_stocks_size.save(using='stock_product')
                         new_stock.amount = new_stock.amount - detail_sale.ammount
                         new_stock.save()
-                        if new_stocks_size.amount < 0:
-                            validate_transaction = False
-                            data['error'] = 'Stock insuficiente' 
-                            break
-                    if validate_transaction == False:
-                        transaction.set_rollback(True) 
-                        data['error'] = 'Stock insuficiente'
-                        print('hola')
+                        new_stock.save(using='stock_product')
             except Exception as e:
                 data['error'] = str(e)
             
