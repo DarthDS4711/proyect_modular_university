@@ -24,6 +24,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
     # sobrescritura del método post para la obtención y guardado de datos
     def post(self, request, *args, **kwargs):
         data = {}
+        print(request.POST)
         # caso de obtención de los colores de un producto en particular
         if request.POST['action'] == 'obtain':
             id_prod = int(request.POST['data'])
@@ -31,6 +32,15 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             data['color1'] = product_return.primary_color
             data['color2'] = product_return.secondary_color
             data['color3'] = product_return.last_color
+        elif request.POST['action'] == 'validate':
+            stock = Stock.objects.get(product = self.object)
+            stock_by_size = StockProductSize.objects.filter(stock = stock)
+            for st_size in stock_by_size:
+                if st_size.size.size_product == request.POST['size']:
+                    if st_size.amount - int(request.POST['ammount']):
+                        data['success'] = ''
+                    else:
+                        data['error'] = 'No hay suficiente stock'
         # caso de obtención de la dirección de la imagen y el nombre de un producto
         elif request.POST['action'] == 'image':
             id_prod = int(request.POST['data'])
@@ -42,6 +52,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             # la venta al sistema
             try:
                 products = json.loads(request.POST['products'])
+                validate_transaction = True
                 with transaction.atomic():
                     sale = Sale()
                     sale.user = self.request.user
@@ -67,7 +78,14 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                         new_stocks_size.save()
                         new_stock.amount = new_stock.amount - detail_sale.ammount
                         new_stock.save()
-                      
+                        if new_stocks_size.amount < 0:
+                            validate_transaction = False
+                            data['error'] = 'Stock insuficiente' 
+                            break
+                    if validate_transaction == False:
+                        transaction.set_rollback(True) 
+                        data['error'] = 'Stock insuficiente'
+                        print('hola')
             except Exception as e:
                 data['error'] = str(e)
             

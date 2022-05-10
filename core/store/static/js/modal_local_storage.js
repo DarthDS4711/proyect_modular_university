@@ -12,6 +12,7 @@ $(document).ready(function () {
     const size_product = document.getElementById("size").value;
     const price_product = document.getElementById("price").value;
     validate_stock(id_product, size_product, value_ammount, url, value_color, price_product);
+    alert('LLEGUE')
     $("#myModal").modal("hide");
   });
 });
