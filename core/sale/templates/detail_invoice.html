@@ -1,0 +1,33 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>Factura: {{object.id}}</h1>
+    <div class="box-content">
+        <h5>Fecha</h5>
+        <p>{{object.date_sale}}</p>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th>Producto</th>
+                <th>Color</th>
+                <th>Talla</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for detail in details %}
+                <td>{{detail.product}}</td>
+                <td style="background-color: {{detail.color}}"";></td>
+                <td>{{detail.size}}</td>
+                <td>{{detail.ammount}}</td>
+                <td>${{detail.subtotal}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock %}

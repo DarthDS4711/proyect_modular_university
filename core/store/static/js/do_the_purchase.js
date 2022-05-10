@@ -5,11 +5,12 @@ $(document).ready(function () {
     const url = document.getElementById("url").value;
     const subtotal = document.getElementById("subtotal").innerHTML;
     const total = document.getElementById("total").innerHTML;
+    const products = return_json_array_products();
     $.ajax({
       type: "POST",
       url: url,
       data: {
-        products: return_json_array_products(),
+        products: products,
         action: "validate_buy",
       },
     }).done(function (response) {
@@ -21,12 +22,13 @@ $(document).ready(function () {
           icon: "error",
         });
       } else {
+        make_purchase(products, 'buy', subtotal, total, url);
         Swal.fire({
           title: "Compra realizada exitosamente",
-          html: '<p>Compra realizada exitosamente!</p>',
+          html: "<p>Compra realizada exitosamente!</p>",
           icon: "success",
         });
-        //sessionStorage.clear();
+        sessionStorage.clear();
         location.reload();
       }
     });

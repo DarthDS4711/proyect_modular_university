@@ -29,7 +29,41 @@ function validate_stock(id_product, size, ammmount, url, value_color, price_prod
         const len_cart = (sessionStorage.length + 1).toString();
         //guardado del item en el local storage
         sessionStorage.setItem(len_cart, value_to_cart);
-        alert('done');
     }
   });
 }
+function validate_stock_cart(id_product, size, ammmount, url, id_local, value_color) {
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: {
+      'action': "validate",
+      'product': id_product,
+      'size': size,
+      'ammount': ammmount
+    }
+  }).done(function (response) {
+    console.log(response);
+    if (response.error) {
+      var html = "<p>" + response.error + "</p>";
+      Swal.fire({
+        title: "Error!",
+        html: html,
+        icon: "error",
+        timer: 2000
+      });
+    }
+    else{
+      //conversión de json a string del objeto
+      let product_new = JSON.parse(sessionStorage.getItem(id_local));
+      product_new.amount = ammmount;
+      product_new.color = value_color;
+      const product_save = JSON.stringify(product_new);
+      //guardado del item en el local storage
+      sessionStorage.setItem(id_local, product_save);
+      location.reload();
+    }
+  });
+  
+}
+

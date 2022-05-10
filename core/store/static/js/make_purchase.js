@@ -1,4 +1,4 @@
-function make_purchase(products, action, subtotal, total) {
+function make_purchase(products, action, subtotal, total, url) {
   $.ajax({
     type: "POST",
     url: url,
@@ -16,14 +16,6 @@ function make_purchase(products, action, subtotal, total) {
         html: html,
         icon: "error",
       });
-    } else {
-      Swal.fire({
-        title: "Compra realizada exitosamente",
-        html: "<p>Compra realizada exitosamente!</p>",
-        icon: "success",
-      });
-      sessionStorage.clear();
-      location.reload();
     }
   });
 }

@@ -11,9 +11,8 @@ $(document).ready(function () {
       id_product = id_product.toString();
       const id_local = document.getElementById('id_local').value;
       const size_product = JSON.parse(sessionStorage.getItem(id_local)).size;
-      validate_stock(id_product, size_product, value_ammount, url, value_color, price_product);
-      alert('LLEGUE')
-      $("#myModal").modal("hide");
+      $('#modal').modal('hide');
+      validate_stock_cart(id_product, size_product, value_ammount, url, id_local, value_color);
     });
   });
   

@@ -33,11 +33,12 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             data['color2'] = product_return.secondary_color
             data['color3'] = product_return.last_color
         elif request.POST['action'] == 'validate':
-            stock = Stock.objects.get(product = self.object)
+            product_id = int(request.POST['product'])
+            stock = Stock.objects.get(product = product_id)
             stock_by_size = StockProductSize.objects.filter(stock = stock)
             for st_size in stock_by_size:
                 if st_size.size.size_product == request.POST['size']:
-                    if st_size.amount - int(request.POST['ammount']):
+                    if st_size.amount - int(request.POST['ammount']) > 0:
                         data['success'] = ''
                     else:
                         data['error'] = 'No hay suficiente stock'
