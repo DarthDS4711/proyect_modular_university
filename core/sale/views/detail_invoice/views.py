@@ -21,4 +21,6 @@ class DetailInvoiceView(LoginRequiredMixin, ObtainColorMixin, DetailView):
         context["image"] = "img/shop-cart.png"
         context['color'] = self.get_number_color()
         context['details'] = DetailSale.objects.filter(sale = self.object)
+        context['number_elements'] = self.object.get_number_elements()
+        context['iva'] = "16%"
         return context

@@ -3,10 +3,24 @@
 
 {% block content %}
 <div class="box-layout">
-    <h1>Factura: {{object.id}}</h1>
+    <h1>Factura</h1>
     <div class="box-content">
-        <h5>Fecha</h5>
-        <p>{{object.date_sale}}</p>
+        <div class="flex-item">
+          <div class="cols-2">
+            <label>Nombre empresa: </label>
+            <span>Shop IA online</span><br>
+            <label>Dirección: </label>
+            <span>My enterprise avenue #136</span><br>
+            <label>CIF: </label>
+            <span>15545156941691</span><br>
+          </div>
+          <div class="cols-2">
+            <label>Fecha: </label>
+            <span>{{object.date_sale}}</span>
+            <label>Número factura: </label>
+            <span>{{object.id}}</span>
+          </div>
+        </div>
         <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
@@ -14,7 +28,9 @@
                 <th>Color</th>
                 <th>Talla</th>
                 <th>Cantidad</th>
-                <th>Subtotal</th>
+                <th>Precio unidad</th>
+                <th>Fecha Garantía</th>
+                <th>Estado Garantía</th>
               </tr>
             </thead>
             <tbody>
@@ -24,10 +40,20 @@
                 <td>{{detail.size}}</td>
                 <td>{{detail.ammount}}</td>
                 <td>${{detail.subtotal}}</td>
+                <td>{{detail.get_max_warranty_date}}</td>
+                <td>{{detail.get_status_warranty}}</td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
+          <label>Total productos: </label>
+          <span>{{number_elements}}</span><br>
+          <label>Iva: </label>
+          <span>{{iva}}</span><br>
+          <label>Subtotal: </label>
+          <span>{{object.subtotal}}</span><br>
+          <label>Total: </label>
+          <span>{{object.total}}</span><br>
     </div>
 </div>
 {% endblock %}
