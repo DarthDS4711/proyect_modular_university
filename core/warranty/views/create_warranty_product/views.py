@@ -25,7 +25,8 @@ class CreateWarrantyProductView(LoginRequiredMixin, ValidateSessionGroupMixin, O
             data = form.save()
         except Exception as e:
             data['error'] = str(e)
-        # regreso de la respuesta del servidor
+        # regreso de la respuesta del 
+        print(data)
         return JsonResponse(data, safe=False)
 
 

@@ -28,6 +28,16 @@ class Sale(models.Model):
         for detail_sale in detail_sales:
             number_elements_sale += detail_sale.ammount
         return number_elements_sale
+    
+    def toJSON(self):
+        item = {}
+        item['id'] = self.id
+        item['user'] = self.user.first_name
+        item['date_sale'] = self.date_sale.strftime('%Y-%m-%d')
+        item['subtotal'] = format(self.subtotal, ".2f")
+        item['iva'] = format(self.iva, ".2f")
+        item['total'] = format(self.total, ".2f")
+        return item
         
 
 # table for the detail of the sale

@@ -7,7 +7,7 @@ from core.stock.models import Stock, StockProductSize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 
-from core.warranty.models import WarrantyProduct, WarrantySale
+from core.warranty.models import WarrantyProduct
 
 
 
@@ -31,7 +31,7 @@ class DetailProductView(LoginRequiredMixin, ObtainColorMixin , DetailView):
         stock_by_size = StockProductSize.objects.filter(stock = stock)
         for st_size in stock_by_size:
             if st_size.size.size_product == request.POST['size']:
-                if st_size.amount - int(request.POST['ammount']):
+                if st_size.amount - int(request.POST['ammount']) > 0:
                     data['success'] = ''
                 else:
                     data['error'] = 'No hay suficiente stock'
