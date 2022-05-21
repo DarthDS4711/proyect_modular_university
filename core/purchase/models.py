@@ -1,17 +1,15 @@
 from datetime import datetime
 from django.db import models
-from core.supplier.models import Supplier
 from core.product.models import Product
 
 
 # table for the purchase
 class Purchase(models.Model):
     id = models.BigAutoField(primary_key=True)
-    supplier = models.ForeignKey(Supplier, verbose_name='supplier_id', on_delete=models.PROTECT)
     date_purchase = models.DateField(default=datetime.now, verbose_name='date_sale')
     subtotal = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='subtotal')
-    iva = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='iva')
-    total = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='iva')
+    iva = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='iva', default=0.16)
+    total = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='total')
 
     class Meta:
         verbose_name = "Purchase"

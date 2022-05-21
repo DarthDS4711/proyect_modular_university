@@ -22,6 +22,13 @@ class Stock(models.Model):
     
     def __str__(self):
         return f'Stock producto: {self.product.name}'
+    
+    def calculate_amount(self):
+        ammount = 0
+        stock_sizes = StockProductSize.objects.filter(stock = self)
+        for stock in stock_sizes:
+            ammount += stock.amount
+        self.amount = ammount
 
 # stock por el tamaño de la prenda
 class StockProductSize(models.Model):

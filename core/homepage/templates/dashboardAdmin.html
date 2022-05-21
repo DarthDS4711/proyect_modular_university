@@ -3,6 +3,9 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/dashboard_admin/styles.css' %}">
+<script src="{% static 'js/dashboard_admin/chart.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/bar_chart.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/filled_line_chart.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -43,14 +46,14 @@
         <h2>Estádisticas</h2>
         <div class="chart-style">
             <h3>Ventas de la semana</h3>
-            <canvas id="line-chart"></canvas>
+            <canvas id="myChart"></canvas>
             <a class="btn btn-primary" href="#">Predicción de ventas</a>
             <a class="btn btn-warning" href="#">Detalles</a>
             <hr>
         </div>
         <div class="chart-style">
             <h3>Ventas del mes</h3>
-            <canvas id="myChart"></canvas>
+            <canvas id="line-chart"></canvas>
             <a class="btn btn-primary" href="#">Predicción de ventas</a>
             <a class="btn btn-warning" href="#">Detalles</a>
             <hr>
@@ -60,21 +63,10 @@
             <canvas id="graphic"></canvas>
             <a class="btn btn-primary" href="#">Más detalles</a>
             <a class="btn btn-warning" href="#">Administración</a>
+            <button class="btn btn-outline-dark" id="categories">Obtener categorias</button>
             <hr>
         </div>
-        <div class="chart-style">
-            <h3>Número de usuarios de la página</h3>
-            <canvas id="bar-chart-horizontal"></canvas>
-        </div>
+        <input type="hidden" id="url" value="{% url 'app_views:dashboard_admin' %}">
     </div>
 </div>
-
-
-{% endblock %}
-
-{% block scripts %}
-<script src="{% static 'js/dashboard_admin/chart.js' %}"></script>
-<script src="{% static 'js/dashboard_admin/bar_chart.js' %}"></script>
-<script src="{% static 'js/dashboard_admin/filled_line_chart.js' %}"></script>
-<script src="{% static 'js/dashboard_admin/line_chart.js' %}"></script>
 {% endblock %}

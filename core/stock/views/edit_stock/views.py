@@ -28,7 +28,6 @@ class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            print(request.POST)
             if request.POST['action'] == 'update':
                 # obtención del stock actual
                 stock = self.object
@@ -47,9 +46,11 @@ class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
                     for stock_size in stock_sizes_product:
                         stock_size.amount = list_ammounts[number_ammounts]
                         stock_size.save()
+                        stock_size.save(using='stock_product')
                         number_ammounts += 1
                     stock.amount = sum(list_ammounts)
                     stock.save()
+                    stock.save(using='stock_product')
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor

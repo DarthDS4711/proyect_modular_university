@@ -1,20 +1,82 @@
-new Chart(document.getElementById("bar-chart-horizontal"), {
-  type: 'horizontalBar',
-  data: {
-    labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
-    datasets: [
-      {
-        label: "Population (millions)",
-        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-        data: [2478,5267,734,784,433]
-      }
-    ]
-  },
-  options: {
-    legend: { display: false },
-    title: {
-      display: true,
-      text: 'Predicted world population (millions) in 2050'
+$(document).ready(function () {
+  function getMonth(number) {
+    let month = "";
+    switch (number) {
+      case 1:
+        month = "Enero";
+        break;
+      case 2:
+        month = "Febreo";
+        break;
+      case 3:
+        month = "Marzo";
+        break;
+      case 4:
+        month = "Abril";
+        break;
+      case 5:
+        month = "Mayo";
+        break;
+      case 6:
+        month = "Junio";
+        break;
+      case 7:
+        month = "Julio";
+        break;
+      case 8:
+        month = "Agosto";
+        break;
+      case 9:
+        month = "Septiembre";
+        break;
+      case 10:
+        month = "Octubre";
+        break;
+      case 11:
+        month = "Noviembre";
+        break;
+      case 12:
+        month = "Diciembre";
+        break;
     }
+    return month;
   }
+
+  function show_graphic(data_response) {
+    const actual_date = Date.now();
+    const actual_number = new Date(actual_date).getMonth();
+    new Chart(document.getElementById("line-chart"), {
+      type: "horizontalBar",
+      data: {
+        labels: ["Mes"],
+        datasets: [
+          {
+            label: "Cantidad ventas",
+            backgroundColor: [
+              "#FF5733",
+            ],
+            data: [data_response.sale_month],
+          },
+        ],
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: "Ventas realizadas en el mes: " + "" + getMonth(actual_number + 1),
+        },
+      },
+    });
+  }
+
+  const url = document.getElementById("url").value;
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: {
+      action: "bar_month",
+    },
+  }).done(function (response) {
+    show_graphic(response);
+  });
 });

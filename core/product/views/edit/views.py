@@ -8,6 +8,8 @@ from core.product.forms.product.forms import ProductForm
 from core.product.forms.size.form import SizeForm
 from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.stock.models import Stock, StockProductSize
+from django.db import transaction
 
 
 class UpdateProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
@@ -24,12 +26,48 @@ class UpdateProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCol
     
     def get_form(self):
         return super().get_form(ProductForm)
+
+    def return_sizes_product(self, stock_product_size):
+        list_sizes = []
+        for stock_size in stock_product_size:
+            list_sizes.append(stock_size.size.id)
+        return list_sizes
+    
+    def make_the_transaction_sizes_stock(self):
+        # procedimiento para actualizar el detail stock
+        # del producto editado
+        stock_product = Stock.objects.get(product = self.object)
+        detail_stock_product = StockProductSize.objects.filter(stock = stock_product)
+        sizes_stock_product = self.return_sizes_product(detail_stock_product)
+        sizes_product = self.object.size.exclude(id__in=sizes_stock_product)
+        for size in sizes_product:
+            new_stock_size = StockProductSize()
+            new_stock_size.stock = stock_product
+            new_stock_size.size = size
+            new_stock_size.save()
+            new_stock_size.save(using='stock_product')
+        # se vuelven a utilizar las mismas variables para ver cuales 
+        # tallas ya no se encuentran en el producto
+        sizes_product = self.object.size.all()
+        detail_stock_product = StockProductSize.objects.filter(
+            stock = stock_product).exclude(size__in = sizes_product)
+        for size_del in detail_stock_product:
+            id_stock_size = size_del.id
+            size_del.delete()
+            StockProductSize.objects.using('stock_product').get(
+                id = id_stock_size).delete(using='stock_product')
+        # recalculo del ammount stock
+        stock_product.calculate_amount()
+        stock_product.save()
+        stock_product.save(using='stock_product')
     
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            form = self.get_form()
-            data = form.save()
+            with transaction.atomic():
+                form = self.get_form()
+                data = form.save()
+                self.make_the_transaction_sizes_stock()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)
