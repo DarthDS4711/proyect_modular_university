@@ -1,60 +1,69 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  </head>
-  <body>
-    <h1>Factura</h1>
-    <div class="row">
-      <div class="col-6">
-        <label><b> Nombre empresa: </b></label>
-        <span>Shop IA online</span><br>
-        <label>Dirección: </label>
-        <span>My enterprise avenue #136</span><br>
-        <label>CIF: </label>
-        <span>15545156941691</span><br>
-      </div>
-      <div class="col-6">
-        <label>Fecha: </label>
-        <span>{{object.date_sale}}</span><br>
-        <label>Número factura: </label>
-        <span>{{object.id}}</span>
-      </div>
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,100&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Factura</h1>
+  <div class="row">
+    <div class="col-6">
+      <label><b> Nombre empresa: </b></label>
+      <span>Shop IA online</span><br>
+      <label>Dirección: </label>
+      <span>My enterprise avenue #136</span><br>
+      <label>CIF: </label>
+      <span>15545156941691</span><br>
     </div>
-    <table class="table table-dark">
-        <thead class="thead-dark">
-          <tr>
-            <th>Producto</th>
-            <th>Talla</th>
-            <th>Cantidad</th>
-            <th>Precio unidad</th>
-            <th>Fecha Garantía</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for detail in details %}
-              <tr>
-                <td>{{detail.product}}</td>
-                <td>{{detail.size}}</td>
-                <td>{{detail.ammount}}</td>
-                <td>${{detail.subtotal}}</td>
-                <td>{{detail.get_max_warranty_date}}</td>
-              </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-      <label>Total productos: </label>
-      <span>{{number_elements}}</span><br>
-      <label>Iva: </label>
-      <span>{{iva}}</span><br>
-      <label>Subtotal: </label>
-      <span>{{object.subtotal}}</span><br>
-      <label>Total: </label>
-      <span>{{object.total}}</span><br>
-  </body>
-</html>
+    <div class="col-6">
+      <label>Fecha: </label>
+      <span>{{object.date_sale}}</span><br>
+      <label>Número factura: </label>
+      <span>{{object.id}}</span>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Talla</th>
+        <th>Cantidad</th>
+        <th>Precio unidad</th>
+        <th>Fecha Garantía</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for detail in details %}
+      <tr>
+        <td>{{detail.product}}</td>
+        <td>{{detail.size}}</td>
+        <td>{{detail.ammount}}</td>
+        <td>${{detail.subtotal}}</td>
+        <td>{{detail.get_max_warranty_date}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <label>Total productos: </label>
+  <span>{{number_elements}}</span><br>
+  <label>Iva: </label>
+  <span>{{iva}}</span><br>
+  <label>Subtotal: </label>
+  <span>{{object.subtotal}}</span><br>
+  <label>Total: </label>
+  <span>{{object.total}}</span><br>
+</body>
 
+</html>

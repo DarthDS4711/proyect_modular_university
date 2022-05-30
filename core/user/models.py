@@ -16,6 +16,7 @@ class User(AbstractUser):
     token = models.UUIDField(primary_key=False, editable=False, null=True, blank=True)
     date_birthday = models.DateField(default=datetime.now, verbose_name='date_birthday')
     gender = models.CharField(verbose_name='gender', max_length=10, choices=gender_choices, default='male')
+    email = models.EmailField(verbose_name='email', blank=True, unique=True)
 
     def get_image(self):
         if self.image:

@@ -8,6 +8,7 @@ from core.product.forms.size.form import SizeForm
 from core.product.models import Category, Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from django.db import transaction
 
 
 
@@ -25,10 +26,9 @@ class RegisterProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainC
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            # obtención de los datos
-            form = self.get_form()
-            # guardado de los datos
-            data = form.save()
+            with transaction.atomic():
+                form = self.get_form()
+                data = form.save()
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor
@@ -62,10 +62,9 @@ class RegisterCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, Obtain
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            # obtención de los datos
-            form = self.get_form()
-            # guardado de los datos
-            data = form.save()
+           with transaction.atomic():
+                form = self.get_form()
+                data = form.save()
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor
@@ -95,10 +94,22 @@ class RegisterSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColo
         return super().get_form(SizeForm)
     
 
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            with transaction.atomic():
+                form = self.get_form()
+                data = form.save()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Registrar talla"
-        context['action'] = "Guardar"
-        context['color'] = self.get_number_color()
+        context["title"] = "Registrar Talla"
         context['list'] = self.success_url
+        context['action'] = 'register' 
+        context['btn'] = 'Registrar talla'
+        context['color'] = self.get_number_color()
         return context

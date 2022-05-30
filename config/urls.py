@@ -42,6 +42,8 @@ urlpatterns = [
     # rutas relacionadas al color de la página
     path('color-page/', include('core.colorpage.urls')),
     # rutas relacionadas con la facturación del usuario
-    path('sale/', include('core.sale.urls'))
+    path('sale/', include('core.sale.urls')),
+    # rutas relacionadas con la subida de facturas al sistema
+    path('purchase/', include('core.purchase.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -92,6 +92,30 @@ class Product(models.Model):
         ordering = ['id']
         db_table = 'products'
     
+    def convert_json_sizes(self):
+        sizes = self.size.all()
+        list_sizes = []
+        for size in sizes:
+            list_sizes.append(size.to_json())
+        return list_sizes
+    
+    def to_json(self):
+        item = {}
+        item['id'] = self.id
+        item['name'] = self.name
+        item['sizes'] = self.convert_json_sizes()
+        item['color1'] = self.primary_color
+        item['color2'] = self.secondary_color
+        item['color3'] = self.last_color
+        item['pvp'] = self.pvp
+        return item
+    
+    def to_json_faster(self):
+        item = {}
+        item['id'] = self.id
+        item['name'] = self.name
+        return item
+    
     def get_image(self):
         if self.image:
             return '{}{}'.format(MEDIA_URL, self.image)

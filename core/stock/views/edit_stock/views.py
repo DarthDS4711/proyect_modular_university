@@ -25,32 +25,36 @@ class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
     def get_form(self):
         return super().get_form(StockEditForm)
     
+
+    # función que guardará los cambios en ambas bases de datos
+    def edit_actual_stock(self, request):
+        stock = self.object
+        product = stock.product
+        is_active = True if request.POST['is_activte'] == 'on' else False
+        stock.is_activte = is_active
+        list_ammounts = []
+        sizes_product = product.size.all()
+        stock_sizes_product = StockProductSize.objects.filter(stock = stock)
+        for size in sizes_product:
+            name_field = size.size_product
+            ammount_size = int(request.POST[name_field])
+            list_ammounts.append(ammount_size)      
+        number_ammounts = 0
+        for stock_size in stock_sizes_product:
+            stock_size.amount = list_ammounts[number_ammounts]
+            stock_size.save()
+            stock_size.save(using='stock_product')
+            number_ammounts += 1
+        stock.amount = sum(list_ammounts)
+        stock.save()
+        stock.save(using='stock_product')
+    
     def post(self, request, *args, **kwargs):
         data = {}
         try:
             if request.POST['action'] == 'update':
                 # obtención del stock actual
-                stock = self.object
-                product = stock.product
-                is_active = True if request.POST['is_activte'] == 'on' else False
-                with transaction.atomic():
-                    stock.is_activte = is_active
-                    list_ammounts = []
-                    sizes_product = product.size.all()
-                    stock_sizes_product = StockProductSize.objects.filter(stock = stock)
-                    for size in sizes_product:
-                        name_field = size.size_product
-                        ammount_size = int(request.POST[name_field])
-                        list_ammounts.append(ammount_size)      
-                    number_ammounts = 0
-                    for stock_size in stock_sizes_product:
-                        stock_size.amount = list_ammounts[number_ammounts]
-                        stock_size.save()
-                        stock_size.save(using='stock_product')
-                        number_ammounts += 1
-                    stock.amount = sum(list_ammounts)
-                    stock.save()
-                    stock.save(using='stock_product')
+                self.edit_actual_stock(request)
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor

@@ -1,0 +1,65 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesPurchasePage.css' %}">
+<link href="{% static 'libs/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'libs/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+<script src="{% static 'libs/select2-4.0.13/js/select2.min.js' %}"></script>
+<script src="{% static 'libs/select2-4.0.13/js/i18n/es.js' %}"></script>
+<script src="{% static 'js/select2_product_purchase.js' %}"></script>
+<script src="{% static 'js/obtain_data_radio_input.js' %}"></script>
+<script src="{% static 'js/secondary_function_edit_modal.js' %}"></script>
+<script src="{% static 'js/functions.js' %}"></script>
+<script src="{% static 'js/load_data_localstorage.js' %}"></script>
+<script src="{% static 'js/make_json_array_product.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/invoice.png' %}" class="img-style">
+        <input type="hidden" name="url" value="#" id="url">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>Nombre del producto</label>
+            <select id="product_id" class="form-control select2"></select>
+            <button type="button" class="btn btn-primary" id="select-product">Seleccionar</button>
+        </div>
+        <div id="details-product">
+            {% include 'modal_purchase.html' %}
+        </div>
+        <table class="table table-striped" id="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th class="col-sm-4">Imagen</th>
+                    <th class="col-sm-1">Cantidad</th>
+                    <th class="col-sm-1">Color</th>
+                    <th class="col-sm-2">Precio</th>
+                    <th class="col-sm-2">Talla</th>
+                    <th class="col-sm-2">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="t_data">
+                
+            </tbody>
+        </table>
+        <h4>Subtotal</h4>
+        <p id="subtotal">$0.00</p>
+        <h4>Total</h4>
+        <p id="total">$0.00</p>
+        <button type="submit" class="btn btn-primary" id="btn-purchase">Subir Factura</button>
+        <a href="{% url 'purchase:options' %}" class="btn btn-danger">Cancelar</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static  'js/upload_invoice.js'%}"></script>
+<script src="{% static 'js/add_product_local_storage.js' %}"></script>
+<script src="{% static 'js/edit_modal_purchase.js' %}"></script>
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

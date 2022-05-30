@@ -16,12 +16,16 @@ class CategoryForm(forms.ModelForm):
             }),
         }
 
+    # sobreescritura del método save para guardar en bases 
+    # de datos distribuidas
     def save(self, commit=True):
         data = {}
         form = super()
         try:
             if form.is_valid():
-                form.save()
+                instance_save =  form.save(commit=False)
+                instance_save.save()
+                instance_save.save(using='stock_product')
             else:
                 data['error'] = form.errors
         except Exception as e:

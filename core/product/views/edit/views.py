@@ -95,11 +95,23 @@ class EditSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMix
         return super().get_form(SizeForm)
     
 
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            with transaction.atomic():
+                form = self.get_form()
+                data = form.save()
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = "Editar categoría"
-        context['action'] = "Editar"
+        context["title"] = "Actualizar Talla"
         context['list'] = self.success_url
+        context['action'] = 'update' 
+        context['btn'] = 'Actualizar talla'
         context['color'] = self.get_number_color()
         return context
 
@@ -121,8 +133,9 @@ class UpdateCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCo
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            form = self.get_form()
-            data = form.save()
+            with transaction.atomic():
+                form = self.get_form()
+                data = form.save()
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data)

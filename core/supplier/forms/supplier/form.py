@@ -22,7 +22,9 @@ class SupplierForm(forms.ModelForm):
         form = super()
         try:
             if form.is_valid():
-                form.save()
+                instance_save =  form.save(commit=False)
+                instance_save.save()
+                instance_save.save(using='stock_product')
             else:
                 data['error'] = form.errors
         except Exception as e:
