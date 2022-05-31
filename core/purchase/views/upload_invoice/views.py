@@ -24,6 +24,8 @@ class UpdloadPurchaseView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainC
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
+    # función que realiza a través de una petición ajax la subida
+    # de la factura deseada a nuestro sistema
     def upload_invoice(self, request):
         data = {}
         products = json.loads(request.POST['products'])

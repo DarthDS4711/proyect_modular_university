@@ -17,8 +17,8 @@
             </div>
             <div class="cols-2">
                 <p><a href="{% url 'purchase:upload' %}" class="btn orange-btn">Agregar facturas</a></p>
-                <p><a href="#" class="btn orange-btn">Listar Facturas</a></p>
-                <p><a href="#" class="btn orange-btn">Comparacion(Gastos - Ingresos)</a></p>
+                <p><a href="{% url 'purchase:list_invoices' %}" class="btn orange-btn">Listar Facturas</a></p>
+                <p><a href="{% url 'purchase:comparation' %}" class="btn orange-btn">Comparacion(Gastos - Ingresos)</a></p>
             </div>
         </div>
     </div>

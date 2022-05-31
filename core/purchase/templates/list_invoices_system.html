@@ -1,0 +1,32 @@
+{% extends 'baseView.html' %} {% load static %} {% block head %} {% endblock %}
+{% block content %}
+<div class="box-layout">
+  <h1>{{title}}</h1>
+  <div class="box-content">
+    <img src="{% static image %}" alt="" class="img-style" />
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>N° Factura</th>
+          <th>Total</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for invoice in page_obj %}
+          <td>{{invoice.id}}</td>
+          <td>${{invoice.total}}</td>
+          <td>{{invoice.date_purchase}}</td>
+          <td>
+            <a href="#" class="btn btn-danger">Detalles</a>
+            <a href="#" class="btn btn-success">PDF</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% include 'pagination_btns.html' %}
+  </div>
+</div>
+{% endblock %}
