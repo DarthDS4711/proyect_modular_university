@@ -5,16 +5,14 @@ from core.user.forms.form_user import UserEditForm
 from core.user.models import User
 from core.classes.obtain_color import ObtainColorMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from core.mixins.mixins import ValidateSessionGroupMixin
 
 
 
-class UpdateUserView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
+class UpdateUserView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
     model = User
     success_url = reverse_lazy('app_views:homepage')
     template_name = 'signin.html'
     login_url = reverse_lazy('access:Login')
-    group_permisson = 'Administrator'
 
     def get_form(self):
         return super().get_form(UserEditForm)

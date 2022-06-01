@@ -3,6 +3,7 @@ from core.homepage.views.dashboard_admin.views import DashboardAdminView
 from core.homepage.views.dashboard_user.views import DashboardUserView
 
 from core.homepage.views.home.views import HomepageView
+from core.homepage.views.not_found_404.views import Template404View
 app_name = 'app_views'
 
 urlpatterns = [
@@ -11,5 +12,7 @@ urlpatterns = [
     # ruta para el dashboard del usuario
     path('dashboard-user/', DashboardUserView.as_view(), name='dashboard_user'),
     # ruta para el dashboard del administrador
-    path('dashboard-admin/', DashboardAdminView.as_view(), name='dashboard_admin')
+    path('dashboard-admin/', DashboardAdminView.as_view(), name='dashboard_admin'),
+    # ruta para la página de error 404
+    path('404/', Template404View.as_view(), name='404_page')
 ]
