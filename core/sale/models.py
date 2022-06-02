@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.db import models
 from django.forms import model_to_dict
-from core.user.models import User
+from core.user.models import DirectionUser, User
 from core.product.models import Product, Size
 from core.warranty.models import WarrantyProduct
 
@@ -14,6 +14,8 @@ class Sale(models.Model):
     subtotal = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='subtotal')
     iva = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='iva', default=0.16)
     total = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='iva')
+    # dirección del usuario
+    direction = models.ForeignKey(DirectionUser, verbose_name='direction_id', on_delete=models.PROTECT, null=True)
 
 
     class Meta:

@@ -8,7 +8,7 @@ from core.status_send.models import StatusSendSale
 
 class ListStatusUserAdminSendView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = StatusSendSale
-    paginate_by = 25
+    paginate_by = 40
     template_name = 'list_status_send_store.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'

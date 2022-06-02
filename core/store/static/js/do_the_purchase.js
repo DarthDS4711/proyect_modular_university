@@ -6,6 +6,7 @@ $(document).ready(function () {
     const subtotal = document.getElementById("subtotal").innerHTML;
     const total = document.getElementById("total").innerHTML;
     const products = return_json_array_products();
+    const direction_user = document.getElementById('direction').value;
     $.ajax({
       type: "POST",
       url: url,
@@ -22,14 +23,16 @@ $(document).ready(function () {
           icon: "error",
         });
       } else {
-        make_purchase(products, 'buy', subtotal, total, url);
+        make_purchase(products, 'buy', subtotal, total, url, direction_user);
         Swal.fire({
-          title: "Compra realizada exitosamente",
-          html: "<p>Compra realizada exitosamente!</p>",
+          title: "Exito",
+          html: "<p>Factura subida exitosamente!</p>",
           icon: "success",
+          timer : 3000
+        }).then(function(){
+          sessionStorage.clear();
+          location.reload();
         });
-        sessionStorage.clear();
-        location.reload();
       }
     });
   });

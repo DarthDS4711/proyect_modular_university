@@ -37,7 +37,7 @@
             <h5>Dirección de envio</h5>
             <select id="direction" class="form-control">
                 {% for direction_user in directions %}
-                    <option value="{{direction_user.direction}}">{{direction_user.direction}}</option>
+                    <option value="{{direction_user.id}}">{{direction_user.name}}</option>
                 {% endfor %}
             </select>
         </div>

@@ -1,4 +1,4 @@
-function make_purchase(products, action, subtotal, total, url) {
+function make_purchase(products, action, subtotal, total, url, direction_user) {
   $.ajax({
     type: "POST",
     url: url,
@@ -7,6 +7,7 @@ function make_purchase(products, action, subtotal, total, url) {
       action: action,
       subtotal: subtotal,
       total: total,
+      direction_user: direction_user
     },
   }).done(function (response) {
     if (response.error) {

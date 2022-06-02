@@ -6,10 +6,10 @@ from core.user.models import DirectionUser
 class DirectionUserForm(forms.ModelForm):
     class Meta:
         model = DirectionUser
-        fields = ['direction', 'is_active']
+        exclude = ('user',)
         widgets = {
-            'direction' : forms.TextInput(attrs={
-                'placeholder' : 'Dirección completa del lugar'
+            'interior_number' : forms.TextInput(attrs={
+                'required' : False
             })
         }
     

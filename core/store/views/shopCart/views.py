@@ -20,12 +20,11 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def return_status_stock(self, request):
+    def return_status_stock(self, request, products):
         # request que nos valida primero la compra mediante la deteccion de
         # faltantes en el stock por medio de bases de datos distribuidas
         data = {}
         try:
-            products = json.loads(request.POST['products'])
             validate_transaction = True
             with transaction.atomic():
                 for product in products:
@@ -60,6 +59,8 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                 sale.user = self.request.user
                 sale.subtotal = float(request.POST['subtotal'])
                 sale.total = float(request.POST['total'])
+                direction = DirectionUser.objects.get(id = int(request.POST['direction_user']))
+                sale.direction = direction
                 sale.save()
                 # recorrido de los productos solicitados para su procesamiento
                 for product in products:
@@ -85,40 +86,52 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
         except Exception as e:
             data['error'] = str(e)
         return data
+    
+    def validate_update_stock_product(self, request):
+        data = {}
+        product_id = int(request.POST['product'])
+        stock = Stock.objects.get(product=product_id)
+        stock_by_size = StockProductSize.objects.filter(stock=stock)
+        for st_size in stock_by_size:
+            if st_size.size.size_product == request.POST['size']:
+                if st_size.amount - int(request.POST['ammount']) > 0:
+                    data['success'] = ''
+                else:
+                    data['error'] = 'No hay suficiente stock'
+        return data
 
     # sobrescritura del método post para la obtención y guardado de datos
 
     def post(self, request, *args, **kwargs):
         data = {}
         print(request.POST)
-        # caso de obtención de los colores de un producto en particular
-        if request.POST['action'] == 'obtain':
-            id_prod = int(request.POST['data'])
-            product_return = Product.objects.get(id=id_prod)
-            data['color1'] = product_return.primary_color
-            data['color2'] = product_return.secondary_color
-            data['color3'] = product_return.last_color
-        elif request.POST['action'] == 'validate':
-            product_id = int(request.POST['product'])
-            stock = Stock.objects.get(product=product_id)
-            stock_by_size = StockProductSize.objects.filter(stock=stock)
-            for st_size in stock_by_size:
-                if st_size.size.size_product == request.POST['size']:
-                    if st_size.amount - int(request.POST['ammount']) > 0:
-                        data['success'] = ''
-                    else:
-                        data['error'] = 'No hay suficiente stock'
-        # caso de obtención de la dirección de la imagen y el nombre de un producto
-        elif request.POST['action'] == 'image':
-            id_prod = int(request.POST['data'])
-            product_return = Product.objects.get(id=id_prod)
-            data['image'] = product_return.get_image()
-            data['name'] = product_return.name
-        elif request.POST['action'] == 'validate_buy':
-            data = self.return_status_stock(request)
-        elif request.POST['action'] == 'buy':
-            data = self.do_the_purchase(request)
-
+        match request.POST['action']:
+            # caso de obtención de los colores del producto
+            case 'obtain':
+                id_prod = int(request.POST['data'])
+                product_return = Product.objects.get(id=id_prod)
+                data['color1'] = product_return.primary_color
+                data['color2'] = product_return.secondary_color
+                data['color3'] = product_return.last_color
+            # caso donde se valida la edición del producto (cantidad)
+            case 'validate':
+                data = self.validate_update_stock_product(request)
+            # caso donde retorna el nombre del producto y su imagen
+            case 'image':
+                id_prod = int(request.POST['data'])
+                product_return = Product.objects.get(id=id_prod)
+                data['image'] = product_return.get_image()
+                data['name'] = product_return.name
+            # caso donde se prevalida la cantidad total de productos a comprar
+            case 'validate_buy':
+                products = json.loads(request.POST['products'])
+                if len(products) > 0:
+                    data = self.return_status_stock(request, products)
+                else:
+                    data['error'] = 'No hay productos por comprar'
+            # caso donde se efectua la compra
+            case 'buy':
+                data = self.do_the_purchase(request)
         # retorno de la información como JSON al front-end
         return JsonResponse(data, safe=False)
 

@@ -6,7 +6,7 @@ from core.mixins.mixins import ValidateSessionGroupMixin
 from core.sale.models import Sale
 
 
-class ListInvoiceView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListInvoiceView(LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Sale
     paginate_by = 20
     template_name = 'list_invoices.html'

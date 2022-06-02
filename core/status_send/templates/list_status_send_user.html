@@ -17,6 +17,7 @@
                     <th>Fecha inicio envio</th>
                     <th>Fecha actual estado</th>
                     <th>Fecha llegada envio</th>
+                    <th>Dirección</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
                     <td>{{status.date_deliver_start}}</td>
                     <td>{{status.date_actual_state}}</td>
                     <td>{{status.date_arrival}}</td>
+                    <td>{{status.sale.direction}}</td>
                 </tr>
                 {% endfor %}
             </tbody>

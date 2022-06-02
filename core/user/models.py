@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from config.settings import MEDIA_URL, STATIC_URL
 from core.user.choises import gender_choices
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # modificación del modelo de usuario a usar en django
@@ -34,13 +35,21 @@ class User(AbstractUser):
 #Modelo relacionado a la agenda de direcciones del usuario
 class DirectionUser(models.Model):
     id = models.BigAutoField(primary_key=True)
-    direction = models.CharField(max_length=150, blank=True, verbose_name='direction')
+    name = models.CharField(max_length=50, blank=True, verbose_name='nombre direccion')
+    street = models.CharField(max_length=80, verbose_name='calle', blank=True)
+    postal_code = models.IntegerField(verbose_name='codigo postal', validators=[
+        # formato de validación para el código postal méxicano
+        MaxValueValidator(99999),
+        MinValueValidator(10000)
+    ], default=10000)
+    exterior_number = models.CharField(max_length=15, verbose_name='Numero exterior', default='')
+    interior_number = models.CharField(max_length=15, verbose_name='Numero interior', default='')
     user = models.ForeignKey(User, on_delete=models.PROTECT)
-    is_active = models.BooleanField(verbose_name='is_active', default=True)
+    is_active = models.BooleanField(verbose_name='Activo?', default=True)
 
 
     def __str__(self):
-        return f'{self.direction}'
+        return f'{self.name}'
     
 
     class Meta:
