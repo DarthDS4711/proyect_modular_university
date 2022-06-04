@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from core.access_system.forms.form_reset_pwd import UserResetPwdForm
+from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.classes.obtain_color import ObtainColorMixin
 from core.user.models import User
 from django.template.loader import render_to_string
@@ -30,6 +31,8 @@ class ResetPasswordEmailiew(FormView, ObtainColorMixin):
         URL = settings.DOMAIN if not settings.DEBUG else self.request.META['HTTP_HOST']
         user.token = uuid.uuid4()
         user.save()
+        if is_actual_state_autoreplication():
+            user.save(using='mirror_database')
 
         mailServer = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
         mailServer.starttls()

@@ -53,6 +53,7 @@ class ChangePasswordUseriew(FormView, ObtainColorMixin):
             data = self.update_password_token_user(new_password)
         else:
             data['error'] = 'Las contraseñas no coinciden'
+        print(data)
         return JsonResponse(data, safe=True)
 
 
