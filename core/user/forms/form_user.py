@@ -1,4 +1,5 @@
 from django import forms
+from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.user.models import User
 from django.db import transaction
 
@@ -24,11 +25,10 @@ class UserEditForm(forms.ModelForm):
         form = super()
         try:
             if form.is_valid():
-               with transaction.atomic():
-                    # obtenemos la contraseña del usuario
-                    u = form.save()
-                    # guardamos el usuario y verificamos que exista
-                    # asignamos un grupo por defecto en los usuarios
+                u = form.save(commit=False)
+                u.save()
+                if is_actual_state_autoreplication():
+                    u.save(using = 'mirror_database')
             else:
                 data['error'] = form.errors
         except Exception as e:

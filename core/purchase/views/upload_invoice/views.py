@@ -2,6 +2,8 @@ import json
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from core.app_functions.data_replication import is_actual_state_autoreplication
+from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Product, Size
@@ -31,24 +33,29 @@ class UpdloadPurchaseView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainC
         products = json.loads(request.POST['products'])
         total_invoice = float(request.POST['total'])
         subtotal_purchase = float(request.POST['subtotal'])
+        state_replication = is_actual_state_autoreplication()
         try:
-            with transaction.atomic():
-                purchase = Purchase()
-                purchase.total = total_invoice
-                purchase.subtotal = subtotal_purchase
-                purchase.save()
-                for product in products:
-                    detail_invoice = DetailPurchase()
-                    detail_invoice.purchase = purchase
-                    product_invoice = Product.objects.get(id = int(product['id']))
-                    detail_invoice.product = product_invoice
-                    size_product_invoice = Size.objects.get(id = int(product['size']))
-                    detail_invoice.size = size_product_invoice
-                    detail_invoice.ammount = int(product['ammount'])
-                    detail_invoice.color = product['color']
-                    detail_invoice.price = float(product['pvp']) / detail_invoice.ammount
-                    detail_invoice.subtotal = float(product['pvp'])
-                    detail_invoice.save()
+            purchase = Purchase()
+            purchase.total = total_invoice
+            purchase.subtotal = subtotal_purchase
+            purchase.save(force_insert=True)
+            if state_replication:
+                purchase.save(using='mirror_database')
+            purchase = Purchase.objects.all().latest('id')
+            for product in products:
+                detail_invoice = DetailPurchase()
+                detail_invoice.purchase = purchase
+                product_invoice = Product.objects.get(id = int(product['id']))
+                detail_invoice.product = product_invoice
+                size_product_invoice = Size.objects.get(id = int(product['size']))
+                detail_invoice.size = size_product_invoice
+                detail_invoice.ammount = int(product['ammount'])
+                detail_invoice.color = product['color']
+                detail_invoice.price = float(product['pvp']) / detail_invoice.ammount
+                detail_invoice.subtotal = float(product['pvp'])
+                detail_invoice.save()
+                if state_replication:
+                    detail_invoice.save(using='mirror_database')
         except Exception as e:
             data['error'] = str(e)
         return data
@@ -79,7 +86,10 @@ class UpdloadPurchaseView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainC
                 data['name'] = product_return.name
             # caso de hacer efectiva la subida de la factura
             case "upload_invoice":
-                data = self.upload_invoice(request)
+                with transaction.atomic():
+                    data = self.upload_invoice(request)
+                    if 'error' in data:
+                        rollback_data(3)
             
         return JsonResponse(data, safe=False)
     

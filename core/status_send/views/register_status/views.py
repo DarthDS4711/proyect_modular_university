@@ -1,11 +1,13 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
 
 
 
@@ -25,13 +27,11 @@ class RegisterStatusView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCo
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
-            # obtención de los datos
+        with transaction.atomic():
             form = self.get_form()
-            # guardado de los datos
             data = form.save()
-        except Exception as e:
-            data['error'] = str(e)
+            if 'error' in data:
+                rollback_data(3)
         # regreso de la respuesta del servidor
         return JsonResponse(data)
 

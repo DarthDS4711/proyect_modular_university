@@ -1,6 +1,9 @@
+from email.policy import default
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from core.app_functions.data_replication import is_actual_state_autoreplication
+from core.app_functions.rollback_data import rollback_data
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.forms.product.forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -29,23 +32,29 @@ class RegisterStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, 
             return number
         except:
             return 1
+    
+    # función que guarda el estatus de envio 
+    def save_status_send_sale(self, request):
+        data = {}
+        try:
+            sale_invoice = Sale.objects.get(id = int(request.POST['sale']))
+            status_send_invoice = StatusSend.objects.get(id = int(request.POST['status_send']))
+            date_arrival = request.POST['date_arrival']
+            status_send_sale = StatusSendSale()
+            status_send_sale.sale = sale_invoice
+            status_send_sale.status_send = status_send_invoice
+            status_send_sale.date_arrival = date_arrival
+            status_send_sale.save()
+            if is_actual_state_autoreplication():
+                status_send_sale.save(using='mirror_database')
+        except Exception as e:
+            data['error'] = str(e)
 
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
-            if request.POST.get('action') == None:
-                with transaction.atomic():
-                    print(request.POST)
-                    sale_invoice = Sale.objects.get(id = int(request.POST['sale']))
-                    status_send_invoice = StatusSend.objects.get(id = int(request.POST['status_send']))
-                    date_arrival = request.POST['date_arrival']
-                    status_send_sale = StatusSendSale()
-                    status_send_sale.sale = sale_invoice
-                    status_send_sale.status_send = status_send_invoice
-                    status_send_sale.date_arrival = date_arrival
-                    status_send_sale.save()
-            elif request.POST['action'] == 'autocomplete':
+        match request.POST['action']:
+            case 'autocomplete':
                 data = []
                 sales_data = Sale.objects.filter(id = self.convert_string_number(request))
                 if sales_data.exists():
@@ -53,8 +62,10 @@ class RegisterStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, 
                     item = sale.toJSON()
                     item['text'] = f'Factura: {sale.id}, Usuario: {sale.user.username}'
                     data.append(item)
-        except Exception as e:
-            data['error'] = str(e)
+            case _:
+                data = self.save_status_send_sale(request)
+                if 'error' in data:
+                    rollback_data(3)
         # regreso de la respuesta del servidor
         return JsonResponse(data, safe=False)
 

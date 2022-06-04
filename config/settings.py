@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'core.access_system',
     'core.store',
     'core.purchase',
-    'core.colorpage'
+    'core.colorpage',
+    'core.data'
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'crum.CurrentRequestUserMiddleware',
-    # personal middleware
+    # personal middleware for remove older sessions
     'django_session_timeout.middleware.SessionTimeoutMiddleware'
 ]
 

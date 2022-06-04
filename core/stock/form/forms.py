@@ -1,4 +1,5 @@
 from django import forms
+from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.stock.models import Stock
 
 
@@ -13,7 +14,10 @@ class StockForm(forms.ModelForm):
         form = super()
         try:
             if form.is_valid():
-                form.save()
+                instance = form.save()
+                instance.save(using='stock_product')
+                if is_actual_state_autoreplication():
+                    instance.save(using='mirror_database')
             else:
                 data['error'] = form.errors
         except Exception as e:
@@ -26,14 +30,17 @@ class StockEditForm(forms.ModelForm):
     class Meta:
         model = Stock
         # exclude es para quitar un campo de nuestro formulario
-        exclude = ['product']
+        exclude = ['product', 'amount']
     
     def save(self, commit=True):
         data = {}
         form = super()
         try:
             if form.is_valid():
-                form.save()
+                instance = form.save()
+                instance.save(using='stock_product')
+                if is_actual_state_autoreplication():
+                    instance.save(using='mirror_database')
             else:
                 data['error'] = form.errors
         except Exception as e:

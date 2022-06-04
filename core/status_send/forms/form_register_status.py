@@ -1,4 +1,5 @@
 from django import forms
+from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.status_send.models import StatusSend
 
 
@@ -18,7 +19,10 @@ class StatusSendForm(forms.ModelForm):
         print(form)
         try:
             if form.is_valid():
-                form.save()
+                instance = form.save(commit=False)
+                instance.save()
+                if is_actual_state_autoreplication():
+                    instance.save(using='mirror_database')
             else:
                 data['error'] = form.errors
         except Exception as e:

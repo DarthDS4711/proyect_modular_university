@@ -1,6 +1,7 @@
 from django import forms
+from core.app_functions.data_replication import is_actual_state_autoreplication
 
-from core.warranty.models import WarrantySale
+from core.warranty.models import Incidence, WarrantySale
 
 
 class WarrantyForm(forms.ModelForm):
@@ -22,12 +23,14 @@ class WarrantyForm(forms.ModelForm):
             })
         }
     
-    def save(self, commit = True):
+    def save(self, commit=True):
         data = {}
         form = super()
         try:
             if form.is_valid():
-                form.save()
+                instance = form.save()
+                if is_actual_state_autoreplication():
+                    instance.save(using='mirror_database')
             else:
                 data['error'] = form.errors
         except Exception as e:

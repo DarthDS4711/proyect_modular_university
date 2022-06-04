@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from core.access_system.forms.form_change_pwd import ChangePasswordForm
+from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.classes.obtain_color import ObtainColorMixin
 from core.user.models import User
 from django.db import transaction
@@ -36,6 +37,8 @@ class ChangePasswordUseriew(FormView, ObtainColorMixin):
                 user.set_password(new_password)
                 user.token = uuid.uuid4()
                 user.save()
+                if is_actual_state_autoreplication():
+                    user.save(using = 'mirror_database')
                 data['success'] = reverse_lazy('access:Login')
         except Exception as e:
             data['error'] = str(e)

@@ -1,11 +1,13 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.supplier.forms.supplier.form import SupplierForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.supplier.models import Supplier
+from django.db import transaction
 
     
 class EditSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
@@ -25,13 +27,13 @@ class EditSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColo
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
+        with transaction.atomic():
             # obtención de los datos
             form = self.get_form()
             # guardado de los datos
             data = form.save()
-        except Exception as e:
-            data['error'] = str(e)
+            if 'error' in data:
+                rollback_data(1)
         # regreso de la respuesta del servidor
         return JsonResponse(data, safe=False)
 

@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from core.access_system.forms.form import UserForm
 from core.user.models import User
 from core.classes.obtain_color import ObtainColorMixin
+from django.db import transaction
 
 
 
@@ -19,9 +20,13 @@ class SignInView(CreateView, ObtainColorMixin):
         data = {}
         try:
             # obtención de los datos
-            form = self.get_form()
-            # guardado de los datos
-            data = form.save()
+            with transaction.atomic():
+                form = self.get_form()
+                # guardado de los datos
+                data = form.save()
+                if 'error' in data:
+                    transaction.set_rollback(True)
+                    transaction.set_rollback(True, using = 'mirror_database')
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor

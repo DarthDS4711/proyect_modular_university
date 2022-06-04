@@ -1,11 +1,13 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.forms.form_warranty.forms import WarrantyForm
 from core.warranty.models import WarrantySale
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
 
 
 class EditWarrantyView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
@@ -22,14 +24,13 @@ class EditWarrantyView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColo
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
-            # obtención de los datos
+        with transaction.atomic():
+             # obtención de los datos
             form = self.get_form()
             # guardado de los datos
             data = form.save()
-        except Exception as e:
-            data['error'] = str(e)
-        # regreso de la respuesta del servidor
+            if 'error' in data:
+                rollback_data(3)
         return JsonResponse(data, safe=False)
 
 

@@ -1,4 +1,5 @@
 from django import forms
+from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.product.models import Category
 
 
@@ -26,6 +27,8 @@ class CategoryForm(forms.ModelForm):
                 instance_save =  form.save(commit=False)
                 instance_save.save()
                 instance_save.save(using='stock_product')
+                if is_actual_state_autoreplication():
+                    instance_save.save(using = 'mirror_database')
             else:
                 data['error'] = form.errors
         except Exception as e:

@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.app_functions.data_replication import is_actual_state_autoreplication
+from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
@@ -53,36 +55,45 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
         # la venta al sistema
         data = {}
         try:
+            status_replication = is_actual_state_autoreplication()
             products = json.loads(request.POST['products'])
-            with transaction.atomic():
-                sale = Sale()
-                sale.user = self.request.user
-                sale.subtotal = float(request.POST['subtotal'])
-                sale.total = float(request.POST['total'])
-                direction = DirectionUser.objects.get(id = int(request.POST['direction_user']))
-                sale.direction = direction
-                sale.save()
-                # recorrido de los productos solicitados para su procesamiento
-                for product in products:
-                    detail_sale = DetailSale()
-                    detail_sale.sale = sale
-                    product_sale = Product.objects.get(id=int(product['id']))
-                    detail_sale.product = product_sale
-                    detail_sale.ammount = int(product['amount'])
-                    detail_sale.color = product['color']
-                    size_sale = Size.objects.get(size_product=product['size'])
-                    detail_sale.size = size_sale
-                    detail_sale.price = float(product['price']) / detail_sale.ammount
-                    detail_sale.subtotal = float(product['price'])
-                    detail_sale.save()
-                    new_stock = Stock.objects.get(product=product_sale)
-                    new_stocks_size = StockProductSize.objects.get(stock=new_stock, size=size_sale)
-                    new_stocks_size.amount = new_stocks_size.amount - detail_sale.ammount
-                    new_stocks_size.save()
-                    new_stocks_size.save(using='stock_product')
-                    new_stock.amount = new_stock.amount - detail_sale.ammount
-                    new_stock.save()
-                    new_stock.save(using='stock_product')
+            sale = Sale()
+            sale.user = self.request.user
+            sale.subtotal = float(request.POST['subtotal'])
+            sale.total = float(request.POST['total'])
+            direction = DirectionUser.objects.get(id = int(request.POST['direction_user']))
+            sale.direction = direction
+            sale.save()
+            if status_replication:
+                sale.save(using='mirror_database')
+            sale = Sale.objects.all().latest('id')
+            # recorrido de los productos solicitados para su procesamiento
+            for product in products:
+                detail_sale = DetailSale()
+                detail_sale.sale = sale
+                product_sale = Product.objects.get(id=int(product['id']))
+                detail_sale.product = product_sale
+                detail_sale.ammount = int(product['amount'])
+                detail_sale.color = product['color']
+                size_sale = Size.objects.get(size_product=product['size'])
+                detail_sale.size = size_sale
+                detail_sale.price = float(product['price']) / detail_sale.ammount
+                detail_sale.subtotal = float(product['price'])
+                detail_sale.save()
+                if status_replication:
+                    detail_sale.save(using='mirror_database')
+                new_stock = Stock.objects.get(product=product_sale)
+                new_stocks_size = StockProductSize.objects.get(stock=new_stock, size=size_sale)
+                new_stocks_size.amount = new_stocks_size.amount - detail_sale.ammount
+                new_stocks_size.save()
+                new_stocks_size.save(using='stock_product')
+                if status_replication:
+                    new_stocks_size.save(using='mirror_database')
+                new_stock.amount = new_stock.amount - detail_sale.ammount
+                new_stock.save()
+                new_stock.save(using='stock_product')
+                if status_replication:
+                    new_stock.save(using='mirror_database')
         except Exception as e:
             data['error'] = str(e)
         return data
@@ -104,7 +115,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         data = {}
-        print(request.POST)
         match request.POST['action']:
             # caso de obtención de los colores del producto
             case 'obtain':
@@ -131,7 +141,10 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                     data['error'] = 'No hay productos por comprar'
             # caso donde se efectua la compra
             case 'buy':
-                data = self.do_the_purchase(request)
+                with transaction.atomic():
+                    data = self.do_the_purchase(request)
+                    if 'error' in data:
+                        rollback_data(1)
         # retorno de la información como JSON al front-end
         return JsonResponse(data, safe=False)
 

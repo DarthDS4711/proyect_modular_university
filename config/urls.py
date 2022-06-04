@@ -44,6 +44,8 @@ urlpatterns = [
     # rutas relacionadas con la facturación del usuario
     path('sale/', include('core.sale.urls')),
     # rutas relacionadas con la subida de facturas al sistema
-    path('purchase/', include('core.purchase.urls'))
+    path('purchase/', include('core.purchase.urls')),
+    # rutas relacionadas con la replicación automática de los datos
+    path('data-application/', include('core.data.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,10 +2,12 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.forms.form_incidence.form import IncidenceForm
 from core.warranty.models import Incidence
+from django.db import transaction
 
 
 class RegisterIncidenceView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin ,CreateView):
@@ -18,14 +20,13 @@ class RegisterIncidenceView(LoginRequiredMixin, ValidateSessionGroupMixin, Obtai
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
-            # obtención de los datos
+        with transaction.atomic():
+             # obtención de los datos
             form = self.get_form()
             # guardado de los datos
             data = form.save()
-        except Exception as e:
-            data['error'] = str(e)
-        # regreso de la respuesta del servidor
+            if 'error' in data:
+                rollback_data(3)
         return JsonResponse(data, safe=False)
 
 

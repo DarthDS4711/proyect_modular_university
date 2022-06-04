@@ -1,4 +1,5 @@
 from django import forms
+from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.user.models import User
 from django.contrib.auth.models import Group
 
@@ -32,6 +33,8 @@ class UserForm(forms.ModelForm):
                         u.set_password(pwd)
                 # obtenemos la contraseña, la encriptamos y la guardamos
                 u.save()
+                if is_actual_state_autoreplication():
+                    u.save(using = 'mirror_database')
                 # asignamos un grupo por defecto en los usuarios
                 client_group = Group.objects.get(name = 'Client')
                 u.groups.add(client_group)

@@ -1,0 +1,51 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="card text-left">
+          <div class="card-body">
+            <h4 class="card-title"><strong>Ayuda</strong></h4>
+            <p class="card-text">La autoreplicación de los datos realiza cambios en la base
+                de datos principal, además de una secundaria en la que por si alguna razón,
+                la base de datos principal falla o se corrompe, no se pierda ninguna información.
+                <br><strong>Nota: </strong>Si se desactiva y activa, posteriormnete se tiene que restaurar
+                manualmente la base de datos secundaria
+            </p>
+          </div>
+        </div>
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
+        {% if datareplication == True %}
+        <div class="alert alert-success" role="alert">
+            <strong>Notificación </strong> La autoreplicación de la base de datos se encuentra activa
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            <strong>Notificación </strong> La autoreplicación de los datos se encuentra desactivada
+        </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Color a elegir</label>
+            <select name="status" id="status" class="form-control">
+                <option value="True">Activar autoreplicación datos</option>
+                <option value="False">Desactivar autoreplicación de datos</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a href="{% url 'app_views:dashboard_admin' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

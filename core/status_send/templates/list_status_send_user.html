@@ -9,30 +9,32 @@
     <h1>{{title}}</h1>
     <div class="box-content">
         <img src="{% static 'img/list.png' %}" alt="" class="img-style">
-        <table class="table table-dark">
-            <thead>
-                <tr>
-                    <th>Factura</th>
-                    <th>Estado de envio</th>
-                    <th>Fecha inicio envio</th>
-                    <th>Fecha actual estado</th>
-                    <th>Fecha llegada envio</th>
-                    <th>Dirección</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for status in page_obj %}
-                <tr>
-                    <td scope="row">{{status.sale.id}}</td>
-                    <td>{{status.status_send}}</td>
-                    <td>{{status.date_deliver_start}}</td>
-                    <td>{{status.date_actual_state}}</td>
-                    <td>{{status.date_arrival}}</td>
-                    <td>{{status.sale.direction}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-responsive-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Factura</th>
+                        <th scope="col">Estado de envio</th>
+                        <th scope="col">Fecha inicio envio</th>
+                        <th scope="col">Fecha actual estado</th>
+                        <th scope="col">Fecha llegada envio</th>
+                        <th scope="col">Dirección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for status in page_obj %}
+                    <tr>
+                        <td scope="row">{{status.sale.id}}</td>
+                        <td>{{status.status_send}}</td>
+                        <td>{{status.date_deliver_start}}</td>
+                        <td>{{status.date_actual_state}}</td>
+                        <td>{{status.date_arrival}}</td>
+                        <td>{{status.sale.direction}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% include 'pagination_btns.html' %}
     </div>
 </div>

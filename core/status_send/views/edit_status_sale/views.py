@@ -2,6 +2,8 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from core.app_functions.data_replication import is_actual_state_autoreplication
+from core.app_functions.rollback_data import rollback_data
 from core.mixins.mixins import ValidateSessionGroupMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
@@ -28,22 +30,33 @@ class UpdateStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, Ob
             return False
         else:
             return True
+    
+    # función que edita y guarda el registro actual del estado de envio
+    # para el usuario en cuestión
+    def update_status_send_sale(self, request):
+        data = {}
+        try:
+            status_send_invoice = StatusSend.objects.get(id = int(request.POST['status_send']))
+            date_actual_state = datetime.now()
+            delivered = self.convert_string_boolean(request)
+            self.object.status_send = status_send_invoice
+            self.object.delivered = delivered
+            self.object.date_actual_state = date_actual_state
+            self.object.save()
+            if is_actual_state_autoreplication():
+                self.object.save(using='mirror_database')
+        except Exception as e:
+            data['error'] = str(e)
+        return data
 
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
-            with transaction.atomic():
-                print(request.POST)
-                status_send_invoice = StatusSend.objects.get(id = int(request.POST['status_send']))
-                date_actual_state = datetime.now()
-                delivered = self.convert_string_boolean(request)
-                self.object.status_send = status_send_invoice
-                self.object.delivered = delivered
-                self.object.date_actual_state = date_actual_state
-                self.object.save()
-        except Exception as e:
-            data['error'] = str(e)
+        with transaction.atomic():
+            data = self.update_status_send_sale(request)
+            if 'error' in data:
+                rollback_data(3)
+        
         # regreso de la respuesta del servidor
         return JsonResponse(data, safe=False)
 

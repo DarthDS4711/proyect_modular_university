@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from core.app_functions.rollback_data import rollback_data
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.forms.category.forms import CategoryForm
 from core.product.forms.product.forms import ProductForm
@@ -25,12 +26,11 @@ class RegisterProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainC
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
         data = {}
-        try:
-            with transaction.atomic():
-                form = self.get_form()
-                data = form.save()
-        except Exception as e:
-            data['error'] = str(e)
+        with transaction.atomic():
+            form = self.get_form()
+            data = form.save()
+            if 'error' in data:
+                rollback_data(1)
         # regreso de la respuesta del servidor
         return JsonResponse(data, safe=False)
 
@@ -65,6 +65,8 @@ class RegisterCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, Obtain
            with transaction.atomic():
                 form = self.get_form()
                 data = form.save()
+                if 'error' in data:
+                    rollback_data(1)
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor
@@ -100,6 +102,8 @@ class RegisterSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColo
             with transaction.atomic():
                 form = self.get_form()
                 data = form.save()
+                if 'error' in data:
+                    rollback_data(1)
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data, safe=False)

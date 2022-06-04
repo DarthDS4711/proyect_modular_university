@@ -1,3 +1,6 @@
+// archivo de javascript el cual nos realiza la petición por ajax a nuestro servidor
+// en casos como actualizar, guardar o en otros eliminar
+
 $('form').on('submit', function (e) {
     e.preventDefault();
     let link = document.querySelector('#value').value;

@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
+from core.app_functions.data_replication import is_actual_state_autoreplication
+from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.stock.models import Stock, StockProductSize
@@ -28,8 +30,9 @@ class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
 
     # función que guardará los cambios en ambas bases de datos
     def edit_actual_stock(self, request):
-        stock = self.object
+        stock = Stock.objects.get(id = self.object.id)
         product = stock.product
+        state_replication = is_actual_state_autoreplication()
         is_active = True if request.POST['is_activte'] == 'on' else False
         stock.is_activte = is_active
         list_ammounts = []
@@ -44,17 +47,22 @@ class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColor
             stock_size.amount = list_ammounts[number_ammounts]
             stock_size.save()
             stock_size.save(using='stock_product')
+            if state_replication:
+                stock_size.save(using='mirror_database')
             number_ammounts += 1
         stock.amount = sum(list_ammounts)
         stock.save()
         stock.save(using='stock_product')
+        if state_replication:
+            stock.save(using='mirror_database')
     
     def post(self, request, *args, **kwargs):
         data = {}
         try:
             if request.POST['action'] == 'update':
                 # obtención del stock actual
-                self.edit_actual_stock(request)
+                with transaction.atomic():
+                    self.edit_actual_stock(request)
         except Exception as e:
             data['error'] = str(e)
         # regreso de la respuesta del servidor
