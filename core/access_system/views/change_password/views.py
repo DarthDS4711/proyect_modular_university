@@ -25,7 +25,7 @@ class ChangePasswordUseriew(FormView, ObtainColorMixin):
         user_token = self.kwargs['token']
         if User.objects.filter(token = user_token).exists():
             return super().get(request, *args, **kwargs)
-        return HttpResponseRedirect('404/')
+        return HttpResponseRedirect(reverse_lazy('app_views:404_page'))
     
 
     # método que actualiza la contraseña y el token del usuario

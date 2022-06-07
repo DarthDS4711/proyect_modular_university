@@ -110,6 +110,10 @@ class EditSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMix
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
     def get_form(self):
         return super().get_form(SizeForm)
     

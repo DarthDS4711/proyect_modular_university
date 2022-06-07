@@ -22,9 +22,9 @@
                 <p><a href="{{stock}}" class="btn orange-btn btn-style">Stock</a></p>
             </div>
             <div class="cols-4 box-shadowed">
-                <h3>Permisos y Usuarios</h3>
-                <p><a href="#" class="btn orange-btn btn-style">Gestionar Grupos</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Editar Grupos Usuarios</a></p>
+                <h3>Usuarios</h3>
+                <p><a href="{% url 'user_admin:list_super_user' %}" class="btn orange-btn btn-style">SuperUsuarios</a></p>
+                <p><a href="#" class="btn orange-btn btn-style">Grupos Usuarios</a></p>
                 <p><a href="#" class="btn orange-btn btn-style">Eliminar usuarios</a></p>
                 <p><a href="#" class="btn orange-btn btn-style">Correo masivo</a></p>
             </div>

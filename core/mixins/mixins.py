@@ -4,9 +4,10 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 
+# validación de una sesión de administrador
 class ValidateSessionGroupMixin(object):
     url_redirect = None
-    group_permisson = 'Client'
+    group_permisson = 'Administrator'
 
 
     def get_url_redirect(self):

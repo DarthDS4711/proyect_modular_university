@@ -83,3 +83,11 @@ h1{
     width: 30%;
     height: 35%;
 }
+#search-input{
+	width: 90%;
+}
+.flex-search{
+	display: flex;
+	margin: 0 auto;
+	justify-content: center;
+}

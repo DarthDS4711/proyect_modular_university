@@ -1,0 +1,51 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="card text-left">
+          <div class="card-body">
+            <h4 class="card-title"><strong>Ayuda</strong></h4>
+            <p class="card-text">Los superusuarios son aquellos que tienen los mayores permisos 
+                dentro de la aplicación. Son los máximos encargados, en cuanto a temas de seguridad.
+                Tales como: eliminar usuarios, designar grupos, agregar a otros superusuarios
+            </p>
+          </div>
+        </div>
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
+        {% if superuser == True %}
+        <div class="alert alert-success" role="alert">
+            <strong>Notificación </strong> El usuario: {{object.username}} actualmente es superusuario
+        </div>
+        {% else %}
+        <div class="alert alert-warning" role="alert">
+            <strong>Notificación </strong> El usuario: {{object.username}} actualmente es un usuario normal
+        </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Color a elegir</label>
+            <select name="status" id="status" class="form-control">
+                <option value="True">Convertir en superusuario</option>
+                <option value="False">Convertir en usuario normal</option>
+            </select>
+            <div class="row" style="padding: 1%;">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a href="{% url 'app_views:dashboard_admin' %}" class="btn btn-danger">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from unittest.mock import patch
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
@@ -46,6 +47,8 @@ urlpatterns = [
     # rutas relacionadas con la subida de facturas al sistema
     path('purchase/', include('core.purchase.urls')),
     # rutas relacionadas con la replicación automática de los datos
-    path('data-application/', include('core.data.urls'))
+    path('data-application/', include('core.data.urls')),
+    # rutas relacionadas a la administración de los usuarios
+    path('user-admin/', include('core.user_admin.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
