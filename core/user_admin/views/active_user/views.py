@@ -6,10 +6,10 @@ from core.mixins.mixins import ValidateSessionGroupMixin
 from core.user.models import User
 
 
-class ListSuperUserView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListBlockUserView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = User # modelo a usar para la consulta del ListView
-    paginate_by = 4 # número de elementos a mostrar por pagina
-    template_name = 'listSuperUser.html'
+    paginate_by = 6 # número de elementos a mostrar por pagina
+    template_name = 'listBlockUser.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
@@ -27,10 +27,10 @@ class ListSuperUserView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCol
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Listado de super usuarios"
+        context["title"] = "Listado de usuarios activos y dados de baja"
         context["image"] = 'img/list.png'
         context['color'] = self.get_number_color()
         context['name'] = self.return_name()
-        context['url'] = reverse_lazy('user_admin:list_super_user')
+        context['url'] = reverse_lazy('user_admin:list_block_user')
         return context
 

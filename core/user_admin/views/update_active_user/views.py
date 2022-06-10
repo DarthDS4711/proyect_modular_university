@@ -11,12 +11,13 @@ from core.user.models import User
 
 
 
-class UpdateSuperUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColorMixin, UpdateView):
-    template_name = 'updateSuperUser.html'
+class UpdateStatusUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColorMixin, UpdateView):
+    template_name = 'updateActiveUser.html'
     model = User
-    success_url = reverse_lazy('user_admin:list_super_user')
+    success_url = reverse_lazy('user_admin:list_block_user')
     login_url = reverse_lazy('access:Login')
-    fields = ('is_superuser',)
+    group_permisson = 'Administrator'
+    fields = ('is_active',)
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -28,8 +29,8 @@ class UpdateSuperUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColo
         data = {}
         try:
             user = User.objects.get(id = self.object.id)
-            super_user = True if request.POST['status'] == 'True' else False
-            user.is_superuser = super_user
+            is_active = True if request.POST['status'] == 'True' else False
+            user.is_active = is_active
             user.save()
             if is_actual_state_autoreplication():
                 user.save(using='mirror_database')
@@ -48,9 +49,8 @@ class UpdateSuperUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColo
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Superusuarios"
+        context["title"] = "Usuarios Activos"
         context['action'] = 'update' 
-        context['superuser'] = self.object.is_superuser
         context['color'] = self.get_number_color()
         context['list'] = self.success_url
         return context

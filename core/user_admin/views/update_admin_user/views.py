@@ -1,7 +1,7 @@
+from django.contrib.auth.models import Group
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
-from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.superuser_mixin import ValidateSuperUserMixin
@@ -11,12 +11,13 @@ from core.user.models import User
 
 
 
-class UpdateSuperUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColorMixin, UpdateView):
-    template_name = 'updateSuperUser.html'
+class UpdateAdminUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColorMixin, UpdateView):
+    template_name = 'updateAdminUser.html'
     model = User
-    success_url = reverse_lazy('user_admin:list_super_user')
+    success_url = reverse_lazy('user_admin:list_admin_user')
     login_url = reverse_lazy('access:Login')
-    fields = ('is_superuser',)
+    group_permisson = 'Administrator'
+    fields = ('is_active',)
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -28,11 +29,15 @@ class UpdateSuperUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColo
         data = {}
         try:
             user = User.objects.get(id = self.object.id)
-            super_user = True if request.POST['status'] == 'True' else False
-            user.is_superuser = super_user
-            user.save()
-            if is_actual_state_autoreplication():
-                user.save(using='mirror_database')
+            admin_group = Group.objects.get(name = 'Administrator')
+            is_admin = True if request.POST['status'] == 'True' else False
+            exists_permmison = user.groups.filter(name = 'Administrator').exists()
+            # caso usuario normal aspirante a administrador
+            if is_admin == True and exists_permmison == False:
+                user.groups.add(admin_group)
+            # caso de un usuario administrator aspirante a usuario normal
+            elif is_admin == False and exists_permmison == True:
+                user.groups.remove(admin_group)
         except Exception as e:
             data['error'] = str(e)
         return data
@@ -48,9 +53,8 @@ class UpdateSuperUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColo
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = "Superusuarios"
+        context["title"] = "Usuarios Activos"
         context['action'] = 'update' 
-        context['superuser'] = self.object.is_superuser
         context['color'] = self.get_number_color()
         context['list'] = self.success_url
         return context

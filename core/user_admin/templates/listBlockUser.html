@@ -1,12 +1,12 @@
 {% extends 'listUser.html' %}
-{% block users %}
 {% load static %}
+{% block users %}
 
 {% block user_header %}
 <tr>
     <th>ID</th>
     <th>Nombre usuario</th>
-    <th>¿Superusuario?</th>
+    <th>Bloqueado?</th>
     <th>Acción</th>
 </tr>
 {% endblock %}
@@ -15,13 +15,13 @@
 <tr>
     <td scope="row">{{user.id}}</td>
     <td>{{user.username}}</td>
-    {% if user.is_superuser %}
-    <td>Superusuario</td>
+    {% if user.is_active %}
+    <td>Activo</td>
     {% else %}
-    <td>Usuario normal</td>
+    <td>Dado de baja</td>
     {% endif %}
     <td>
-        <a class="btn btn-warning" href="../../update-superuser/{{user.id}}">Cambiar tipo</a>
+        <a class="btn btn-warning" href="../../update/active-user/{{user.id}}">Cambiar estatus</a>
     </td>
 </tr>
 {% endfor %}

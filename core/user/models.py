@@ -30,6 +30,12 @@ class User(AbstractUser):
         verbose_name_plural = 'Users'
         ordering = ['id']
         db_table = 'user'
+    
+    def is_admin_user(self):
+        is_admin_user = False
+        if self.groups.filter(name = 'Administrator').exists():
+            is_admin_user = True
+        return is_admin_user
 
 
 #Modelo relacionado a la agenda de direcciones del usuario
