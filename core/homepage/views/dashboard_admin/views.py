@@ -37,7 +37,9 @@ class DashboardAdminView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCo
     
     def get_sales_by_month(self):
         date_time_month = datetime.now().month
-        sale_num = Sale.objects.filter(date_sale__month = date_time_month).count()
+        date_time_year = datetime.now().year
+        sale_num = Sale.objects.filter(
+            date_sale__month = date_time_month, date_sale__year = date_time_year).count()
         return sale_num
     
     def get_sales_by_week(self):

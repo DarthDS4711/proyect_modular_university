@@ -1,0 +1,23 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/user_flow/pie_graph.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h3>Resumen</h3>
+        <label>Usuarios inactivos: </label>
+        <span id="inactive">{{inactive_users}}</span><br>
+        <label>Usuarios activos: </label>
+        <span id="active">{{active_users}}</span>
+        <div class="row">
+            <h3>Gráfica comparaiva</h3>
+            <canvas id="comparative"></canvas>
+        </div>
+    </div>
+</div>
+{% endblock %}

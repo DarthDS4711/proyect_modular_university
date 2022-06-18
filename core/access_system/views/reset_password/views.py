@@ -11,8 +11,7 @@ from core.classes.obtain_color import ObtainColorMixin
 from core.user.models import User
 from django.template.loader import render_to_string
 from email.mime.text import MIMEText
-
-
+import threading
 
 
 class ResetPasswordEmailiew(FormView, ObtainColorMixin):
@@ -23,35 +22,41 @@ class ResetPasswordEmailiew(FormView, ObtainColorMixin):
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-    
-    
-    # método que envia un correo electrónico a la persona para reestablecer la contraseña
-    def send_email(self, user:User):
-        user = user[0]
-        URL = settings.DOMAIN if not settings.DEBUG else self.request.META['HTTP_HOST']
-        user.token = uuid.uuid4()
-        user.save()
-        if is_actual_state_autoreplication():
-            user.save(using='mirror_database')
 
-        mailServer = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
+    
+    # método secundario que envia el correo con hilos
+    def send_email_thread(self, user : User):
+        URL = settings.DOMAIN if not settings.DEBUG else self.request.META['HTTP_HOST']
+        print("proceso")
+        mailServer = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
         mailServer.starttls()
         mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-
         email_to = user.email
         mensaje = MIMEMultipart()
         mensaje['From'] = settings.EMAIL_HOST_USER
         mensaje['To'] = email_to
         mensaje['Subject'] = 'Reseteo de contraseña'
-
         content = render_to_string('template_email_pass.html', {
             'user': user,
             'link_resetpwd': 'http://{}/access/change-password/{}/'.format(URL, str(user.token)),
             'link_home': 'http://{}'.format(URL)
         })
         mensaje.attach(MIMEText(content, 'html'))
-
         mailServer.sendmail(settings.EMAIL_HOST_USER, email_to, mensaje.as_string())
+        mailServer.quit()
+        print("enviado")
+
+    
+    
+    # método principal que envia un correo electrónico a la persona para reestablecer la contraseña
+    def send_email(self, user:User):
+        user = user[0]
+        user.token = uuid.uuid4()
+        user.save()
+        if is_actual_state_autoreplication():
+            user.save(using='mirror_database')
+        thread = threading.Thread(target=self.send_email_thread, args=(user,))
+        thread.start()
 
 
     def post(self, request, *args, **kwargs):

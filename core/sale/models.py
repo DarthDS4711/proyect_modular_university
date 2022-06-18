@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from xmlrpc.client import _datetime_type
 from django.db import models
 from django.forms import model_to_dict
 from core.user.models import DirectionUser, User
@@ -67,12 +68,23 @@ class DetailSale(models.Model):
         date_new = date_buy + timedelta(weeks=(4 * months_covered))
         return date_new
     
+    # function converts the number of days of subs dates
+    def getDifference(self, then, now = datetime.now()):
+        duration = now - then
+        duration_in_s = duration.total_seconds() 
+        day_ct = 24 * 60 * 60 			#86400
+        def days():
+            return divmod(duration_in_s, day_ct)[0]
+        return int(days())
+    
     def get_status_warranty(self):
         product_sale = self.product
         date_buy = self.sale.date_sale
         warranty_product = WarrantyProduct.objects.get(product = product_sale).warranty
         months_covered = float(warranty_product.months_coverred)
         date_new = date_buy + timedelta(weeks=(4 * months_covered))
-        status = 'Valida' if (date_new - date_buy).days > 0 else 'Caducada'
+        date_warranty = datetime(year=date_new.year, month=date_new.month, day=date_new.day)
+        date_now = datetime.now()
+        status = 'Valida' if self.getDifference(date_now, date_warranty) > 0 else 'Caducada'
         return status
         

@@ -159,7 +159,7 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 # Email
 
 # servidor de correo
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.office365.com'
 
 # puerto del correo 
 EMAIL_PORT = 587

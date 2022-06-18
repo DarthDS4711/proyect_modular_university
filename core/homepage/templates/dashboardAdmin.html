@@ -18,15 +18,15 @@
                 <h3>Administración</h3>
                 <p><a href="{% url 'color:update_page' %}" class="btn orange-btn btn-style">Color página</a></p>
                 <p> <a href="{% url 'purchase:options' %}" class="btn orange-btn btn-style">Compras</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Ventas</a></p>
                 <p><a href="{{stock}}" class="btn orange-btn btn-style">Stock</a></p>
+                <p><a href="" class="btn orange-btn btn-style">Proximamente...</a></p>
             </div>
             <div class="cols-4 box-shadowed">
                 <h3>Usuarios</h3>
                 <p><a href="{% url 'user_admin:list_super_user' %}" class="btn orange-btn btn-style">Super Usuarios</a></p>
                 <p><a href="{% url 'user_admin:list_admin_user' %}" class="btn orange-btn btn-style">Usuarios administradores</a></p>
                 <p><a href="{% url 'user_admin:list_block_user' %}" class="btn orange-btn btn-style">Eliminar usuarios</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Correo masivo</a></p>
+                <p><a href="" class="btn orange-btn btn-style">Proximamente...</a></p>
             </div>
             <div class="cols-4 box-shadowed">
                 <h3>Tienda</h3>
@@ -38,9 +38,9 @@
             <div class="cols-4 box-shadowed">
                 <h3>Opciones</h3>
                 <p><a href="{% url 'data:update_rep' %}" class="btn orange-btn btn-style">Respaldos automáticos</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Flujo de usuarios</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Comprar productos</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Estado página</a></p>
+                <p><a href="{% url 'app_views:flow_users' %}" class="btn orange-btn btn-style">Flujo de usuarios</a></p>
+                <p><a href="{% url 'app_views:state_page' %}" class="btn orange-btn btn-style">Estado página</a></p>
+                <p><a href="{% url 'app_views:state_databases' %}" class="btn orange-btn btn-style">Estado bases de datos</a></p>
             </div>
         </div>
         <h2>Estádisticas</h2>
