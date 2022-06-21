@@ -12,7 +12,7 @@ $(document).ready(function () {
             }
         }).done(function(response){
             image_html.src = response.image;
-            image_html.className = "img-style";
+            image_html.className = "image-list";
             column1.innerHTML = response.name;
         });
     }
@@ -39,7 +39,7 @@ $(document).ready(function () {
             let buttonDetail = document.createElement('a');
             let image_html = document.createElement('img');
             get_image(data_cart.id, url, image_html, column1);
-            image_html.className = "img-style";
+            image_html.className = "image-list";
             column2.appendChild(image_html);
             column3.innerHTML = data_cart.ammount;
             column4.style.backgroundColor = data_cart.color;

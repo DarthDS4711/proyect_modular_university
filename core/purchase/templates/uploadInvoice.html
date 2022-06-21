@@ -25,13 +25,13 @@
         {% csrf_token %}
         <div class="form-group">
             <label>Nombre del producto</label>
-            <select id="product_id" class="form-control select2"></select>
+            <select id="product_id" class="select2" style="width: 100%;"></select>
             <button type="button" class="btn btn-primary" id="select-product">Seleccionar</button>
         </div>
         <div id="details-product">
             {% include 'modal_purchase.html' %}
         </div>
-        <table class="table table-striped" id="table">
+        <table class="table table-striped table-responsive" id="table">
             <thead class="thead-dark">
                 <tr>
                     <th>Nombre</th>

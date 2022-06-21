@@ -4,6 +4,7 @@
 $(document).ready(function () {
     $('.select2').select2({
         theme : "bootstrap4",
+        width: 'resolve',
         language : "es",
         ajax : {
             delay : 300,

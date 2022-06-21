@@ -17,16 +17,16 @@
     <div class="box-content">
         <img src="{% static image %}" class="image-cart">
         <input type="hidden" id="url" value="{% url 'shop:shop_cart' %}">
-        <table class="table table-striped" id="table">
+        <table class="table table-striped table-responsive" id="table">
             <thead class="thead-dark">
                 <tr>
                     <th>Nombre</th>
-                    <th class="col-sm-4">Imagen</th>
-                    <th class="col-sm-1">Cantidad</th>
-                    <th class="col-sm-1">Color</th>
-                    <th class="col-sm-2">Precio</th>
-                    <th class="col-sm-2">Talla</th>
-                    <th class="col-sm-3">Acciones</th>
+                    <th>Imagen</th>
+                    <th>Cantidad</th>
+                    <th>Color</th>
+                    <th>Precio</th>
+                    <th>Talla</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="t_data">

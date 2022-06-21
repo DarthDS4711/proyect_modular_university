@@ -3,9 +3,6 @@
 	margin: 0 auto;
 	justify-content: center;
 }
-h1{
-	font-size: 55px;
-}
 #search-input{
 	width: 85%;
 }
@@ -42,4 +39,52 @@ h4{
 .btn-category{
 	width: 45%;
 	margin: 2%;
+}
+@media screen and (max-width: 1064px){
+	.card-product div p{
+		font-size: 14px;
+	}
+	.card-product div h4{
+		font-size: 16px;
+	}
+}
+@media screen and (max-width: 968px){
+	.card-product div p{
+		font-size: 12px;
+	}
+	.card-product div h4{
+		font-size: 14px;
+	}
+}
+@media screen and (max-width: 968px){
+	.card-product div p{
+		font-size: 10px;
+	}
+	.card-product div h4{
+		font-size: 12px;
+	}
+}
+@media screen and (max-width: 602px){
+	.card-product div p{
+		font-size: 8px;
+	}
+	.card-product div h4{
+		font-size: 10px;
+	}
+	.image-style{
+		width: 70%;
+    	height: 70%;
+	}
+}
+@media screen and (max-width: 512px){
+	.card-product div p{
+		font-size: 7px;
+	}
+	.card-product div h4{
+		font-size: 9px;
+	}
+	.image-style{
+		width: 70%;
+    	height: 70%;
+	}
 }

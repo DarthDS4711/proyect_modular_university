@@ -1,4 +1,5 @@
 from email.mime.multipart import MIMEMultipart
+from http import server
 import smtplib
 import uuid
 from django.conf import settings
@@ -26,25 +27,27 @@ class ResetPasswordEmailiew(FormView, ObtainColorMixin):
     
     # método secundario que envia el correo con hilos
     def send_email_thread(self, user : User):
-        URL = settings.DOMAIN if not settings.DEBUG else self.request.META['HTTP_HOST']
-        print("proceso")
-        mailServer = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
-        mailServer.starttls()
-        mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-        email_to = user.email
-        mensaje = MIMEMultipart()
-        mensaje['From'] = settings.EMAIL_HOST_USER
-        mensaje['To'] = email_to
-        mensaje['Subject'] = 'Reseteo de contraseña'
-        content = render_to_string('template_email_pass.html', {
-            'user': user,
-            'link_resetpwd': 'http://{}/access/change-password/{}/'.format(URL, str(user.token)),
-            'link_home': 'http://{}'.format(URL)
-        })
-        mensaje.attach(MIMEText(content, 'html'))
-        mailServer.sendmail(settings.EMAIL_HOST_USER, email_to, mensaje.as_string())
-        mailServer.quit()
-        print("enviado")
+        try: 
+            URL = settings.DOMAIN if not settings.DEBUG else self.request.META['HTTP_HOST']
+            mailServer = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
+            mailServer.ehlo()
+            mailServer.starttls()
+            mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+            email_to = user.email
+            mensaje = MIMEMultipart()
+            mensaje['From'] = settings.EMAIL_HOST_USER
+            mensaje['To'] = email_to
+            mensaje['Subject'] = 'Reseteo de contraseña'
+            content = render_to_string('template_email_pass.html', {
+                'user': user,
+                'link_resetpwd': 'http://{}/access/change-password/{}/'.format(URL, str(user.token)),
+                'link_home': 'http://{}'.format(URL)
+            })
+            mensaje.attach(MIMEText(content, 'html'))
+            mailServer.sendmail(settings.EMAIL_HOST_USER, email_to, mensaje.as_string())
+            mailServer.quit()
+        except Exception as e:
+            print(str(e))
 
     
     

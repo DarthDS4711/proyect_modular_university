@@ -1,0 +1,191 @@
+/* Diseño responsive */
+@media only screen and (max-width: 1185px) {
+    .box-layout{
+        margin-top: 8%;
+    }
+}
+@media only screen and (max-width: 1185px) {
+    .btn{
+        font-size: 15px;
+    }
+}
+@media only screen and (max-width: 1185px) {
+    h2{
+        font-size: 28px;
+    }
+    h3{
+        font-size: 20px;
+    }
+}
+@media only screen and (max-width: 956px) {
+    th{
+        font-size: 15px;
+    }
+    td{
+        font-size: 15px;
+    }
+}
+@media only screen and (max-width: 946px){
+    .image-list{
+        width: 60%;
+        height: 65%;
+    }
+}
+@media only screen and (max-width: 840px){
+    .btn{
+        font-size: 14px;
+    }
+    ul li a{
+        font-size: 14px;
+    }
+    th{
+        font-size: 14px;
+    }
+    td{
+        font-size: 14px;
+    }
+}
+@media only screen and (max-width: 755px){
+    .box-layout{
+        margin-top: 10%;
+    }
+    .btn{
+        font-size: 13px;
+    }
+    ul li a{
+        font-size: 13px;
+    }
+    th{
+        font-size: 13px;
+    }
+    td{
+        font-size: 13px;
+    }
+}
+@media only screen and (max-width: 684px){
+    h2{
+        font-size: 23px;
+    }
+    h3{
+        font-size: 16px;
+    }
+    h5{
+        font-size: 14px;
+    }
+}
+@media only screen and (max-width: 663px){
+    h1{
+        font-size: 37px;
+    }
+    .box-layout{
+        margin-top: 11%;
+    }
+    .box-content{
+        margin-top: 6%;
+    }
+}
+@media only screen and (max-width: 688px){
+    .image-list{
+        width: 80%;
+        height: 85%;
+    }
+}
+@media only screen and (max-width: 599px){
+    h1{
+        font-size: 33px;
+    }
+    .box-layout{
+        margin-top: 12%;
+    }
+    .box-content{
+        margin-top: 6%;
+    }
+    h4{
+        font-size: 16px;
+    }
+    div{
+        font-size: 13px;
+    }
+    select{
+        font-size: 13px;
+    }
+    option{
+        font-size: 13px;
+    } 
+    .btn{
+        font-size: 13px;
+    }
+    th{
+        font-size: 12px;
+    }
+    td{
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 540px){
+    h1{
+        font-size: 30px;
+    }
+    h2{
+        font-size: 21px;
+    }
+    h3{
+        font-size: 15px;
+    }
+    .btn{
+        font-size: 12px;
+    }
+    ul li a{
+        font-size: 12px;
+    }
+    .form-control{
+        font-size: 12px;
+    }
+    .image-list{
+        width: 90%;
+        height: 95%;
+    }
+    h5{
+        font-size: 13px;
+    }
+}
+@media only screen and (max-width: 514px){
+    h3{
+        font-size: 14px;
+    }
+    .btn{
+        font-size: 11px;
+    }
+    ul li a{
+        font-size: 11px;
+    }
+    .image-list{
+        width: 95%;
+        height: 100%;
+    }
+    h5{
+        font-size: 12px;
+    }
+}
+@media only screen and (max-width: 476px){
+    .box-layout{
+        margin-top: 14%;
+    }
+    h3{
+        font-size: 12px;
+    }
+    .btn{
+        font-size: 9px;
+    }
+    ul li a{
+        font-size: 9px;
+    }
+}
+@media only screen and (max-width: 412px){
+    h3{
+        font-size: 9px;
+    }
+    .btn{
+        font-size: 7px;
+    }
+}
