@@ -34,12 +34,12 @@ class MassiveEmailView(LoginRequiredMixin, ValidateSessionGroupMixin, TemplateVi
     def __define_type_user_email(self, type_send, user):
         match type_send:
             case 'inactive':
-                return render_to_string('massive_email/userActive.html', {
+                return render_to_string('massive_email/userInactive.html', {
                     'username': user.username,
                     'title': 'Felicitaciones',
                 })
             case 'active':
-                return render_to_string('massive_email/userInactive.html', {
+                return render_to_string('massive_email/userActive.html', {
                     'username': user.username,
                     'title': 'Advertencia',
                 })
@@ -51,10 +51,12 @@ class MassiveEmailView(LoginRequiredMixin, ValidateSessionGroupMixin, TemplateVi
 
     def send_email_users(self, type_send):
         try:
+            print("Entrando")
             mailServer = smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT)
             mailServer.ehlo()
             mailServer.starttls()
             mailServer.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+            print("Preparando")
             users = self.__define_type_user(type_send)
             for user in users:
                 email_to = user.email
@@ -65,6 +67,7 @@ class MassiveEmailView(LoginRequiredMixin, ValidateSessionGroupMixin, TemplateVi
                 content = self.__define_type_user_email(type_send, user)
                 mensaje.attach(MIMEText(content, 'html'))
                 mailServer.sendmail(settings.EMAIL_HOST_USER, email_to, mensaje.as_string())
+            print("enviados")
             mailServer.quit()
         except Exception as e:
             print(str(e))
@@ -72,8 +75,9 @@ class MassiveEmailView(LoginRequiredMixin, ValidateSessionGroupMixin, TemplateVi
     # sobreescitura del método get, para el envio de correos masivos
     def get(self, request, *args, **kwargs):
         type_send = self.kwargs['type'] if 'type' in self.kwargs else ''
-        thread = threading.Thread(target=self.send_email_active_user, args=(type_send))
+        thread = threading.Thread(target=self.send_email_users, args=(type_send,))
         thread.start()
+        print("hilo")
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
