@@ -1,5 +1,4 @@
-from datetime import datetime
-from django.http import HttpResponseBadRequest, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm
@@ -18,7 +17,6 @@ class LoginView(FormView, ObtainColorMixin):
         return super().dispatch(request, *args, **kwargs)
     
     def form_valid(self, form):
-        print(self.request)
         login(self.request, form.get_user())
         return HttpResponseRedirect(self.success_url)
     
@@ -27,11 +25,11 @@ class LoginView(FormView, ObtainColorMixin):
         password = request.POST['password']
         data = {}
         user = authenticate(request, username=username, password=password)
-        if user is not None:
+        if user is None:
+            data['error'] = 'Usuario o contraseña no válidos'
+        else:
             login(request, user)
             data['success'] = self.success_url
-        else:
-            data['error'] = 'Usuario o contraseña no válidos'
         return JsonResponse(data, safe=True)
 
     def get_context_data(self, **kwargs):

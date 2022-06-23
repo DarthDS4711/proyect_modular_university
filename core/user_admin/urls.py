@@ -1,4 +1,5 @@
 from django.urls import path
+from core.user_admin.views.massive_email.views import MassiveEmailView
 from core.user_admin.views.update_active_user.views import UpdateStatusUserView
 from core.user_admin.views.active_user.views import ListBlockUserView
 from core.user_admin.views.admin_user.views import ListAdminUserView
@@ -27,5 +28,9 @@ urlpatterns = [
     # ruta para actualizar el estado actual de los usuarios (activo o no)
     path('update/active-user/<pk>', UpdateStatusUserView.as_view(), name='update_status_user'),
     # ruta para actualizar el grupo de administrador de un usuario
-    path('update/admin-user/<pk>', UpdateAdminUserView.as_view(), name='update_admin_user')
+    path('update/admin-user/<pk>', UpdateAdminUserView.as_view(), name='update_admin_user'),
+    # ruta para seleccionar el tipo de plantilla además de los usuarios de correo masivo
+    path('massive-email/select', MassiveEmailView.as_view(), name='massive_email'),
+    # ruta que envia el correo masivo acorde a lo selecionado
+    path('massive-email/send/<str:type>', MassiveEmailView.as_view(), name='massive_email_send')
 ]
