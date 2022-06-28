@@ -1,5 +1,6 @@
 from django.urls import path
 from core.store.views.add_comment.views import AddComentProduct
+from core.store.views.cancel.views import CancelPaymentView
 from core.store.views.list_all_comments_products.views import ListAllCommentsProduct
 from core.store.views.list_all_products.views import ListAllProductsView
 from core.store.views.list_best_ranking_prod.views import ListBestProductsView
@@ -11,6 +12,7 @@ from core.store.views.shopCart.views import ShopCartView
 
 from core.store.views.showProduct.views import DetailProductView
 from core.store.views.shop.views import MainShopView
+from core.store.views.success.views import SuccessPaymentView
 
 
 app_name = "shop"
@@ -37,5 +39,9 @@ urlpatterns = [
     # vista relacionada a agregar los comentarios de un producto
     path('add-comment-product/<int:id_product>', AddComentProduct.as_view(), name='add_comment'),
     # vista relacionada a mostrar los comentarios de un producto
-    path('view-comments-product/<int:id_product>', ListAllCommentsProduct.as_view(), name='list_comments')
+    path('view-comments-product/<int:id_product>', ListAllCommentsProduct.as_view(), name='list_comments'),
+    # ruta de la vista de cancelación de la compra
+    path('cancel/', CancelPaymentView.as_view(), name='cancel'),
+    # ruta de pago exitoso
+    path('sucess/', SuccessPaymentView.as_view(), name='success')
 ]

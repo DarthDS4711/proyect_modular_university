@@ -1,4 +1,5 @@
 config/data_access
+config/stripe
 .vscode/*
 media/*
 .sqlite3
