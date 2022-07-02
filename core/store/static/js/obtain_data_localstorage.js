@@ -54,7 +54,7 @@ $(document).ready(function () {
             buttonDetail.href = "../../shop/detail-product/" + parseInt(data_cart.id);
             buttonDetail.className = "btn btn-primary";
             buttonDetail.innerHTML = "Detalles";
-            subtotal += parseFloat(data_cart.price) * parseFloat(data_cart.amount);
+            subtotal += parseFloat(data_cart.price) * parseFloat(data_cart.amount).toFixed(2);
             //función que nos renderiza el modal, de acuerdo al producto a modificar
             buttonEdit.onclick = function () {
                 $.ajax({
@@ -88,5 +88,5 @@ $(document).ready(function () {
     }
     document.getElementById('subtotal').innerHTML = subtotal;
     subtotal = subtotal + (subtotal * 0.16);
-    document.getElementById('total').innerHTML = subtotal;
+    document.getElementById('total').innerHTML = subtotal.toFixed(2);
 });

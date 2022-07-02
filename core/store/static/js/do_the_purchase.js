@@ -23,16 +23,7 @@ $(document).ready(function () {
           icon: "error",
         });
       } else {
-        make_purchase(products, 'buy', subtotal, total, url, direction_user);
-        Swal.fire({
-          title: "Exito",
-          html: "<p>Factura subida exitosamente!</p>",
-          icon: "success",
-          timer : 3000
-        }).then(function(){
-          sessionStorage.clear();
-          location.reload();
-        });
+        paymentStripe(total, products, direction_user, subtotal);
       }
     });
   });

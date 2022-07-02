@@ -114,13 +114,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                     data['error'] = 'No hay suficiente stock'
         return data
     
-    # funcion que procesa el json array hacia un nombre del producto
-    def __obtain_name_product(self, request):
-        raw_products = json.loads(request.POST['products'])
-        products = []
-        for product in raw_products:
-            products.append({'name ' : Product.objects.get(id = int(product['id'])).name})
-        return products
     
     # función que procesa el pago con stripe
     def process_data_payment(self, request):
@@ -130,6 +123,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             DOMAIN_PAGE = "http://127.0.0.1:8000"
             checkout_session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
+                customer_email = self.request.user.email,
                 line_items=[
                     {
                         # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
@@ -137,7 +131,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                             'currency' : 'MXN',
                             'unit_amount' : int(float(request.POST['total'])*100),
                             'product_data': {
-                                'name' : 'Pago de productos'
+                                'name' : f'Pago de productos usuario: {self.request.user.username}'
                             }
     
                         },
@@ -148,6 +142,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                 success_url= DOMAIN_PAGE + reverse_lazy('shop:success'),
                 cancel_url= DOMAIN_PAGE + reverse_lazy('shop:cancel'),
             )
+            print(checkout_session)
             data['id'] = checkout_session.id
         except Exception as e:
             data['error'] = str(e)
@@ -157,7 +152,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
     # sobrescritura del método post para la obtención y guardado de datos
     def post(self, request, *args, **kwargs):
         data = {}
-        print(request.POST)
         match request.POST['action']:
             # caso de obtención de los colores del producto
             case 'obtain':
@@ -182,14 +176,12 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                     data = self.return_status_stock(request, products)
                 else:
                     data['error'] = 'No hay productos por comprar'
-            # caso donde se efectua la compra
-            case 'buy':
-                with transaction.atomic():
-                    data = self.do_the_purchase(request)
-                    if 'error' in data:
-                        rollback_data(1)
+            # caso de checkout donde se realiza la compra de los productos
             case 'checkout':
+                data_products = {}
                 data = self.process_data_payment(request)
+                
+                
         # retorno de la información como JSON al front-end
         return JsonResponse(data, safe=False)
 
