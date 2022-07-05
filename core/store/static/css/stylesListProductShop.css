@@ -5,9 +5,9 @@
 }
 .card-product{
     display: flex;
-    box-shadow: 10px 5px 15px 15px lightgray;
+    box-shadow: 8px 8px 8px 3px lightgray;
     margin: 2%;
-    padding: 2%;
+    padding: 5%;
     width: 100%;
     height: 2%;
 }

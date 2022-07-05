@@ -10,6 +10,7 @@
           <th>N° Factura</th>
           <th>Total</th>
           <th>Fecha</th>
+          <th>¿Pagada?</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -18,6 +19,11 @@
           <td>{{invoice.id}}</td>
           <td>${{invoice.total}}</td>
           <td>{{invoice.date_sale}}</td>
+          {% if invoice.is_completed %}
+          <td>Pagada</td>
+          {% else %}
+          <td>Sin pagar</td>
+          {% endif %}
           <td>
             <a href="../detail-invoice/{{invoice.id}}" class="btn btn-danger">Detalles</a>
             <a href="../render-pdf-invoice/{{invoice.id}}" class="btn btn-success">PDF</a>

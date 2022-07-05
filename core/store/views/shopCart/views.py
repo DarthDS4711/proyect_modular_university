@@ -54,7 +54,8 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
     
     def do_the_purchase(self, request):
         # petición post que realiza con una transacción atómica
-        # la venta al sistema
+        # la venta al sistema, pero, sin que esta disminuya los stocks
+        # es decir, unicamente crea la orden 
         data = {}
         try:
             status_replication = is_actual_state_autoreplication()
@@ -65,6 +66,7 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             sale.total = float(request.POST['total'])
             direction = DirectionUser.objects.get(id = int(request.POST['direction_user']))
             sale.direction = direction
+            sale.is_completed = False
             sale.save()
             if status_replication:
                 sale.save(using='mirror_database')
@@ -84,18 +86,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                 detail_sale.save()
                 if status_replication:
                     detail_sale.save(using='mirror_database')
-                new_stock = Stock.objects.get(product=product_sale)
-                new_stocks_size = StockProductSize.objects.get(stock=new_stock, size=size_sale)
-                new_stocks_size.amount = new_stocks_size.amount - detail_sale.ammount
-                new_stocks_size.save()
-                new_stocks_size.save(using='stock_product')
-                if status_replication:
-                    new_stocks_size.save(using='mirror_database')
-                new_stock.amount = new_stock.amount - detail_sale.ammount
-                new_stock.save()
-                new_stock.save(using='stock_product')
-                if status_replication:
-                    new_stock.save(using='mirror_database')
         except Exception as e:
             data['error'] = str(e)
         return data
@@ -180,7 +170,12 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
             case 'checkout':
                 data_products = {}
                 data = self.process_data_payment(request)
-                
+                if 'id' in data:
+                    with transaction.atomic():
+                        data_products = self.do_the_purchase(request)
+                        if 'error' in data_products:
+                            rollback_data(1)
+                            data['error'] = 'error'
                 
         # retorno de la información como JSON al front-end
         return JsonResponse(data, safe=False)

@@ -17,7 +17,7 @@ class Sale(models.Model):
     total = models.DecimalField(max_digits=18, decimal_places=2, verbose_name='iva')
     # dirección del usuario
     direction = models.ForeignKey(DirectionUser, verbose_name='direction_id', on_delete=models.PROTECT, null=True)
-
+    is_completed = models.BooleanField(verbose_name='Esta pagada?', default=True)
 
     class Meta:
         verbose_name = "Sale"
