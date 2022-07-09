@@ -9,6 +9,20 @@
     <h1>{{title}}</h1>
     <div class="box-content">
         <img src="{% static 'img/list.png' %}" alt="" class="img-style">
+        <h4>Filtrar por fecha de llegada</h4>
+        <form action="{{url}}" method="get">
+            <div class="flex-item">
+                <div class="cols-3">
+                    <input type="date" name="initial_date" style="width: 98%;" required>
+                </div>
+                <div class="cols-3">
+                    <input type="date" name="final_date" style="width: 98%;" required>
+                </div>
+                <div class="cols-3">
+                    <button type="submit" class="btn btn-success">Filtrar</button>
+                </div>
+            </div>
+        </form>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -35,7 +49,7 @@
             </tbody>
         </table>
         <a href="{% url 'status_send:add_status_send_user' %}" class="btn btn-primary">Agregar nuevo estado envio</a>
-        {% include 'pagination_btns.html' %}
+        {% include 'pagination_list_filter_date.html' %}
     </div>
 </div>
 {% endblock %}

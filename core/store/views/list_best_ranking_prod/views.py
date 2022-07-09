@@ -19,7 +19,7 @@ class ListBestProductsView(LoginRequiredMixin, ObtainColorMixin, ListView):
             case 2:
                 return Product.objects.filter(product_rating__gt=3).order_by('-pvp')
             case 3:
-                return Product.objects.filter(product_rating__gt=3).order_by('-name')
+                return Product.objects.filter(product_rating__gt=3).order_by('name')
             case 4:
                 return Product.objects.filter(product_rating__gt=3).order_by('-product_rating')
     

@@ -50,7 +50,7 @@ class CompareSalesPurchasesView(LoginRequiredMixin, ValidateSessionGroupMixin, O
         date_year = datetime.now().year
         sales_month = Sale.objects.filter(
             date_sale__year = date_year, date_sale__month = date_month).aggregate(Sum('total'))
-        return sales_month['total__sum']
+        return sales_month['total__sum'] if sales_month['total__sum'] != None else 0.0
     
     # método que nos devuelve la cantidad (total comprado) del mes y año actual
     def get_money_related_purchases(self):
@@ -58,13 +58,12 @@ class CompareSalesPurchasesView(LoginRequiredMixin, ValidateSessionGroupMixin, O
         date_year = datetime.now().year
         purchases_month = Purchase.objects.filter(
             date_purchase__year = date_year, date_purchase__month = date_month).aggregate(Sum('total'))
-        return purchases_month['total__sum']
+        return purchases_month['total__sum'] if purchases_month['total__sum'] != None else 0.0
 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         total_sale_month = self.get_money_related_sales()
-        print(total_sale_month)
         total_purchase_month = self.get_money_related_purchases()
         is_bigger_than = True if total_sale_month > total_purchase_month else False
         context['title'] = "Gastos vs Ingresos"

@@ -49,6 +49,7 @@ class RegisterStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, 
                 status_send_sale.save(using='mirror_database')
         except Exception as e:
             data['error'] = str(e)
+        return data
 
     # sobrescritura del método post para el guardado de los datos
     def post(self, request, *args, **kwargs):
@@ -56,13 +57,13 @@ class RegisterStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, 
         match request.POST['action']:
             case 'autocomplete':
                 data = []
-                sales_data = Sale.objects.filter(id = self.convert_string_number(request))
+                sales_data = Sale.objects.filter(id = self.convert_string_number(request), is_completed=True)
                 if sales_data.exists():
                     sale = sales_data[0]
                     item = sale.toJSON()
                     item['text'] = f'Factura: {sale.id}, Usuario: {sale.user.username}'
                     data.append(item)
-            case _:
+            case 'register':
                 data = self.save_status_send_sale(request)
                 if 'error' in data:
                     rollback_data(3)
