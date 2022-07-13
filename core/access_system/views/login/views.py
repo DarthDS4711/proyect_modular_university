@@ -4,10 +4,11 @@ from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 
 
 
-class LoginView(FormView, ObtainColorMixin):
+class LoginView(EmergencyModeMixin, FormView, ObtainColorMixin):
     template_name = 'login.html'
     form_class = AuthenticationForm
     success_url = reverse_lazy('app_views:dashboard_user')

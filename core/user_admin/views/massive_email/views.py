@@ -3,9 +3,9 @@ from email.mime.text import MIMEText
 import smtplib
 from django.conf import settings
 from django.views.generic import TemplateView
-from django.urls import reverse_lazy
 from core.classes.obtain_color import ObtainColorMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from django.template.loader import render_to_string
 import threading
@@ -14,7 +14,7 @@ from django.contrib.auth.models import Group
 
 
 
-class MassiveEmailView(LoginRequiredMixin, ValidateSessionGroupMixin, TemplateView, ObtainColorMixin):
+class MassiveEmailView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, TemplateView, ObtainColorMixin):
     template_name = 'massiveEmail.html'
 
     # función que en base del tipo de correo, filtra los usuarios a los cuales

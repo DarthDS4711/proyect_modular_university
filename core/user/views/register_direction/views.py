@@ -5,12 +5,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.user.forms.form import DirectionUserForm
 from core.user.models import DirectionUser
 from django.db import transaction
 
 
-class RegisterDirectionUser(LoginRequiredMixin, ObtainColorMixin, CreateView):
+class RegisterDirectionUser(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, CreateView):
     template_name = 'direction_notebook/register_direction.html'
     login_url = reverse_lazy('access:Login')
     model = DirectionUser

@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
@@ -13,8 +14,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
 
 
-class UpdateStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
-    template_name = "registerStatusSendSale.html"
+class UpdateStatusSendSaleView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
+    template_name = "editStatusSendSale.html"
     model = StatusSendSale
     success_url = reverse_lazy('status_send:list_status_send_admin')
     login_url = reverse_lazy('access:Login')
@@ -36,12 +37,15 @@ class UpdateStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, Ob
     def update_status_send_sale(self, request):
         data = {}
         try:
+            print(request.POST)
             status_send_invoice = StatusSend.objects.get(id = int(request.POST['status_send']))
             date_actual_state = datetime.now()
             delivered = self.convert_string_boolean(request)
             self.object.status_send = status_send_invoice
             self.object.delivered = delivered
             self.object.date_actual_state = date_actual_state
+            self.object.date_arrival = request.POST[
+                'date_arrival'] if request.POST['date_arrival'] != '' else self.object.date_arrival
             self.object.save()
             if is_actual_state_autoreplication():
                 self.object.save(using='mirror_database')

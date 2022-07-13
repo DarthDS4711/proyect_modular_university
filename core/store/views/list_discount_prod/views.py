@@ -1,11 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListDiscountProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListDiscountProductView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
     paginate_by = 5
     template_name = 'listDiscountProd.html'
@@ -19,7 +20,7 @@ class ListDiscountProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
             case 2:
                 return Product.objects.filter(discount__gt=0.1).order_by('-pvp')
             case 3:
-                return Product.objects.filter(discount__gt=0.1).order_by('-name')
+                return Product.objects.filter(discount__gt=0.1).order_by('name')
             case 4:
                 return Product.objects.filter(discount__gt=0.1).order_by('-product_rating')
     

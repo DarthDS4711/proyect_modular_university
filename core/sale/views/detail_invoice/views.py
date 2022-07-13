@@ -2,10 +2,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.sale.models import DetailSale, Sale
 
 
-class DetailInvoiceView(LoginRequiredMixin, ObtainColorMixin, DetailView):
+class DetailInvoiceView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, DetailView):
     template_name = 'detail_invoice.html'
     login_url = reverse_lazy('access:Login')
     model = Sale

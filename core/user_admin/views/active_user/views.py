@@ -2,11 +2,12 @@ from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.user.models import User
 
 
-class ListBlockUserView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListBlockUserView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = User # modelo a usar para la consulta del ListView
     paginate_by = 6 # número de elementos a mostrar por pagina
     template_name = 'listBlockUser.html'

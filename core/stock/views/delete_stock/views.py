@@ -2,12 +2,13 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.stock.models import Stock
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class DeleteStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
+class DeleteStockView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
     model = Stock
     success_url = reverse_lazy('stock:list_stock')
     template_name = 'deleteStock.html'

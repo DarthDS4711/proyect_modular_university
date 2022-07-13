@@ -22,14 +22,14 @@
                 <h3>Compras</h3>
                 <p><a href="{% url 'sale:list_invoices' %}" class="btn orange-btn btn-style">Facturas</a></p>
                 <p> <a href="{% url 'status_send:list_status_send_user' %}" class="btn orange-btn btn-style">Estado envio productos</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Devoluciones</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Más...</a></p>
+                <p><a href="{% url 'shop:list_discount' %}" class="btn orange-btn btn-style">Mejores ofertas</a></p>
+                <p><a href="{% url 'shop:list_best_products' %}" class="btn orange-btn btn-style">Mejores productos</a></p>
             </div>
             <div class="cols-3 box-shadowed">
                 <h3>En desarrollo...</h3>
-                <p><a href="#" class="btn orange-btn btn-style">Mejores ofertas</a></p>
-                <p> <a href="#" class="btn orange-btn btn-style">Contacto con el vendedor</a></p>
                 <p><a href="#" class="btn orange-btn btn-style">Dar de baja la cuenta</a></p>
+                <p> <a href="#" class="btn orange-btn btn-style">Contacto con el equipo administrador</a></p>
+                <p><a href="{% url 'access:logout_all' %}" class="btn orange-btn btn-style">Cerrar todas las sesiones: {{number_sessions}}</a></p>
                 <p><a href="#" class="btn orange-btn btn-style">Más...</a></p>
             </div>
         </div>

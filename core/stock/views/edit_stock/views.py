@@ -4,6 +4,7 @@ from django.views.generic.edit import UpdateView
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.stock.models import Stock, StockProductSize
 from core.stock.form.forms import StockEditForm
@@ -12,7 +13,7 @@ from django.db import transaction
 
 
 # clase para crear los stock
-class UpdateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
+class UpdateStockView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     template_name = 'editStock.html'
     model = Stock
     success_url = reverse_lazy('stock:list_stock')

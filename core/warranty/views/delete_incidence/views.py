@@ -1,7 +1,8 @@
 from django.views.generic.base import TemplateView
+from core.mixins.emergency_mixin import EmergencyModeMixin
 
 
-class DeleteIncidenceView(TemplateView):
+class DeleteIncidenceView(EmergencyModeMixin, TemplateView):
     template_name = 'deleteIncidence.html'
 
     def get_context_data(self, **kwargs):

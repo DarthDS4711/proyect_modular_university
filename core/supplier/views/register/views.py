@@ -4,13 +4,14 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.supplier.forms.supplier.form import SupplierForm
 from core.supplier.models import Supplier
 from django.db import transaction
 
 
-class RegisterSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
+class RegisterSupplierView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = "registerSupplier.html"
     model = Supplier
     success_url = reverse_lazy('supplier_app:list_supplier')

@@ -29,5 +29,11 @@ class Supplier(models.Model):
         ordering = ['id']
         db_table = 'supplier'
     
+    def to_json_faster(self):
+        item = {}
+        item['id'] = self.id
+        item['name'] = self.get_image()
+        return item
+    
     def __str__(self):
         return self.first_names + ' ' + self.last_names

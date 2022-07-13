@@ -1,12 +1,13 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListSizeView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Size
     paginate_by = 10
     template_name = 'listSize.html'
@@ -23,7 +24,7 @@ class ListSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMix
         return context
 
 
-class ListCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListCategoryView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Category
     paginate_by = 4
     template_name = 'listCategories.html'
@@ -40,7 +41,7 @@ class ListCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColo
         context['color'] = self.get_number_color()
         return context
 
-class ListProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Product
     paginate_by = 10
     template_name = 'listProducts.html'

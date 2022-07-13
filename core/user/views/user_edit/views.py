@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from core.app_functions.rollback_data import rollback_data
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.user.forms.form_user import UserEditForm
 from core.user.models import User
 from core.classes.obtain_color import ObtainColorMixin
@@ -10,7 +11,7 @@ from django.db import transaction
 
 
 
-class UpdateUserView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class UpdateUserView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, UpdateView):
     model = User
     success_url = reverse_lazy('app_views:homepage')
     template_name = 'signin.html'

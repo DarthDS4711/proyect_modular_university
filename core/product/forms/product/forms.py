@@ -1,6 +1,7 @@
 from django import forms
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.product.models import Product
+from core.supplier.models import Supplier
 
 
 # formulario Django para el producto
@@ -25,6 +26,10 @@ class ProductForm(forms.ModelForm):
             'last_color' : forms.TextInput(attrs={
                 'type' : 'color'
             }),
+            'supplier_id' : forms.Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%',
+            })
         }
 
     def save(self, commit=True):

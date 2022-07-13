@@ -2,10 +2,11 @@ from itertools import product
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Product
 
 # template view for the main page
-class HomepageView(TemplateView, ObtainColorMixin):
+class HomepageView(EmergencyModeMixin, TemplateView, ObtainColorMixin):
     template_name = 'index.html'
 
     # method that return best products for the shop

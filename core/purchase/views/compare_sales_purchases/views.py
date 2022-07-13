@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.urls import reverse_lazy
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.purchase.models import Purchase
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,7 +10,7 @@ from core.sale.models import Sale
 from django.db.models import Sum
 
 # vista que nos permitirá comparar nuestros gastos y nuestras ventas
-class CompareSalesPurchasesView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
+class CompareSalesPurchasesView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
     template_name = "compare_sales_purchases.html"
     login_url: reverse_lazy("access:Login")
     group_permisson = 'Administrator'

@@ -1,11 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Category
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListCategoryShopView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListCategoryShopView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Category
     paginate_by = 4
     template_name = 'listCategoriesShop.html'

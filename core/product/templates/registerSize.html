@@ -16,6 +16,7 @@
         <input type="hidden" id="action" value="{{action}}">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <input type="hidden" name="action" value="{{action}}">
             {% for field in form.visible_fields %}
             <div class="form-group">
                 <label>{{ field.label }}:</label>

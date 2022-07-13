@@ -10,13 +10,14 @@ from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Product, Size
 from core.stock.models import Stock, StockProductSize
 from core.sale.models import DetailSale, Sale
 from core.user.models import DirectionUser
 
 
-class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
+class ShopCartView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, TemplateView):
     template_name = "shopCart.html"
     login_url = reverse_lazy('access:Login')
 
@@ -123,7 +124,6 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                             'product_data': {
                                 'name' : f'Pago de productos usuario: {self.request.user.username}'
                             }
-    
                         },
                         'quantity': 1,
                     },
@@ -132,11 +132,9 @@ class ShopCartView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
                 success_url= DOMAIN_PAGE + reverse_lazy('shop:success'),
                 cancel_url= DOMAIN_PAGE + reverse_lazy('shop:cancel'),
             )
-            print(checkout_session)
             data['id'] = checkout_session.id
         except Exception as e:
             data['error'] = str(e)
-        print(data)
         return data
 
     # sobrescritura del método post para la obtención y guardado de datos

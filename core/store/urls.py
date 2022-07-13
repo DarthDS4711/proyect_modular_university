@@ -22,7 +22,7 @@ urlpatterns = [
     # vista relacionada al carrito de compra 
     path('shop-cart/', ShopCartView.as_view(), name='shop_cart'),
     # vista relacionada a la página principal de la tienda
-    path('', MainShopView.as_view(), name='main-shop'),
+    path('', MainShopView.as_view(), name='main_shop'),
     # vista relacionada a mostrar en lista los productos de la tienda
     path('list/<int:id_category>', ListProductsShopView.as_view(), name='list_products'),
     # vista relacionada a mostrar todas las categorías de la tienda (cliente),
@@ -43,5 +43,5 @@ urlpatterns = [
     # ruta de la vista de cancelación de la compra
     path('cancel/', CancelPaymentView.as_view(), name='cancel'),
     # ruta de pago exitoso
-    path('sucess/', SuccessPaymentView.as_view(), name='success')
+    path('success/', SuccessPaymentView.as_view(), name='success')
 ]

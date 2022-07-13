@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.supplier.forms.supplier.form import SupplierForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,7 +11,7 @@ from core.supplier.models import Supplier
 from django.db import transaction
 
     
-class EditSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
+class EditSupplierView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     template_name = "editSupplier.html"
     model = Supplier
     success_url = reverse_lazy('supplier_app:list_supplier')

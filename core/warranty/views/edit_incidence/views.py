@@ -4,13 +4,14 @@ from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.forms.form_incidence.form import IncidenceForm
 from core.warranty.models import Incidence
 from django.db import transaction
 
 
-class EditIncidenceView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin ,UpdateView):
+class EditIncidenceView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin ,UpdateView):
     template_name = 'editIncidence.html'
     model = Incidence
     login_url = reverse_lazy('access:Login')

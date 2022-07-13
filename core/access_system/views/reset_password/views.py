@@ -9,13 +9,14 @@ from django.urls import reverse_lazy
 from core.access_system.forms.form_reset_pwd import UserResetPwdForm
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.user.models import User
 from django.template.loader import render_to_string
 from email.mime.text import MIMEText
 import threading
 
 
-class ResetPasswordEmailiew(FormView, ObtainColorMixin):
+class ResetPasswordEmailiew(EmergencyModeMixin, FormView, ObtainColorMixin):
     template_name = 'reset_password_email.html'
     form_class = UserResetPwdForm
     success_url = reverse_lazy('app_views:homepage')

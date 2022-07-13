@@ -4,13 +4,14 @@ from django.urls import reverse_lazy
 from core.access_system.forms.form_change_pwd import ChangePasswordForm
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.user.models import User
 from django.db import transaction
 import uuid
 
 
 # vista que cambia la contraseña y el token del usuario
-class ChangePasswordUseriew(FormView, ObtainColorMixin):
+class ChangePasswordUseriew(EmergencyModeMixin, FormView, ObtainColorMixin):
     template_name = 'change_password.html'
     form_class = ChangePasswordForm
     success_url = reverse_lazy('app_views:homepage')

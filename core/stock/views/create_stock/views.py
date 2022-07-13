@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Product
 from core.stock.models import Stock
@@ -15,7 +16,7 @@ from django.db import transaction
 
 
 # clase para crear los stock
-class CreateStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
+class CreateStockView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = 'createStock.html'
     model = Stock
     success_url = reverse_lazy('stock:list_stock')

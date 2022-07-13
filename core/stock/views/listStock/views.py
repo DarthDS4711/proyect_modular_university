@@ -1,12 +1,13 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.stock.models import Stock
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ListStockView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListStockView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Stock
     template_name = 'listStock.html'
     paginate_by = 20

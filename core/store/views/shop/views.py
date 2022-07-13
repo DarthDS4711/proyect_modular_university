@@ -1,11 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class MainShopView(LoginRequiredMixin, ObtainColorMixin, TemplateView):
+class MainShopView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, TemplateView):
 	template_name = 'shopMainPage.html'
 	login_url = reverse_lazy('access:Login')
 

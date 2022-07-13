@@ -1,6 +1,7 @@
 from django.urls import path
 from core.homepage.views.dashboard_admin.views import DashboardAdminView
 from core.homepage.views.dashboard_user.views import DashboardUserView
+from core.homepage.views.error_page.views import ErrorPageView
 
 from core.homepage.views.home.views import HomepageView
 from core.homepage.views.not_found_404.views import Template404View
@@ -23,5 +24,7 @@ urlpatterns = [
     # ruta para obtener el estado de la página
     path('state-page/', StatePageView.as_view(), name='state_page'),
     # ruta para obtener el estado actual de las bases de datos
-    path('state-databases/', StateDatabasesView.as_view(), name='state_databases')
+    path('state-databases/', StateDatabasesView.as_view(), name='state_databases'),
+    # ruta para manejar el estado de protección de la página
+    path('error/', ErrorPageView.as_view(), name='error_page')
 ]

@@ -1,13 +1,14 @@
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Product
 from core.supplier.models import Supplier
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class DetailSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DetailView):
+class DetailSupplierView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DetailView):
     model = Supplier
     template_name = "detailSupplier.html"
     login_url = reverse_lazy('access:Login')

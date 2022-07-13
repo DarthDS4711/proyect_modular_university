@@ -6,11 +6,12 @@ from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.colorpage.models import ColorPage
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from django.db import transaction
 
 
-class UpdateColorPage(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
+class UpdateColorPage(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
     template_name = 'updateColorPage.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'

@@ -5,12 +5,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.base import View
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.sale.models import DetailSale, Sale
 from django.template.loader import get_template
 from weasyprint import HTML, CSS
 
 
-class RenderDetailInvoiceView(LoginRequiredMixin, ObtainColorMixin, View):
+class RenderDetailInvoiceView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, View):
     login_url = reverse_lazy('access:Login')
     
 

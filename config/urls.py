@@ -49,6 +49,8 @@ urlpatterns = [
     # rutas relacionadas con la replicación automática de los datos
     path('data-application/', include('core.data.urls')),
     # rutas relacionadas a la administración de los usuarios
-    path('user-admin/', include('core.user_admin.urls'))
+    path('user-admin/', include('core.user_admin.urls')),
+    # rutas relacionadas con la administración de la aplicacion
+    path('admin_site/', include('core.admin_site.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

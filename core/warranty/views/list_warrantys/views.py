@@ -2,12 +2,13 @@ from django.urls import reverse_lazy
 from core.classes.obtain_color import ObtainColorMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.models import WarrantySale
 
 
 
-class ListWarrantyView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
+class ListWarrantyView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = WarrantySale
     paginate_by = 10
     template_name = 'listWarrantys.html'

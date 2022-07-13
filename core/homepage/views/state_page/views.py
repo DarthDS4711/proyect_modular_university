@@ -3,14 +3,13 @@ from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Product
-from django.http import JsonResponse
-
 from core.user.models import User
 
 
-class StatePageView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
+class StatePageView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
     template_name = 'statePage.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'

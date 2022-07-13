@@ -4,11 +4,12 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
 from core.data.models import DataReplication
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from django.db import transaction
 
 
-class UpdateDataRepplicationView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
+class UpdateDataRepplicationView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
     template_name = 'update_view_datarep.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'

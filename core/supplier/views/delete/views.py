@@ -3,11 +3,12 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.supplier.models import Supplier
 
 
-class DeleteSupplierView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
+class DeleteSupplierView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteSupplier.html'
     success_url = reverse_lazy('supplier_app:list_supplier')
     model = Supplier

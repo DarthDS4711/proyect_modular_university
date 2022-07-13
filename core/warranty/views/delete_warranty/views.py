@@ -1,7 +1,8 @@
 from django.views.generic.base import TemplateView
+from core.mixins.emergency_mixin import EmergencyModeMixin
 
 
-class DeleteWarrantyView(TemplateView):
+class DeleteWarrantyView(EmergencyModeMixin, TemplateView):
     template_name = 'deleteWarranty.html'
 
     def get_context_data(self, **kwargs):

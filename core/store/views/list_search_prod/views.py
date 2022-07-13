@@ -1,15 +1,12 @@
-from multiprocessing import context
-from urllib import request
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
-from django.core.paginator import Paginator
 
 
-class ListSearchProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListSearchProductView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
     paginate_by = 2
     template_name = 'listSearchProduct.html'
@@ -31,7 +28,7 @@ class ListSearchProductView(LoginRequiredMixin, ObtainColorMixin, ListView):
             case 2:
                 return Product.objects.filter(name__icontains=name).order_by('-pvp')
             case 3:
-                return Product.objects.filter(name__icontains=name).order_by('-name')
+                return Product.objects.filter(name__icontains=name).order_by('name')
             case 4:
                 return Product.objects.filter(name__icontains=name).order_by('-product_rating')
     

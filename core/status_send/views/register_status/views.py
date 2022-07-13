@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
@@ -11,7 +12,7 @@ from django.db import transaction
 
 
 
-class RegisterStatusView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
+class RegisterStatusView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     model = StatusSend
     template_name = 'registerStatusSend.html'
     success_url = reverse_lazy('status_send:list')

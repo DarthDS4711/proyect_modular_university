@@ -4,6 +4,7 @@ from django.views.generic.edit import UpdateView
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.superuser_mixin import ValidateSuperUserMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -11,7 +12,7 @@ from core.user.models import User
 
 
 
-class UpdateStatusUserView(LoginRequiredMixin, ValidateSuperUserMixin, ObtainColorMixin, UpdateView):
+class UpdateStatusUserView(EmergencyModeMixin, LoginRequiredMixin, ValidateSuperUserMixin, ObtainColorMixin, UpdateView):
     template_name = 'updateActiveUser.html'
     model = User
     success_url = reverse_lazy('user_admin:list_block_user')

@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.status_send.forms.form_register_status import StatusSendForm
 from core.status_send.models import StatusSend
@@ -10,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 
 
-class UpdateStatusSendView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
+class UpdateStatusSendView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, UpdateView):
     from_class = StatusSendForm
     template_name = 'editStatusSend.html'
     model = StatusSend

@@ -1,19 +1,14 @@
-from datetime import datetime, timedelta
-from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
-from django.contrib.auth.models import Group
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
-from core.product.models import Category
-from core.sale.models import DetailSale, Sale
 from django.http import JsonResponse
-
 from core.user.models import User
 
 
-class UserPageFlowView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
+class UserPageFlowView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, TemplateView):
     template_name = 'usersFlow.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'

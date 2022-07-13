@@ -5,10 +5,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import stripe
 from config.stripe.secret_keys_payment import STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.sale.models import Sale
 
 
-class ListInvoiceView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListInvoiceView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Sale
     paginate_by = 10
     template_name = 'list_invoices.html'
@@ -49,7 +50,6 @@ class ListInvoiceView(LoginRequiredMixin, ObtainColorMixin, ListView):
                             'product_data': {
                                 'name' : f'Pago de productos con atraso usuario: {self.request.user.username}'
                             }
-    
                         },
                         'quantity': 1,
                     },
@@ -66,7 +66,6 @@ class ListInvoiceView(LoginRequiredMixin, ObtainColorMixin, ListView):
     def post(self, request, *args, **kwargs):
         data = {}
         data = self.process_data_payment(request)
-        print(data)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):

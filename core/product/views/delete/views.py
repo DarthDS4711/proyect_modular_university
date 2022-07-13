@@ -3,12 +3,13 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import DeleteView
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Category, Product, Size
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
 
-class DeleteSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
+class DeleteSizeView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
     model = Size
     success_url = reverse_lazy('product:list_sizes')
     template_name = 'deleteSize.html'
@@ -22,7 +23,7 @@ class DeleteSizeView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorM
         context['color'] = self.get_number_color()
         return context
 
-class DeleteCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
+class DeleteCategoryView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteCategory.html'
     success_url = reverse_lazy('product:list_cat')
     model = Category
@@ -53,7 +54,7 @@ class DeleteCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCo
         return context
 
 
-class DeleteProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
+class DeleteProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DeleteView):
     template_name = 'deleteProduct.html'
     success_url = reverse_lazy('product:list_product')
     model = Product

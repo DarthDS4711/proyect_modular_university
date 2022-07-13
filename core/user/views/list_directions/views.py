@@ -1,12 +1,12 @@
-import imp
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from core.classes.obtain_color import ObtainColorMixin
 from django.views.generic.list import ListView
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.user.models import DirectionUser
 
 
-class ListDirectionUserView(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListDirectionUserView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     template_name = 'direction_notebook/list_direction_notebook.html'
     login_url = reverse_lazy('access:Login')
     model = DirectionUser

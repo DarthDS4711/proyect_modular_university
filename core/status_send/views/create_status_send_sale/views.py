@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.forms.product.forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -15,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
 
 
-class RegisterStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
+class RegisterStatusSendSaleView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = "registerStatusSendSale.html"
     model = StatusSendSale
     success_url = reverse_lazy('status_send:list_status_send_admin')
@@ -65,8 +66,9 @@ class RegisterStatusSendSaleView(LoginRequiredMixin, ValidateSessionGroupMixin, 
                     data.append(item)
             case 'register':
                 data = self.save_status_send_sale(request)
-                if 'error' in data:
-                    rollback_data(3)
+                with transaction.atomic():
+                    if 'error' in data:
+                        rollback_data(3)
         # regreso de la respuesta del servidor
         return JsonResponse(data, safe=False)
 

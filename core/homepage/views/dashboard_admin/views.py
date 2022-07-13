@@ -4,14 +4,14 @@ from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
-from django.contrib.auth.models import Group
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Category
 from core.sale.models import DetailSale, Sale
 from django.http import JsonResponse
+from core.mixins.emergency_mixin import EmergencyModeMixin
 
 
-class DashboardAdminView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin,TemplateView):
+class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin,TemplateView):
     template_name = 'dashboardAdmin.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
@@ -51,7 +51,6 @@ class DashboardAdminView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCo
             list_sale_days.append(sales_per_day)
             counter -= 1
         return list_sale_days
-
 
     
     def post(self, request, *args, **kwargs):

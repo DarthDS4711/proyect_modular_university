@@ -1,12 +1,12 @@
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Comment, Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-
-class ListAllCommentsProduct(LoginRequiredMixin, ObtainColorMixin, ListView):
+class ListAllCommentsProduct(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Comment
     paginate_by = 10
     template_name = 'list_all_comments.html'

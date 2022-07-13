@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.warranty.forms.form_warranty_product.forms import WarrantyProductForm
 from core.warranty.models import WarrantyProduct
@@ -10,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
 
 
-class CreateWarrantyProductView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
+class CreateWarrantyProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):
     template_name = 'createWarrantyProduct.html'
     model = WarrantyProduct
     login_url = reverse_lazy('access:Login')

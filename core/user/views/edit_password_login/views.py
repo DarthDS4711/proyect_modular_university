@@ -1,17 +1,17 @@
 from django.http import JsonResponse
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.user.models import User
 from django.contrib.auth import logout
 from django.db import transaction
 
 
-class EditPasswordLoginView(LoginRequiredMixin, ObtainColorMixin, UpdateView):
+class EditPasswordLoginView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, UpdateView):
     template_name = 'edit_password/new_password.html'
     login_url = reverse_lazy('access:Login')
     success_url = reverse_lazy('app_views:dashboard_user')

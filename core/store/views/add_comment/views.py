@@ -5,13 +5,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Comment, Product
 from core.store.forms.form_comment.forms import CommentUserForm
 from django.db.models import Avg
 from django.db import transaction
 
 
-class AddComentProduct(LoginRequiredMixin, ObtainColorMixin, CreateView):
+class AddComentProduct(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, CreateView):
     template_name = 'add_comment.html'
     login_url = reverse_lazy('access:Login')
     model = Comment

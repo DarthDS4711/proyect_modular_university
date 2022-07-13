@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'core.purchase',
     'core.colorpage',
     'core.data',
-    'core.user_admin'
+    'core.user_admin',
+    'core.admin_site'
 ]
 
 MIDDLEWARE = [

@@ -1,13 +1,14 @@
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Category, Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-class DetailCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DetailView):
+class DetailCategoryView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, DetailView):
     model = Category
     template_name = "detailCategory.html"
     login_url = reverse_lazy('access:Login')
@@ -20,7 +21,7 @@ class DetailCategoryView(LoginRequiredMixin, ValidateSessionGroupMixin, ObtainCo
         return context
 
 
-class DetailProductView(LoginRequiredMixin, ObtainColorMixin ,DetailView):
+class DetailProductView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin ,DetailView):
     model = Product
     template_name = 'detailProduct.html'
     login_url = reverse_lazy('access:Login')

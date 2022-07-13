@@ -2,16 +2,16 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.detail import DetailView
 from core.classes.obtain_color import ObtainColorMixin
+from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.product.models import Comment, Product
 from core.stock.models import Stock, StockProductSize
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
-
 from core.warranty.models import WarrantyProduct
 
 
 
-class DetailProductView(LoginRequiredMixin, ObtainColorMixin , DetailView):
+class DetailProductView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin , DetailView):
     template_name = "detailProductShop.html"
     model = Product
     login_url = reverse_lazy('access:Login')
