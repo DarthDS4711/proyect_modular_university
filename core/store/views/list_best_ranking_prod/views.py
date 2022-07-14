@@ -39,7 +39,7 @@ class ListBestProductsView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMi
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Mejores productos"
-        context["discount"] = False
+        context["discount"] = True
         context['url'] = reverse_lazy('shop:list_best_products')
         context['color'] = self.get_number_color()
         context['order'] = self.return_value_of_order()

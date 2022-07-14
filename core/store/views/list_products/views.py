@@ -21,6 +21,6 @@ class ListProductsShopView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMi
         category = Category.objects.filter(id=self.kwargs['id_category'])[0]
         context = super().get_context_data(**kwargs) 
         context["title"] = category
-        context["discount"] = False
+        context["discount"] = True
         context['color'] = self.get_number_color()
         return context

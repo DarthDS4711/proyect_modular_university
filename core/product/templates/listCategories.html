@@ -10,6 +10,23 @@
     <h1>{{title}}</h1>
     <div class="box-content">
         <img src="{% static image %}" alt="" class="img-style">
+        <div class="form-group">
+            <form action="{{url}}" method="get">
+                <label>Búsqueda</label>
+                <div class="flex-search">
+                    <input type="search" name="name" class="form-control" class="flex-item"
+                        placeholder="Ingresa el nombre de la categoría" value="{{name}}">
+                </div>
+                <div class="form-group">
+                    <label>Filtrar por</label>
+                    <select class="form-control" name="status" id="options">
+                      <option value="1" selected>Ninguno</option>
+                      <option value="2">Activos</option>
+                      <option value="3">Inactivos</option>
+                    </select>
+                </div><button class="btn btn-success" type="submit" id="btn-submit" style="width: 100%;">Buscar y filtrar</button>
+            </form>
+        </div>
         <table class="table table-striped table-responsive">
             <thead>
                 <tr>
@@ -33,14 +50,15 @@
                     <td><strong>Baja</strong></td>
                     {% endif %}
                     <td><a class="btn btn-warning" href="../update-category/{{category.id}}">Editar</a>
-                    <a class="btn btn-danger" href="../delete-category/{{category.id}}">Eliminar</a>
-                    <a class="btn btn-success" href="../detail-category/{{category.id}}">Detalles</a></td>
+                        <a class="btn btn-danger" href="../delete-category/{{category.id}}">Eliminar</a>
+                        <a class="btn btn-success" href="../detail-category/{{category.id}}">Detalles</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
         <a href="{{create_category}}" class="btn btn-primary">Agregar nueva categoría</a>
-        {% include 'pagination_btns.html' %}
+        {% include 'pagination_product_supplier.html' %}
     </div>
 </div>
 {% endblock %}

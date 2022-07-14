@@ -15,6 +15,7 @@
     <img src="{% static image %}" alt="" class="img-style" />
     <h4>Filtrar por fecha</h4>
     <form action="{{url}}" method="get">
+      {% csrf_token %}
       <div class="flex-item">
         <div class="cols-3">
           <input type="date" name="initial_date" style="width: 98%;" required>
@@ -27,7 +28,6 @@
         </div>
       </div>
     </form>
-    {% csrf_token %}
     <input type="hidden" id="stripe-public-key" value="{{public_stripe}}">
     <table class="table table-striped">
       <thead class="thead-dark">

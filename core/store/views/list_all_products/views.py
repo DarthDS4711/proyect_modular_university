@@ -40,7 +40,7 @@ class ListAllProductsView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMix
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Todos los productos"
-        context["discount"] = False
+        context["discount"] = True
         context['url'] = reverse_lazy('shop:list_all')
         context['color'] = self.get_number_color()
         context['order'] = self.return_value_of_order()

@@ -1,20 +1,40 @@
-{% extends 'baseView.html' %} {% load static %} {% block head %} {% endblock %}
+{% extends 'baseView.html' %} 
+{% load static %} 
+
+{% block head %} 
+{% endblock %}
+
 {% block content %}
 <div class="box-layout">
   <h1>{{title}}</h1>
   <div class="box-content">
     <img src="{% static image %}" alt="" class="img-style" />
-    <table class="table table-responsive table-striped">
-      <thead class="thead-dark">
+    <h4>Filtrar por fecha</h4>
+    <form action="{{url}}" method="get">
+      <div class="flex-item">
+        <div class="cols-3">
+          <input type="date" name="initial_date" style="width: 98%;" required>
+        </div>
+        <div class="cols-3">
+          <input type="date" name="final_date" style="width: 98%;" required>
+        </div>
+        <div class="cols-3">
+          <button type="submit" class="btn btn-success">Filtrar</button>
+        </div>
+      </div>
+    </form>
+    <table class="table table-responsive table-striped w-auto">
+      <thead class="thead-dark" style="width: 100%!important;">
         <tr>
-          <th>N° Factura</th>
-          <th>Total</th>
-          <th>Fecha</th>
-          <th>Acciones</th>
+          <th class="w-5">N° Factura</th>
+          <th class="w-75">Total</th>
+          <th class="w-75">Fecha</th>
+          <th class="w-70">Acciones</th>
         </tr>
       </thead>
       <tbody>
         {% for invoice in page_obj %}
+        <tr>
           <td>{{invoice.id}}</td>
           <td>${{invoice.total}}</td>
           <td>{{invoice.date_purchase}}</td>
