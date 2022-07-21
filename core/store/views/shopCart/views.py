@@ -1,4 +1,5 @@
 import json
+from locale import currency
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
@@ -87,6 +88,7 @@ class ShopCartView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, Tem
                 detail_sale.save()
                 if status_replication:
                     detail_sale.save(using='mirror_database')
+            data['success'] = str(sale.id)
         except Exception as e:
             data['error'] = str(e)
         return data
@@ -105,9 +107,23 @@ class ShopCartView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, Tem
                     data['error'] = 'No hay suficiente stock'
         return data
     
+    # función que nos valida si no existen pagos que no se han cumplido
+    def validate_non_paid_invoices(self):
+        data = {}
+        try:
+            unpaid_invoices = Sale.objects.filter(user=self.request.user, is_completed=False)
+            if len(unpaid_invoices) > 0:
+                data['error'] = 'No puede comprar más productos ya que tiene cargos pendientes'
+            else:
+                data['success'] = ''
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+    
     
     # función que procesa el pago con stripe
-    def process_data_payment(self, request):
+    def process_data_payment(self, request, sale_id):
         data = {}
         try:
             stripe.api_key = STRIPE_SECRET_KEY
@@ -131,7 +147,11 @@ class ShopCartView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, Tem
                 mode='payment',
                 success_url= DOMAIN_PAGE + reverse_lazy('shop:success'),
                 cancel_url= DOMAIN_PAGE + reverse_lazy('shop:cancel'),
+                payment_intent_data={
+                    'metadata' : {'order_id' : sale_id}
+                }
             )
+            print(checkout_session)
             data['id'] = checkout_session.id
         except Exception as e:
             data['error'] = str(e)
@@ -158,22 +178,30 @@ class ShopCartView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, Tem
                 data['image'] = product_return.get_image()
                 data['name'] = product_return.name
             # caso donde se prevalida la cantidad total de productos a comprar
+            # además de si existen facturas pendientes por pagar
             case 'validate_buy':
-                products = json.loads(request.POST['products'])
-                if len(products) > 0:
-                    data = self.return_status_stock(request, products)
-                else:
-                    data['error'] = 'No hay productos por comprar'
+                data = self.validate_non_paid_invoices()
+                if 'success' in data:
+                    products = json.loads(request.POST['products'])
+                    if len(products) > 0:
+                        data = self.return_status_stock(request, products)
+                    else:
+                        data['error'] = 'No hay productos por comprar'
             # caso de checkout donde se realiza la compra de los productos
             case 'checkout':
                 data_products = {}
-                data = self.process_data_payment(request)
-                if 'id' in data:
-                    with transaction.atomic():
-                        data_products = self.do_the_purchase(request)
-                        if 'error' in data_products:
+                with transaction.atomic():
+                    data_products = self.do_the_purchase(request)
+                    if 'success' in data_products:
+                        print(data_products['success'])
+                        data = self.process_data_payment(request, data_products['success'])
+                        print(data)
+                        if 'error' in data:
                             rollback_data(1)
-                            data['error'] = 'error'
+                    else:
+                        rollback_data(1)
+                        data['error'] = 'error'
+
                 
         # retorno de la información como JSON al front-end
         return JsonResponse(data, safe=False)

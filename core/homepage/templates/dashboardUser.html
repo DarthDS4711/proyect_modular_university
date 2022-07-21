@@ -27,29 +27,21 @@
             </div>
             <div class="cols-3 box-shadowed">
                 <h3>En desarrollo...</h3>
-                <p><a href="#" class="btn orange-btn btn-style">Dar de baja la cuenta</a></p>
-                <p> <a href="#" class="btn orange-btn btn-style">Contacto con el equipo administrador</a></p>
+                <p><a href="" class="btn orange-btn btn-style">Dar de baja la cuenta</a></p>
+                <p> <a href="" class="btn orange-btn btn-style">Contacto con el equipo administrador</a></p>
                 <p><a href="{% url 'access:logout_all' %}" class="btn orange-btn btn-style">Cerrar todas las sesiones: {{number_sessions}}</a></p>
-                <p><a href="#" class="btn orange-btn btn-style">Más...</a></p>
+                <p><a href="" class="btn orange-btn btn-style">Más...</a></p>
             </div>
         </div>
         <h3>Ultimos productos comprados</h3>
         <div class="flex-item">
-            <div class="cols-3 card-product">
-                <h5>Vestido verano</h5>
-                <img src="{% static 'img/dress.png' %}" alt="" class="image-card">
-                <a class="btn btn-primary" href="#">Ver más</a>
+            {% for product in last_products %}
+            <div class="cols-{{class_css}} card-product">
+                <h5>{{product.name}}</h5>
+                <img src="{{product.get_image}}" alt="" class="image-card">
+                <a class="btn btn-primary" href="../shop/detail-product/{{product.id}}">Ver más</a>
             </div>
-            <div class="cols-3 card-product">
-                <h5>Vestido verano</h5>
-                <img src="{% static 'img/dress.png' %}" alt="" class="image-card">
-                <a class="btn btn-primary" href="#">Ver más</a>
-            </div>
-            <div class="cols-3 card-product">
-                <h5>Vestido verano</h5>
-                <img src="{% static 'img/dress.png' %}" alt="" class="image-card">
-                <a class="btn btn-primary" href="#">Ver más</a>
-            </div>
+            {% endfor %}
         </div>
         <a href="{% url 'sale:list_invoices' %}" class="btn btn-success">Ver todas las compras</a>
         <h3>Perfil de usuario</h3>
@@ -64,30 +56,11 @@
                 <p><strong>Apellidos: </strong>{{request.user.last_name}}</p>
                 <a href="{% url 'user:view_profile' %}" class="btn btn-warning">Más información</a>
                 <a href="{% url 'user:list_directions' %}" class="btn btn-primary">Agenda direcciones</a>
-                <a href="#" class="btn btn-danger">Cambiar contraseña</a>
+                <a href="{% url 'user:edit_password' %}" class="btn btn-danger">Cambiar contraseña</a>
             </div>
         </div>
         <h3>Estadisticas de compras por categoría</h3>
         <canvas id="graphic"></canvas>
-        <h3>Productos recomendados para ti</h3>
-        <div class="flex-item">
-            <div class="cols-3 card-product">
-                <h5>Camisa deportiva</h5>
-                <img src="{% static 'img/tshirt.png' %}" alt="" class="image-card">
-                <a class="btn btn-primary" href="#">Ver más</a>
-            </div>
-            <div class="cols-3 card-product">
-                <h5>Camisa deportiva</h5>
-                <img src="{% static 'img/tshirt.png' %}" alt="" class="image-card">
-                <a class="btn btn-primary" href="#">Ver más</a>
-            </div>
-            <div class="cols-3 card-product">
-                <h5>Camisa deportiva</h5>
-                <img src="{% static 'img/tshirt.png' %}" alt="" class="image-card">
-                <a class="btn btn-primary" href="#">Ver más</a>
-            </div>
-        </div>
-        <a href="#" class="btn btn-success">Ver más productos</a>
     </div>
 </div>
 {% endblock %}

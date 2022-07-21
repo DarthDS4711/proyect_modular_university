@@ -14,6 +14,7 @@ function paymentStripe(total, products, direction_user, subtotal) {
             subtotal: subtotal
         },
     }).then(function (session) {
+        sessionStorage.clear();
         return stripe.redirectToCheckout({ sessionId: session.id })
     }).then(function (result) {
         if (result.error) {

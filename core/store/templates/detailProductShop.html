@@ -23,6 +23,11 @@
             <span style="background-color: {{object.last_color}};" class="btn"></span>
             {% include 'rankProduct.html' %}
             <p><strong>Precio: </strong>${{object.get_pvp_with_discount}} MXN</p>
+            {% if object.get_discount_product > 0.00 %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Descuento: </strong> {{object.get_discount_product}}%
+            </div>
+            {% endif %}
             <input type="hidden" id="price" value="{{object.get_pvp_with_discount}}">
             {% if stock %}
             <button class="btn btn-success" id="btn-buy">Agregar al carrito</button>

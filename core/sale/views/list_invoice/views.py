@@ -57,6 +57,9 @@ class ListInvoiceView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, 
                 mode='payment',
                 success_url= DOMAIN_PAGE + reverse_lazy('shop:success'),
                 cancel_url= DOMAIN_PAGE + reverse_lazy('shop:cancel'),
+                payment_intent_data={
+                    'metadata' : {'order_id' : str(sale_to_pay.id)}
+                }
             )
             data['id'] = checkout_session.id
         except Exception as e:

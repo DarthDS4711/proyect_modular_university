@@ -1,5 +1,6 @@
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from config.stripe.secret_keys_payment import STRIPE_SECRET_KEY
 from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
@@ -7,6 +8,9 @@ from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.sale.models import DetailSale, Sale
 from core.stock.models import Stock, StockProductSize
 from django.db import transaction
+import stripe
+import time
+
 
 
 class SuccessPaymentView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, TemplateView):
@@ -42,13 +46,46 @@ class SuccessPaymentView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixi
         except Exception as e:
             data['error'] = str(e)
         return data
+    
+    # función que obtiene el último cargo del usuario
+    def obtain_list_of_charges(self, sale_id):
+        last_charge = stripe.Charge.search(
+            query=f"metadata['order_id']:'{sale_id}' and status:'succeeded'"
+        )['data']
+        return last_charge
+
+    # función en la cual obtenemos el último cargo del usuario
+    # con un tiempo de espera entre cada consulta para validar su compra
+    def search_last_charge_customer(self):
+        is_paid_the_transaction = False
+        stripe.api_key = STRIPE_SECRET_KEY
+        lastest_sale_user = Sale.objects.filter(user = self.request.user, is_completed=False).last()
+        limit_attempts = 15
+        if lastest_sale_user != None:
+            last_charge = self.obtain_list_of_charges(lastest_sale_user.id)
+            number_attempts = 0
+            while len(last_charge) <= 0 and number_attempts <= limit_attempts:
+                last_charge = self.obtain_list_of_charges(lastest_sale_user.id)
+                number_attempts += 1
+                time.sleep(3)
+            if number_attempts <= limit_attempts:
+                last_charge = last_charge[0]
+                print(last_charge)
+                if 'status' in last_charge:
+                    if last_charge['status'] == 'succeeded':
+                        is_paid_the_transaction = True
+                        print("pagada")
+        return is_paid_the_transaction
+
 
     def get(self, request, *args, **kwargs):
         data = {}
-        with transaction.atomic():
-            data = self.reduce_stock_products()
-            if 'error' in data:
-                rollback_data(1)
+        is_paid_transaction = self.search_last_charge_customer()
+        if is_paid_transaction:
+            with transaction.atomic():
+                data = self.reduce_stock_products()
+                if 'error' in data:
+                    rollback_data(1)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
