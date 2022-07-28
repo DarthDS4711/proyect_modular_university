@@ -12,6 +12,7 @@
 <div class="box-layout">
     <h1>{{title}}</h1>
     <div class="box-dashboard">
+        {% csrf_token %}
         <h2>Opciones administrador</h2>
         <div class="flex-item">
             <div class="cols-4 box-shadowed">

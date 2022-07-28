@@ -21,7 +21,6 @@ class UpdateStatusSendSaleView(EmergencyModeMixin, LoginRequiredMixin, ValidateS
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
-    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)

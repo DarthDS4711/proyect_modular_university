@@ -22,7 +22,6 @@ class ShopCartView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, Tem
     template_name = "shopCart.html"
     login_url = reverse_lazy('access:Login')
 
-    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 

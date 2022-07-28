@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,7 +15,6 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
-    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 

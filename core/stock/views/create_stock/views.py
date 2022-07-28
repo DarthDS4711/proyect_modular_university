@@ -24,7 +24,6 @@ class CreateStockView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGro
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
-    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     

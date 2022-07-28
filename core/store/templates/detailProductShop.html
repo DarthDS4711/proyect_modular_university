@@ -14,6 +14,7 @@
             <img src="{{object.get_image}}" class="image-style">
         </div>
         <input type="hidden" id="url" value="../detail-product/{{object.id}}">
+        {% csrf_token %}
         <div class="description-product">
             <h4>Descripción</h4>
             <p>{{object.description}}</p>

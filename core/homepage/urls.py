@@ -8,6 +8,7 @@ from core.homepage.views.home.views import HomepageView
 from core.homepage.views.not_found_404.views import Template404View
 from core.homepage.views.our_mission.views import OurMissionPageView
 from core.homepage.views.state_page.views import StatePageView
+from core.homepage.views.support_email.views import SupportEmailView
 from core.homepage.views.test_databases.views import StateDatabasesView
 from core.homepage.views.user_flow.views import UserPageFlowView
 app_name = 'app_views'
@@ -32,5 +33,7 @@ urlpatterns = [
     # ruta para ver un about del sitio
     path('about', AboutPageView.as_view(), name='about'),
     # ruta para ver las misiones de la compañia
-    path('our-mission/', OurMissionPageView.as_view(), name='our_mission')
+    path('our-mission/', OurMissionPageView.as_view(), name='our_mission'),
+    # ruta para mostrar el correo de soporte del sitio
+    path('support-team/', SupportEmailView.as_view(), name='support_team')
 ]

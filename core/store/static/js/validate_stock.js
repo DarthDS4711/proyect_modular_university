@@ -1,4 +1,4 @@
-function validate_stock(id_product, size, ammmount, url, value_color, price_product) {
+function validate_stock(id_product, size, ammmount, url, value_color, price_product, token) {
   $.ajax({
     type: "POST",
     url: url,
@@ -6,7 +6,8 @@ function validate_stock(id_product, size, ammmount, url, value_color, price_prod
       'action': "validate",
       'product': id_product,
       'size': size,
-      'ammount': ammmount
+      'ammount': ammmount,
+      'csrfmiddlewaretoken' : token,
     }
   }).done(function (response) {
     if (response.error) {
@@ -32,7 +33,7 @@ function validate_stock(id_product, size, ammmount, url, value_color, price_prod
     }
   });
 }
-function validate_stock_cart(id_product, size, ammmount, url, id_local, value_color) {
+function validate_stock_cart(id_product, size, ammmount, url, id_local, value_color, token) {
   $.ajax({
     type: "POST",
     url: url,
@@ -40,7 +41,8 @@ function validate_stock_cart(id_product, size, ammmount, url, id_local, value_co
       'action': "validate",
       'product': id_product,
       'size': size,
-      'ammount': ammmount
+      'ammount': ammmount,
+      'csrfmiddlewaretoken' : token,
     }
   }).done(function (response) {
     console.log(response);

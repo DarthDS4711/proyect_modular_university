@@ -70,11 +70,13 @@ $(document).ready(function () {
   }
 
   const url = document.getElementById("url").value;
+  const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
   $.ajax({
     type: "POST",
     url: url,
     data: {
       action: "bar_month",
+      csrfmiddlewaretoken: token,
     },
   }).done(function (response) {
     show_graphic(response);
