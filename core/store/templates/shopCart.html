@@ -17,6 +17,7 @@
 {% block content %}
 <div class="box-layout">
     <h1>{{title}}</h1>
+    {% csrf_token %}
     <div class="box-content">
         <img src="{% static image %}" class="image-cart">
         <input type="hidden" id="url" value="{% url 'shop:shop_cart' %}">
