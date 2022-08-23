@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from urllib import response
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +9,7 @@ from core.product.models import Category
 from core.sale.models import DetailSale, Sale
 from django.http import JsonResponse
 from core.mixins.emergency_mixin import EmergencyModeMixin
+import requests
 
 
 class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin,TemplateView):
@@ -49,18 +51,46 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
             list_sale_days.append(sales_per_day)
             counter -= 1
         return list_sale_days
+    
+    # function allows to send to api_ia data for prediction of sale of week
+    def __request_prediction_week_from_api(self):
+        uri = "http://localhost:8080/sale/prediction/"
+        body = {
+            "data_x" : [39, 45, 47, 65, 46, 67, 42, 56],
+            "data_y" : [144000000, 138000000, 145000000, 162000000, 142000000, 170000000, 124000000, 154000000],
+            "data_predict" : 90
+        }
+        response = requests.get(uri, json = body)
+        return response.json()
+    
+    # function allows to send to api_ia data for prediction of sale of month
+    def __request_prediction_month_from_api(self):
+        uri = "http://localhost:8080/sale/prediction/"
+        body = {
+            "data_x" : [1.1, 1.3, 1.5, 2, 2.2, 2.9, 3, 3.2, 3.2, 3.7, 3.9],
+            "data_y" : [39343, 46205, 37731, 45525, 39891, 56642, 60150, 54445, 64445, 54189, 63218],
+            "data_predict" : 1.6
+        }
+        response = requests.get(uri, json = body)
+        return response.json()
+    
 
     
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            if request.POST['action'] == 'pie_g':
-                data['number_sale'] = self.get_number_sale_per_category()
-                data['labels'] = self.get_names_categories()
-            elif request.POST['action'] == "bar_month":
-                data['sale_month'] = self.get_sales_by_month()
-            elif request.POST['action'] == 'bar_week':
-                data['sale_week'] = self.get_sales_by_week()
+            match request.POST['action']:
+                case 'pie_g':
+                    data['number_sale'] = self.get_number_sale_per_category()
+                    data['labels'] = self.get_names_categories() 
+                case 'bar_month':
+                    data['sale_month'] = self.get_sales_by_month() 
+                case 'bar_week':
+                    data['sale_week'] = self.get_sales_by_week()
+                case 'prediction_sale_week':
+                    data = self.__request_prediction_week_from_api()
+                case 'prediction_sale_month':
+                    data = self.__request_prediction_month_from_api()
             
         except Exception as e:
             data['error'] = str(e)
