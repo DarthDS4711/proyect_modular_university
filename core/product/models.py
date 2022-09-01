@@ -77,7 +77,7 @@ class Product(models.Model):
     # descuento del producto
     discount = models.DecimalField(verbose_name='discount', max_digits=3, decimal_places=2)
     # status de producto activo en la base de datos
-    is_active = models.BooleanField(verbose_name='is_active', default=True)
+    is_active = models.BooleanField(verbose_name='Usar para el sistema (No se usara en para la prediccion)', default=True)
     # descripción del producto
     description = models.CharField(max_length=2000, verbose_name='description', default='')
     # valoración total del producto en base a los valoration_user 

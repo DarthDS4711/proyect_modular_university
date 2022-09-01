@@ -26,7 +26,7 @@ class ListSizeView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupM
 
 class ListCategoryView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Category
-    paginate_by = 4
+    paginate_by = 10
     template_name = 'listCategories.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
@@ -83,7 +83,7 @@ class ListCategoryView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGr
 
 class ListProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, ListView):
     model = Product
-    paginate_by = 10
+    paginate_by = 25
     template_name = 'listProducts.html'
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
