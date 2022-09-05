@@ -7,6 +7,16 @@ $(document).ready(function () {
         const supplier_selected = $('#id_supplier_id').val();
         console.log(category_selected);
         console.log(supplier_selected);
+        // función con sweetalert para hacer la espera más comoda
+        Swal.fire({
+            title: 'Por favor espere!',
+            html: 'La predicción en un momento estará lista',// add html attribute if you want or remove
+            icon : "info",
+            allowOutsideClick: false,
+            onBeforeOpen: () => {
+                Swal.showLoading()
+            }
+        });
         $.ajax({
             type: "POST",
             url: window.location.pathname,
@@ -18,7 +28,24 @@ $(document).ready(function () {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response)
+                Swal.close();
+                let discount_predicted = '';
+                switch (response.class) {
+                    case 0:
+                        discount_predicted = "25%";
+                        break;
+                    case 1:
+                        discount_predicted = "50%";
+                        break;
+                    case -1:
+                        discount_predicted = "75%";
+                        break;
+                    default:
+                        discount_predicted = "0%";
+                        break;
+                }
+                document.getElementById("text_prediction").innerHTML = "Descuento predecido: " + discount_predicted;
+                $("#myModalPredictionDiscount").modal("show");
             }
         });
     });

@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from platform import libc_ver
 from urllib import response
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
@@ -42,6 +43,20 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
             date_sale__month = date_time_month, date_sale__year = date_time_year).count()
         return sale_num
     
+    def get_sales_by_month_for_ia(self):
+        max_month = datetime.now().month - 1
+        current_month = 1
+        current_year = datetime.now().year
+        list_sales_per_month = []
+        list_of_month = []
+        while current_month <= max_month:
+            sale_of_month = Sale.objects.filter(
+                date_sale__month = current_month, date_sale__year = current_year).count()
+            list_sales_per_month.append(sale_of_month)
+            list_of_month.append(current_month)
+            current_month += 1
+        return list_sales_per_month, list_of_month
+    
     def get_sales_by_week(self):
         list_sale_days = []
         counter = 6
@@ -56,20 +71,21 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
     def __request_prediction_week_from_api(self):
         uri = "http://localhost:8080/sale/prediction/"
         body = {
-            "data_x" : [39, 45, 47, 65, 46, 67, 42, 56],
-            "data_y" : [144000000, 138000000, 145000000, 162000000, 142000000, 170000000, 124000000, 154000000],
-            "data_predict" : 90
+            "data_x" : [1, 2 ,3 ,4 ,5 , 6, 7],
+            "data_y" : self.get_sales_by_week(),
+            "data_predict" : 8
         }
         response = requests.get(uri, json = body)
         return response.json()
     
     # function allows to send to api_ia data for prediction of sale of month
     def __request_prediction_month_from_api(self):
+        sales_per_month, list_months = self.get_sales_by_month_for_ia()
         uri = "http://localhost:8080/sale/prediction/"
         body = {
-            "data_x" : [1.1, 1.3, 1.5, 2, 2.2, 2.9, 3, 3.2, 3.2, 3.7, 3.9],
-            "data_y" : [39343, 46205, 37731, 45525, 39891, 56642, 60150, 54445, 64445, 54189, 63218],
-            "data_predict" : 1.6
+            "data_x" : list_months,
+            "data_y" : sales_per_month,
+            "data_predict" : datetime.now().month
         }
         response = requests.get(uri, json = body)
         return response.json()

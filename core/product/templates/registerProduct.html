@@ -19,6 +19,7 @@
         <img src="{% static 'img/product.png' %}" class="img-style">
         <input type="hidden" id="value" value="{{list}}">
         <input type="hidden" id="action" value="{{action}}">
+        {% include 'modal_discount.html' %}
         <form method="post" enctype="multipart/form-data" id="form_data">
             {% csrf_token %}
             <input type="hidden" name="action" value="{{action}}">
