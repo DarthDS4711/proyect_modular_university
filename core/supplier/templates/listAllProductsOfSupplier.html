@@ -9,7 +9,17 @@
 {% block content %}
 <div class="box-layout">
     <h1>{{title}}</h1>
+    <form action="{{url}}" method="get">
+        <div class="form-group" style="margin: 0 auto; width: 90%">
+            <label>Búsqueda</label>
+            <input type="hidden" name="id_supplier" value="{{id_supplier}}">
+            <div class="flex-search">
+                <input type="search" class="form-control" name="name" class="flex-item" placeholder="Ingresa el nombre del proveedor">
+                <button class="btn btn-success flex-item" type="submit" id="btn-submit">Buscar</button>
+            </div>
+        </div>
+    </form>
     {% include 'productsOfSupplier.html' %}
-    {% include 'pagination_btns.html' %}
+    {% include 'pagination_product_supplier.html' %}
 </div>
 {% endblock %}

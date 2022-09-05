@@ -2,6 +2,7 @@
 // obtenemos los productos relacionados en nombre 
 
 $(document).ready(function () {
+    const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
     $('.select2').select2({
         theme : "bootstrap4",
         width: 'resolve',
@@ -13,7 +14,8 @@ $(document).ready(function () {
             data : function (params){
                 let queryParams = {
                     term : params.term,
-                    action : 'autocomplete'
+                    action : 'autocomplete',
+                    csrfmiddlewaretoken: token,
                 }
                 return queryParams;
             },

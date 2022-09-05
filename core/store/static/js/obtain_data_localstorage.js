@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
     //función que mediante una petición ajax, obtenemos la imagen y el nombre del producto
+    const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
     function get_image(data, url, image_html, column1){
         let image_url = '';
         $.ajax({
@@ -9,7 +10,8 @@ $(document).ready(function () {
             url: url,
             data: {
                 'data' : data,
-                'action' : 'image'
+                'action' : 'image',
+                'csrfmiddlewaretoken' : token,
             }
         }).done(function(response){
             image_html.src = response.image;
@@ -62,7 +64,8 @@ $(document).ready(function () {
                     url: url,
                     data: {
                         'data': data_cart.id,
-                        'action': 'obtain'
+                        'action': 'obtain',
+                        'csrfmiddlewaretoken' : token,
                     }
                 }).done(function (response) {
                     edit_modal(response, data_cart.id, key);

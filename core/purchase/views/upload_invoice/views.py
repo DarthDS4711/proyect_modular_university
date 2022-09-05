@@ -23,7 +23,6 @@ class UpdloadPurchaseView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessio
     group_permisson = 'Administrator'
     fields = ('iva',)
 
-    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     

@@ -24,7 +24,7 @@ function submit_with_ajax(url, title, content, parameters, callback) {
         content: content,
         columnClass: 'small',
         typeAnimated: true,
-        cancelButtonClass: 'btn-primary',
+        cancelButtlass: 'btn-primary',
         draggable: true,
         dragWindowBorder: false,
         buttons: {

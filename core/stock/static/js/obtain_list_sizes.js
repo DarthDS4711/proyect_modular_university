@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $('[name="product"]').on('change', function(){
+        const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
         const value_product = document.getElementById('id_product').value;
         const url = document.getElementById('url').value;
         $.ajax({
@@ -8,6 +9,7 @@ $(document).ready(function () {
             data: {
                 'action' : 'obtain',
                 'id_product' : value_product,
+                'csrfmiddlewaretoken' : token,
             },
         }).done(function(response){
             let fields = document.getElementById('stock');

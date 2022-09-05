@@ -19,7 +19,8 @@
         <img src="{% static 'img/product.png' %}" class="img-style">
         <input type="hidden" id="value" value="{{list}}">
         <input type="hidden" id="action" value="{{action}}">
-        <form method="post" enctype="multipart/form-data">
+        {% include 'modal_discount.html' %}
+        <form method="post" enctype="multipart/form-data" id="form_data">
             {% csrf_token %}
             <input type="hidden" name="action" value="{{action}}">
             {% for field in form.visible_fields %}
@@ -31,9 +32,11 @@
             <button type="submit" class="btn btn-primary">{{btn}}</button>
             <a href="{{list}}" class="btn btn-danger">Cancelar</a>
         </form>
+        <button class="btn btn-secondary" id="predict_discount">Predicción de descuento</button>
     </div>
 </div>
 {% endblock %}
 {% block scripts %}
 <script src="{% static 'js/validate_action.js' %}"></script>
+<script src="{% static 'js/products/predict_discount.js' %}"></script>
 {% endblock %}

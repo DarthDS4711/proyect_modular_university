@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
     $('.select2').select2({
         theme : "bootstrap4",
         language : "es",
@@ -9,7 +10,8 @@ $(document).ready(function () {
             data : function (params){
                 let queryParams = {
                     term : params.term,
-                    action : 'autocomplete'
+                    action : 'autocomplete',
+                    csrfmiddlewaretoken: token,
                 }
                 return queryParams;
             },

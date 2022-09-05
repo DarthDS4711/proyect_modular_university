@@ -14,6 +14,7 @@ urlpatterns = [
     path('detail/<pk>', DetailStockProduct.as_view(), name='detail_stock'),
     # ruta para listar los stock de la tienda
     path('list/', ListStockView.as_view(), name='list_stock'),
+    path('list/<str:name>', ListStockView.as_view(), name='list_stock_search'),
     # ruta para crear nuevos stock
     path('create/', CreateStockView.as_view(), name='create_stock'),
     # ruta para editar un stock

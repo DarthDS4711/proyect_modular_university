@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
-from django.views.decorators.csrf import csrf_exempt
+from platform import libc_ver
+from urllib import response
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +10,7 @@ from core.product.models import Category
 from core.sale.models import DetailSale, Sale
 from django.http import JsonResponse
 from core.mixins.emergency_mixin import EmergencyModeMixin
+import requests
 
 
 class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin,TemplateView):
@@ -16,7 +18,6 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
-    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
@@ -42,6 +43,20 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
             date_sale__month = date_time_month, date_sale__year = date_time_year).count()
         return sale_num
     
+    def get_sales_by_month_for_ia(self):
+        max_month = datetime.now().month - 1
+        current_month = 1
+        current_year = datetime.now().year
+        list_sales_per_month = []
+        list_of_month = []
+        while current_month <= max_month:
+            sale_of_month = Sale.objects.filter(
+                date_sale__month = current_month, date_sale__year = current_year).count()
+            list_sales_per_month.append(sale_of_month)
+            list_of_month.append(current_month)
+            current_month += 1
+        return list_sales_per_month, list_of_month
+    
     def get_sales_by_week(self):
         list_sale_days = []
         counter = 6
@@ -51,18 +66,47 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
             list_sale_days.append(sales_per_day)
             counter -= 1
         return list_sale_days
+    
+    # function allows to send to api_ia data for prediction of sale of week
+    def __request_prediction_week_from_api(self):
+        uri = "http://localhost:8080/sale/prediction/"
+        body = {
+            "data_x" : [1, 2 ,3 ,4 ,5 , 6, 7],
+            "data_y" : self.get_sales_by_week(),
+            "data_predict" : 8
+        }
+        response = requests.get(uri, json = body)
+        return response.json()
+    
+    # function allows to send to api_ia data for prediction of sale of month
+    def __request_prediction_month_from_api(self):
+        sales_per_month, list_months = self.get_sales_by_month_for_ia()
+        uri = "http://localhost:8080/sale/prediction/"
+        body = {
+            "data_x" : list_months,
+            "data_y" : sales_per_month,
+            "data_predict" : datetime.now().month
+        }
+        response = requests.get(uri, json = body)
+        return response.json()
+    
 
     
     def post(self, request, *args, **kwargs):
         data = {}
         try:
-            if request.POST['action'] == 'pie_g':
-                data['number_sale'] = self.get_number_sale_per_category()
-                data['labels'] = self.get_names_categories()
-            elif request.POST['action'] == "bar_month":
-                data['sale_month'] = self.get_sales_by_month()
-            elif request.POST['action'] == 'bar_week':
-                data['sale_week'] = self.get_sales_by_week()
+            match request.POST['action']:
+                case 'pie_g':
+                    data['number_sale'] = self.get_number_sale_per_category()
+                    data['labels'] = self.get_names_categories() 
+                case 'bar_month':
+                    data['sale_month'] = self.get_sales_by_month() 
+                case 'bar_week':
+                    data['sale_week'] = self.get_sales_by_week()
+                case 'prediction_sale_week':
+                    data = self.__request_prediction_week_from_api()
+                case 'prediction_sale_month':
+                    data = self.__request_prediction_month_from_api()
             
         except Exception as e:
             data['error'] = str(e)

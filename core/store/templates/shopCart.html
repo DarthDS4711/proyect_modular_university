@@ -17,6 +17,7 @@
 {% block content %}
 <div class="box-layout">
     <h1>{{title}}</h1>
+    {% csrf_token %}
     <div class="box-content">
         <img src="{% static image %}" class="image-cart">
         <input type="hidden" id="url" value="{% url 'shop:shop_cart' %}">
@@ -50,7 +51,7 @@
         <p id="total"></p>
         <div class="buttons">
             <button class="btn btn-success" id="btn-purchase">Comprar articulos</button>
-            <a href="{% url 'shop:main-shop' %}" class="btn btn-primary">Regresar a la tienda</a>
+            <a href="{% url 'shop:main_shop' %}" class="btn btn-primary">Regresar a la tienda</a>
             <button class="btn btn-danger">Cancelar compra</button>
         </div>
         <input type="hidden" id="stripe-public-key" value="{{public_stripe}}">

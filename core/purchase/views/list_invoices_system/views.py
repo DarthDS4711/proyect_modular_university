@@ -14,6 +14,22 @@ class ListInvoiceSystemView(EmergencyModeMixin, LoginRequiredMixin, ValidateSess
     login_url = reverse_lazy('access:Login')
     group_permisson = 'Administrator'
 
+    def __obtain_range_date(self):
+        initial_date = self.request.GET['initial_date'] if 'initial_date' in self.request.GET.keys(
+        ) else ''
+        final_date = self.request.GET['final_date'] if 'final_date' in self.request.GET.keys(
+        ) else ''
+        return initial_date, final_date
+
+    def get_queryset(self):
+        queryset = None
+        initial_date, final_date = self.__obtain_range_date()
+        if initial_date != '' and final_date != '':
+            queryset = Purchase.objects.filter(date_purchase__range=(initial_date, final_date))
+        else:
+            queryset = Purchase.objects.all()
+        return queryset
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "Listado de facturas del sistema"

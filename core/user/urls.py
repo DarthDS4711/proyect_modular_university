@@ -2,6 +2,7 @@ from django.urls import path
 from core.user.views.edit_direction.views import UpdateUserDirectionView
 from core.user.views.edit_password_login.views import EditPasswordLoginView
 from core.user.views.list_directions.views import ListDirectionUserView
+from core.user.views.make_unactive_user.views import EditStatusActualUser
 from core.user.views.register_direction.views import RegisterDirectionUser
 
 from core.user.views.user_edit.views import UpdateUserView
@@ -20,5 +21,7 @@ urlpatterns = [
     # ruta para editar una dirección del usuario
     path('edit-direction/<int:pk>', UpdateUserDirectionView.as_view(), name='edit_direction'),
     # ruta para actualizar la contraseña del usuario
-    path('edit-password/', EditPasswordLoginView.as_view(), name='edit_password')
+    path('edit-password/', EditPasswordLoginView.as_view(), name='edit_password'),
+    # ruta para dar de baja la cuenta
+    path('make-inactive/', EditStatusActualUser.as_view(), name='make_inactive')
 ]

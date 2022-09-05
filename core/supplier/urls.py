@@ -17,8 +17,11 @@ urlpatterns = [
     path('drop/<pk>', DeleteSupplierView.as_view(), name="delete_supplier"),
     # ruta para listar a los proveedor 
     path('list/', ListSupplierView.as_view(), name='list_supplier'),
+    path('list/<str:name>', ListSupplierView.as_view(), name='list_supplier_search'),
     # ruta para visualizar a nuestro proveedor
     path('details/<pk>', DetailSupplierView.as_view(), name='detail_supplier'),
     # ruta para visualizar los productos de nuestro proveedor
-    path('list-product/<int:id_supplier>', ListAllProductSupplierView.as_view(), name='list_products')
+    path('list-product/<int:id_supplier>', ListAllProductSupplierView.as_view(), name='list_products'),
+    path('list-product/<int:id_supplier>/<str:name>', ListAllProductSupplierView.as_view(), name='list_products_search'),
+    path('list-product/', ListAllProductSupplierView.as_view(), name='list_only_products')
 ]

@@ -12,6 +12,9 @@
 <div class="box-layout">
     <h1>{{title}}</h1>
     <div class="box-dashboard">
+        {% csrf_token %}
+        {% include 'modal_predictions.html' %}
+        {% include 'modal_predictions_month.html' %}
         <h2>Opciones administrador</h2>
         <div class="flex-item">
             <div class="cols-4 box-shadowed">
@@ -47,15 +50,13 @@
         <div class="chart-style">
             <h3>Ventas de la semana</h3>
             <canvas id="myChart"></canvas>
-            <a class="btn btn-primary" href="#">Predicción de ventas</a>
-            <a class="btn btn-warning" href="#">Detalles</a>
+            <button class="btn btn-primary" id="predict_sales_week">Predicción de ventas</button>
             <hr>
         </div>
         <div class="chart-style">
             <h3>Ventas del mes</h3>
             <canvas id="line-chart"></canvas>
-            <a class="btn btn-primary" href="#">Predicción de ventas</a>
-            <a class="btn btn-warning" href="#">Detalles</a>
+            <button class="btn btn-primary" id="predict_sales_month">Predicción de ventas</button>
             <hr>
         </div>
         <div class="chart-style">
@@ -69,4 +70,8 @@
         <input type="hidden" id="url" value="{% url 'app_views:dashboard_admin' %}">
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/dashboard_admin/requestIA.js' %}"></script>
 {% endblock %}

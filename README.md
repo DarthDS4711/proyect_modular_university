@@ -15,7 +15,7 @@ Mira **Deployment** para conocer como desplegar el proyecto.
 
 _Necesitarás crear en la carpeta config otro directorio llamado data_access en el cual creáras dos archivos python, donde uno albergue la SECRET-KEY de 
 Django, y el otro relacionado a las bases de datos con las cuales se empleará el proyecto_
-_Crear las bases de datos applicationwebdata, applicationwebrecovery, applicationwebrecovery2_
+_Crear las bases de datos applicationwebdata, colorapplicationweb, stockproductweb, mirrorappdatabase_
 
 ```
 Da un ejemplo

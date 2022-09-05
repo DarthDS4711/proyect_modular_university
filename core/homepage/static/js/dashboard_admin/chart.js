@@ -33,13 +33,14 @@ $(document).ready(function () {
       },
     });
   }
-
+  const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
   const url = document.getElementById("url").value;
   $.ajax({
     type: "POST",
     url: url,
     data: {
       action: "pie_g",
+      csrfmiddlewaretoken: token,
     },
   }).done(function (response) {
     console.log(response);

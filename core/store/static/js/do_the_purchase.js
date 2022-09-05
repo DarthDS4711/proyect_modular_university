@@ -7,12 +7,14 @@ $(document).ready(function () {
     const total = document.getElementById("total").innerHTML;
     const products = return_json_array_products();
     const direction_user = document.getElementById('direction').value;
+    const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
     $.ajax({
       type: "POST",
       url: url,
       data: {
         products: products,
         action: "validate_buy",
+        csrfmiddlewaretoken: token,
       },
     }).done(function (response) {
       if (response.error) {

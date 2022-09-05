@@ -37,7 +37,7 @@ class ListInvoiceView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, 
         try:
             stripe.api_key = STRIPE_SECRET_KEY
             DOMAIN_PAGE = "http://127.0.0.1:8000"
-            sale_to_pay = Sale.objects.get(id = request.POST['id_product'])
+            sale_to_pay = Sale.objects.get(id = request.POST['id_product'], user=self.request.user, is_completed=False)
             checkout_session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 customer_email = self.request.user.email,
@@ -57,6 +57,9 @@ class ListInvoiceView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, 
                 mode='payment',
                 success_url= DOMAIN_PAGE + reverse_lazy('shop:success'),
                 cancel_url= DOMAIN_PAGE + reverse_lazy('shop:cancel'),
+                payment_intent_data={
+                    'metadata' : {'order_id' : str(sale_to_pay.id)}
+                }
             )
             data['id'] = checkout_session.id
         except Exception as e:

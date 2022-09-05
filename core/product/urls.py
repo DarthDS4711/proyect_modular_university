@@ -17,6 +17,7 @@ urlpatterns = [
     path('delete/<pk>', DeleteProductView.as_view(), name='delete_product'),
     # ruta para listar (administrador) productos
     path('list/', ListProductView.as_view(), name='list_product'),
+    path('list/<str:name>', ListProductView.as_view(), name='list_product_search'),
     # ruta para obtener los detalles (administrador) del producto
     path('detail/<pk>', DetailProductView.as_view(), name='detail_product'),
     # rutas para registrar una categoría
@@ -25,6 +26,7 @@ urlpatterns = [
     path('update-category/<pk>', UpdateCategoryView.as_view(), name='edit_category'),
     # ruta para listar categorías
     path('list-categories/', ListCategoryView.as_view(), name='list_cat'),
+    path('list-categories/<str:name>', ListCategoryView.as_view(), name='list_cat_search'),
     # ruta para visualizar una categoría
     path('detail-category/<pk>', DetailCategoryView.as_view(), name='detail_category'),
     # ruta para eliminar una categoría

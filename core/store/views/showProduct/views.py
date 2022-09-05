@@ -16,8 +16,7 @@ class DetailProductView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin
     model = Product
     login_url = reverse_lazy('access:Login')
 
-
-    @csrf_exempt    
+   
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         return super().dispatch(request, *args, **kwargs)
