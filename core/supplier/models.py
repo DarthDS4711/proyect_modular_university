@@ -8,12 +8,12 @@ from config.settings import MEDIA_URL, STATIC_URL
 # table for the supplier 
 class Supplier(models.Model):
     id = models.BigAutoField(primary_key=True)
-    first_names = models.CharField(verbose_name='first_names', max_length=100)
-    last_names = models.CharField(verbose_name='last_names', max_length=110)
-    email = models.EmailField(verbose_name='email', max_length=254)
-    image = models.ImageField(upload_to='supplier/%Y/%m/%d', null=True, blank=True, verbose_name='image')
-    telephone = models.CharField(verbose_name='telephone', max_length=50)
-    is_active = models.BooleanField(default=True)
+    first_names = models.CharField(verbose_name='Nombres', max_length=100)
+    last_names = models.CharField(verbose_name='Apellidos', max_length=110)
+    email = models.EmailField(verbose_name='Correo electrónico', max_length=254)
+    image = models.ImageField(upload_to='supplier/%Y/%m/%d', null=True, blank=True, verbose_name='Imagen')
+    telephone = models.CharField(verbose_name='Teléfono', max_length=50)
+    is_active = models.BooleanField(default=True, verbose_name='¿Activo?')
 
     def get_image(self):
         if self.image:

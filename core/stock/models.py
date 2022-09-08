@@ -8,9 +8,9 @@ from django.contrib.postgres.fields import ArrayField
 class Stock(models.Model):
     id = models.BigAutoField(primary_key=True)
     # relación de la cantidad de productos que existen dentro de la aplicación 
-    product = models.ForeignKey(Product, verbose_name='product_id', on_delete=models.PROTECT, unique=True)
-    amount = models.IntegerField(default=0, verbose_name='amount')
-    is_activte = models.BooleanField(default=True, verbose_name='is_active')
+    product = models.ForeignKey(Product, verbose_name='Producto', on_delete=models.PROTECT, unique=True)
+    amount = models.IntegerField(default=0, verbose_name='Cantidad')
+    is_activte = models.BooleanField(default=True, verbose_name='¿Activo?')
 
     class Meta:
         verbose_name = 'Stock'
@@ -32,9 +32,9 @@ class Stock(models.Model):
 # stock por el tamaño de la prenda
 class StockProductSize(models.Model):
     id = models.BigAutoField(primary_key=True)
-    stock = models.ForeignKey(Stock, verbose_name='stock', on_delete=models.PROTECT, null=True)
-    size = models.ForeignKey(Size, verbose_name='size', on_delete=models.PROTECT)
-    amount = models.IntegerField(default=0, verbose_name='amount')
+    stock = models.ForeignKey(Stock, verbose_name='Número stock', on_delete=models.PROTECT, null=True)
+    size = models.ForeignKey(Size, verbose_name='Talla', on_delete=models.PROTECT)
+    amount = models.IntegerField(default=0, verbose_name='Cantidad')
 
     class Meta:
         verbose_name = 'StockProductSize'

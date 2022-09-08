@@ -23,10 +23,10 @@ class Incidence(models.Model):
 # table warranty for user of the application
 class WarrantySale(models.Model):
     id = models.BigAutoField(primary_key=True)
-    name = models.CharField(verbose_name='name', default='', max_length=80)
-    description = models.CharField(verbose_name='description', max_length=150)
-    months_coverred = models.IntegerField(default=3, verbose_name='months_covered')
-    incidence = models.ManyToManyField(Incidence, verbose_name='incidence_id')
+    name = models.CharField(verbose_name='Nombre', default='', max_length=80)
+    description = models.CharField(verbose_name='Descripción', max_length=150)
+    months_coverred = models.IntegerField(default=3, verbose_name='Meses cubiertos')
+    incidence = models.ManyToManyField(Incidence, verbose_name='Incidencia')
     is_active = models.BooleanField(default=True)
 
     class Meta:
@@ -43,8 +43,8 @@ class WarrantySale(models.Model):
 class WarrantyProduct(models.Model):
     id = models.BigAutoField(primary_key=True)
     # el producto no puede tener más de una garantía, pero la garantía si puede aparecer más veces
-    product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, unique=True)
-    warranty = models.ForeignKey(WarrantySale, on_delete=models.PROTECT, null=True)
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, null=True, unique=True, verbose_name='Producto')
+    warranty = models.ForeignKey(WarrantySale, on_delete=models.PROTECT, null=True, verbose_name='Garantía')
 
     class Meta:
         verbose_name = "WarrantyProduct"
