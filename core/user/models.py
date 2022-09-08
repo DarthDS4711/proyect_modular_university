@@ -13,12 +13,13 @@ class User(AbstractUser):
     # modificación el id del usuario
     id = models.BigAutoField(primary_key=True)
     # campo de imagen para el usuario
-    image = models.ImageField(upload_to='users/%Y/%m/%d', null=True, blank=True)
+    image = models.ImageField(upload_to='users/%Y/%m/%d', null=True, blank=True, verbose_name='Imagen')
+    # token para cambiar la contraseña del usuario
     token = models.UUIDField(primary_key=False, editable=False, null=True, blank=True)
-    date_birthday = models.DateField(default=datetime.now, verbose_name='date_birthday')
-    gender = models.CharField(verbose_name='gender', max_length=10, choices=gender_choices, default='male')
+    date_birthday = models.DateField(default=datetime.now, verbose_name='Fecha de nacimiento')
+    gender = models.CharField(verbose_name='Sexo', max_length=10, choices=gender_choices, default='male')
     # sobreescritura del campo email para establecerlo como campo único
-    email = models.EmailField(verbose_name='email', blank=True, unique=True)
+    email = models.EmailField(verbose_name='Correo electrónico', blank=True, unique=True)
 
     def get_image(self):
         if self.image:
@@ -41,15 +42,15 @@ class User(AbstractUser):
 #Modelo relacionado a la agenda de direcciones del usuario
 class DirectionUser(models.Model):
     id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=50, blank=True, verbose_name='nombre direccion')
-    street = models.CharField(max_length=80, verbose_name='calle', blank=True)
-    postal_code = models.IntegerField(verbose_name='codigo postal', validators=[
+    name = models.CharField(max_length=50, blank=True, verbose_name='Dirección')
+    street = models.CharField(max_length=80, verbose_name='Calle', blank=True)
+    postal_code = models.IntegerField(verbose_name='Código postal', validators=[
         # formato de validación para el código postal méxicano
         MaxValueValidator(99999),
         MinValueValidator(10000)
     ], default=10000)
-    exterior_number = models.CharField(max_length=15, verbose_name='Numero exterior', default='')
-    interior_number = models.CharField(max_length=15, verbose_name='Numero interior', default='')
+    exterior_number = models.CharField(max_length=15, verbose_name='Número exterior', default='')
+    interior_number = models.CharField(max_length=15, verbose_name='Núsmero interior', default='')
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     is_active = models.BooleanField(verbose_name='Activo?', default=True)
 

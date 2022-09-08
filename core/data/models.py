@@ -4,7 +4,7 @@ import hashlib
 # modelo que representará la autoreplicación de la base de datos
 # al momento de realizar cualquier cambio en la aplicacion
 class DataReplication(models.Model):
-    autoreplication = models.BooleanField(verbose_name='autoreplicacion', default=True)
+    autoreplication = models.BooleanField(verbose_name='Autoreplicación', default=True)
 
     class Meta:
         verbose_name = "DataReplication"

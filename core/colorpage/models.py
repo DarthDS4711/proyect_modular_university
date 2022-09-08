@@ -2,7 +2,7 @@ from django.db import models
 
 # modelo que obtiene el color de nuestra página web(bordes, botones)
 class ColorPage(models.Model):
-    color_selected = models.IntegerField(default=3, verbose_name='color')
+    color_selected = models.IntegerField(default=3, verbose_name='Color pagina')
 
 
     class Meta:
