@@ -1,6 +1,4 @@
 from datetime import datetime, timedelta
-from platform import libc_ver
-from urllib import response
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -106,8 +104,7 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
                 case 'prediction_sale_week':
                     data = self.__request_prediction_week_from_api()
                 case 'prediction_sale_month':
-                    data = self.__request_prediction_month_from_api()
-            
+                    data = self.__request_prediction_month_from_api()    
         except Exception as e:
             data['error'] = str(e)
         return JsonResponse(data, safe=False)

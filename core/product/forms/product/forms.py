@@ -45,4 +45,5 @@ class ProductForm(forms.ModelForm):
                 data['error'] = form.errors
         except Exception as e:
             data['error'] = str(e)
+        print(data)
         return data

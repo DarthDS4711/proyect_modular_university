@@ -3,6 +3,8 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/dashboard_user/styles.css' %}">
+<script src="{% static 'js/array_color.js' %}"></script>
+<script src="{% static 'js/dashboard_user/chart.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -10,6 +12,7 @@
     <h1>{{title}}</h1>
     <div class="main-box">
         <h2>Opciones usuario</h2>
+        {% csrf_token %}
         <div class="flex-item">
             <div class="cols-3 box-shadowed">
                 <h3>Perfil</h3>
@@ -66,5 +69,4 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'js/dashboard_user/chart.js' %}"></script>
 {% endblock %}

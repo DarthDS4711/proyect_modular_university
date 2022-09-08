@@ -72,6 +72,15 @@ class CreateStockView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGro
             data['error'] = str(e)
             print(data)
         return data
+    
+    # función que retornará un arreglo de id de productos con stock
+    def __get_array_id_products(self):
+        actual_stock = Stock.objects.all()
+        list_id_products = []
+        for item in actual_stock:
+            list_id_products.append(item.product.id)
+        print(list_id_products)
+        return list_id_products
 
     def post(self, request, *args, **kwargs):
         data = {}
@@ -88,6 +97,16 @@ class CreateStockView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGro
                     data = self.create_new_stock(request)
                     if 'error' in data:
                         rollback_data(1)   
+            case 'autocomplete':
+                data = []
+                list_existant_products = self.__get_array_id_products()
+                products = Product.objects.exclude(id__in=list_existant_products)[0:10]
+                for product in products:
+                    item = product.to_json_faster()
+                    item['text'] = f'Producto: {product.name}'
+                    data.append(item)
+
+
         return JsonResponse(data, safe=False)
     
     def get_context_data(self, **kwargs):

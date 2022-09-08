@@ -44,36 +44,39 @@ class UpdateProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionG
         data = {}
         try:
             product = Product.objects.get(id = self.object.id)
-            stock_product = Stock.objects.get(product = product)
-            detail_stock_product = StockProductSize.objects.filter(stock = stock_product)
-            sizes_stock_product = self.return_sizes_product(detail_stock_product)
-            sizes_product = product.size.exclude(id__in=sizes_stock_product)
-            for size in sizes_product:
-                new_stock_size = StockProductSize()
-                new_stock_size.stock = stock_product
-                new_stock_size.size = size
-                new_stock_size.save()
-                new_stock_size.save(using='stock_product')
-                if is_actual_state_autoreplication():
-                    new_stock_size.save(using='mirror_database')
-            # se vuelven a utilizar las mismas variables para ver cuales 
-            # tallas ya no se encuentran en el producto
-            sizes_product = product.size.all()
-            detail_stock_product = StockProductSize.objects.filter(
-                stock = stock_product).exclude(size__in = sizes_product)
-            for size_del in detail_stock_product:
-                id_stock_size = size_del.id
-                size_del.delete()
-                StockProductSize.objects.using('stock_product').get(
-                    id = id_stock_size).delete(using='stock_product')
-                if is_actual_state_autoreplication():
-                    StockProductSize.objects.using('mirror_database').get(
-                    id = id_stock_size).delete(using='mirror_database')
-            # recalculo del ammount stock
-            stock_product.calculate_amount()
-            stock_product.save()
-            stock_product.save(using='stock_product')
-            stock_product.save(using='mirror_database')
+            stock_product = Stock.objects.filter(product = product)
+            print(stock_product)
+            if stock_product.exists():
+                stock_product = stock_product[0]
+                detail_stock_product = StockProductSize.objects.filter(stock = stock_product)
+                sizes_stock_product = self.return_sizes_product(detail_stock_product)
+                sizes_product = product.size.exclude(id__in=sizes_stock_product)
+                for size in sizes_product:
+                    new_stock_size = StockProductSize()
+                    new_stock_size.stock = stock_product
+                    new_stock_size.size = size
+                    new_stock_size.save()
+                    new_stock_size.save(using='stock_product')
+                    if is_actual_state_autoreplication():
+                        new_stock_size.save(using='mirror_database')
+                # se vuelven a utilizar las mismas variables para ver cuales 
+                # tallas ya no se encuentran en el producto
+                sizes_product = product.size.all()
+                detail_stock_product = StockProductSize.objects.filter(
+                    stock = stock_product).exclude(size__in = sizes_product)
+                for size_del in detail_stock_product:
+                    id_stock_size = size_del.id
+                    size_del.delete()
+                    StockProductSize.objects.using('stock_product').get(
+                        id = id_stock_size).delete(using='stock_product')
+                    if is_actual_state_autoreplication():
+                        StockProductSize.objects.using('mirror_database').get(
+                        id = id_stock_size).delete(using='mirror_database')
+                # recalculo del ammount stock
+                stock_product.calculate_amount()
+                stock_product.save()
+                stock_product.save(using='stock_product')
+                stock_product.save(using='mirror_database')
         except Exception as e:
             data['error'] = str(e)
         return data

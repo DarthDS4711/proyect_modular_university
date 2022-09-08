@@ -8,7 +8,7 @@ from django.views.generic.list import ListView
 
 class ListSearchProductView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
-    paginate_by = 2
+    paginate_by = 20
     template_name = 'listSearchProduct.html'
     login_url = reverse_lazy('access:Login')
 
@@ -24,13 +24,13 @@ class ListSearchProductView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorM
         name = self.return_name()
         match option:
             case 1:
-                return Product.objects.filter(name__icontains=name).order_by('pvp')
+                return Product.objects.filter(name__icontains=name, is_active=True).order_by('pvp')
             case 2:
-                return Product.objects.filter(name__icontains=name).order_by('-pvp')
+                return Product.objects.filter(name__icontains=name, is_active=True).order_by('-pvp')
             case 3:
-                return Product.objects.filter(name__icontains=name).order_by('name')
+                return Product.objects.filter(name__icontains=name, is_active=True).order_by('name')
             case 4:
-                return Product.objects.filter(name__icontains=name).order_by('-product_rating')
+                return Product.objects.filter(name__icontains=name, is_active=True).order_by('-product_rating')
     
     def return_value_of_order(self):
         if 'order' in self.request.GET.keys():

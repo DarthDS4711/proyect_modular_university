@@ -4,6 +4,10 @@
 
 {% block head %}
 <script src="{% static 'js/functions.js' %}"></script>
+<link href="{% static 'libs/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'libs/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+<script src="{% static 'libs/select2-4.0.13/js/select2.min.js' %}"></script>
+<script src="{% static 'libs/select2-4.0.13/js/i18n/es.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -35,4 +39,5 @@
 {% block scripts %}
 <script src="{% static 'js/obtain_list_sizes.js' %}"></script>
 <script src="{% static 'js/validate_action.js' %}"></script>
+<script src="{% static 'js/autocomplete_product.js' %}"></script>
 {% endblock %}
