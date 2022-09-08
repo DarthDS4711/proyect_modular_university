@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+import json
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -6,8 +7,9 @@ from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
 from core.product.models import Category
 from core.sale.models import DetailSale, Sale
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from core.mixins.emergency_mixin import EmergencyModeMixin
+from django.db.models import Sum
 import requests
 
 
@@ -38,8 +40,8 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
         date_time_month = datetime.now().month
         date_time_year = datetime.now().year
         sale_num = Sale.objects.filter(
-            date_sale__month = date_time_month, date_sale__year = date_time_year).count()
-        return sale_num
+            date_sale__month = date_time_month, date_sale__year = date_time_year).aggregate(Sum('total'))
+        return sale_num.get('total__sum') if sale_num.get('total__sum') != None else 0.0
     
     def get_sales_by_month_for_ia(self):
         max_month = datetime.now().month - 1
@@ -49,8 +51,9 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
         list_of_month = []
         while current_month <= max_month:
             sale_of_month = Sale.objects.filter(
-                date_sale__month = current_month, date_sale__year = current_year).count()
-            list_sales_per_month.append(sale_of_month)
+                date_sale__month = current_month, date_sale__year = current_year).aggregate(Sum('total'))
+            value_sale_month = float(sale_of_month.get('total__sum')) if sale_of_month.get('total__sum') != None else 0.0
+            list_sales_per_month.append(value_sale_month)
             list_of_month.append(current_month)
             current_month += 1
         return list_sales_per_month, list_of_month
@@ -60,9 +63,16 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
         counter = 6
         while counter >= 0:
             date = (datetime.now() - timedelta(counter)) 
-            sales_per_day =  Sale.objects.filter(date_sale = date).count()
-            list_sale_days.append(sales_per_day)
+            sales_per_day =  Sale.objects.filter(date_sale = date).aggregate(Sum('total'))
+            sale = sales_per_day['total__sum']
+            if sale is not None:
+                sale = str(sale)
+                sale = float(sale)
+                list_sale_days.append(sale)
+            else:
+                list_sale_days.append(0.0)
             counter -= 1
+        print(list_sale_days)
         return list_sale_days
     
     # function allows to send to api_ia data for prediction of sale of week
@@ -104,9 +114,10 @@ class DashboardAdminView(EmergencyModeMixin, LoginRequiredMixin, ValidateSession
                 case 'prediction_sale_week':
                     data = self.__request_prediction_week_from_api()
                 case 'prediction_sale_month':
-                    data = self.__request_prediction_month_from_api()    
+                    data = self.__request_prediction_month_from_api()   
         except Exception as e:
             data['error'] = str(e)
+            print(data)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
