@@ -1,4 +1,4 @@
-// archivo javascript, para generar un autocomplete de busqueda de provedores
+// archivo javascript, para generar un autocomplete de busqueda de productos
 $(document).ready(function () {
     $('.select2').select2({
         theme : "bootstrap4",

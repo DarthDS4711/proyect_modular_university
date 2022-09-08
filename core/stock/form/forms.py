@@ -8,6 +8,12 @@ class StockForm(forms.ModelForm):
     class Meta:
         model = Stock
         exclude = ['amount']
+        widgets = {
+            'product' : forms.Select(attrs={
+                'class': 'form-control select2',
+                'style': 'width: 100%',
+            })
+        }
 
     def save(self, commit=True):
         data = {}

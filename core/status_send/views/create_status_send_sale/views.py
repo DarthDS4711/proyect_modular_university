@@ -1,4 +1,3 @@
-from email.policy import default
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
@@ -6,14 +5,13 @@ from core.app_functions.data_replication import is_actual_state_autoreplication
 from core.app_functions.rollback_data import rollback_data
 from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.mixins.mixins import ValidateSessionGroupMixin
-from core.product.forms.product.forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from core.classes.obtain_color import ObtainColorMixin
 from core.sale.models import Sale
 from core.status_send.forms.form_status_send_client import StatusSendClientForm
 from core.status_send.models import StatusSend, StatusSendSale
-from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
+
 
 
 class RegisterStatusSendSaleView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessionGroupMixin, ObtainColorMixin, CreateView):

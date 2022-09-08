@@ -87,4 +87,7 @@ class DetailSale(models.Model):
         date_now = datetime.now()
         status = 'Valida' if self.getDifference(date_now, date_warranty) > 0 else 'Caducada'
         return status
+
+    def toJSON(self):
+        return model_to_dict(self)
         

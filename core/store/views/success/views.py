@@ -6,15 +6,19 @@ from core.app_functions.rollback_data import rollback_data
 from core.classes.obtain_color import ObtainColorMixin
 from core.mixins.emergency_mixin import EmergencyModeMixin
 from core.sale.models import DetailSale, Sale
+from core.status_send.models import StatusSend, StatusSendSale
 from core.stock.models import Stock, StockProductSize
 from django.db import transaction
 import stripe
 import time
+from datetime import timedelta, datetime
+from django.urls import reverse_lazy
 
 
 
 class SuccessPaymentView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, TemplateView):
     template_name = 'sucess.html'
+    login_url = reverse_lazy('access:Login')
 
     # función que, en el caso de que la venta haya sido exitosa, se reduce el stock de nuestra
     # aplicación, pero validando que, en el caso de que el usuario regrese a esta pestaña
@@ -43,6 +47,30 @@ class SuccessPaymentView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixi
                 lastest_sale_user.save()
                 if status_replication:
                     lastest_sale_user.save(using='mirror_database')
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+    
+    # función que genera de forma automática el estado de envio
+    def __create_new_status_send(self):
+        data = {}
+        try:
+            # creación de el estado de envio
+            status_initial_send = StatusSend.objects.filter(id = 1)
+            lastest_sale_user = Sale.objects.filter(user = self.request.user).last()
+            status_send_sales_prev = StatusSendSale.objects.filter(sale = lastest_sale_user)
+            print(status_send_sales_prev)
+            if status_initial_send.exists() and (not status_send_sales_prev.exists()):
+                print("creacion automática orden de envio")
+                status_initial_send = status_initial_send[0]
+                date_send = datetime.now() + timedelta(days=30)
+                status_send_sale = StatusSendSale()
+                status_send_sale.sale = lastest_sale_user
+                status_send_sale.date_arrival = date_send
+                status_send_sale.status_send = status_initial_send
+                status_send_sale.save()
+                if is_actual_state_autoreplication():
+                    status_send_sale.save(using='mirror_database')
         except Exception as e:
             data['error'] = str(e)
         return data
@@ -86,6 +114,12 @@ class SuccessPaymentView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixi
                 data = self.reduce_stock_products()
                 if 'error' in data:
                     rollback_data(1)
+            if 'error' not in data:
+                with transaction.atomic():
+                    data = self.__create_new_status_send()
+                    if 'error' in data:
+                        rollback_data(3)
+
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
