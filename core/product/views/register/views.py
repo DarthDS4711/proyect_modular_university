@@ -116,7 +116,7 @@ class RegisterProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessio
 
                 for supplier in suppliers:
                     item = supplier.to_json_faster()
-                    item['text'] = f'Producto: {supplier.get_name()}'
+                    item['text'] = f'Proveedor: {supplier.get_name()}'
                     data.append(item)
             case 'register':
                 with transaction.atomic():

@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class ListAllProductsView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin, ListView):
     model = Product
-    paginate_by = 3
+    paginate_by = 20
     template_name = 'listAllProducts.html'
     login_url = reverse_lazy('access:Login')
 

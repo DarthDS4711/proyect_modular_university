@@ -51,6 +51,17 @@ class DashboardUserView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin
                 product__category=category, sale__user=self.request.user).count()
             list_number_sale_per_category.append(sale_number)
         return list_number_sale_per_category
+    
+    def get_date_register(self):
+        return self.request.user.last_login.date    
+    
+    def get_date_last_bought(self):
+        sales_user = Sale.objects.filter(
+            user = self.request.user, is_completed=True).order_by('-date_sale')
+        if sales_user.exists():
+            return sales_user[0].date_sale
+        else:
+            return 'No hay compras'
 
     
     # función que obtiene los últimos productos comprados por el usuario y la cantidad de los mismos
@@ -88,4 +99,6 @@ class DashboardUserView(EmergencyModeMixin, LoginRequiredMixin, ObtainColorMixin
         context['number_sessions'] = self.__get_number_sessions()
         context['class_css'] = number_products
         context['last_products'] = list_last_bought_products
+        context['last_login_date'] = self.get_date_register()
+        context['date_last_bought'] = self.get_date_last_bought()
         return context
