@@ -7,6 +7,7 @@ from core.status_send.views.delete_status.views import DeleteStatusSendView
 from core.status_send.views.list_status.views import ListStatusView
 from core.status_send.views.options_status.views import OptionsStatusSendView
 from core.status_send.views.register_status.views import RegisterStatusView
+from core.status_send.views.render_pdf_send.views import RenderDetailInvoiceSendView
 
 from core.status_send.views.status_send.views import StatusSendView
 from core.status_send.views.edit_status.views import UpdateStatusSendView
@@ -33,5 +34,7 @@ urlpatterns = [
     # ruta para editar un estado de envio para un usuario
     path('update-status-send-user/<pk>', UpdateStatusSendSaleView.as_view(), name='update_status_send_user'),
     # ruta para listar todos los estados de envio relacionados con el usuario
-    path('list-status-send-user/', ListStatusUserSendView.as_view(), name='list_status_send_user')
+    path('list-status-send-user/', ListStatusUserSendView.as_view(), name='list_status_send_user'),
+    # ruta para renderizar un pdf de una factura
+    path('render-pdf-send/<pk>', RenderDetailInvoiceSendView.as_view(), name='render_pdf_send')
 ]

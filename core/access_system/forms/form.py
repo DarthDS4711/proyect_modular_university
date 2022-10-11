@@ -33,11 +33,11 @@ class UserForm(forms.ModelForm):
                         u.set_password(pwd)
                 # obtenemos la contraseña, la encriptamos y la guardamos
                 u.save()
+                client_group = Group.objects.get(name = 'Client')
+                u.groups.add(client_group)
                 if is_actual_state_autoreplication():
                     u.save(using = 'mirror_database')
                 # asignamos un grupo por defecto en los usuarios
-                client_group = Group.objects.get(name = 'Client')
-                u.groups.add(client_group)
             else:
                 data['error'] = form.errors
         except Exception as e:

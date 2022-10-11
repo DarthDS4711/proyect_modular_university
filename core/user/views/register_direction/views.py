@@ -35,6 +35,7 @@ class RegisterDirectionUser(EmergencyModeMixin, LoginRequiredMixin, ObtainColorM
                 direction_user.save(using='mirror_database')
         except Exception as e:
             data['error'] = str(e) 
+        return data
 
 
     def post(self, request, *args, **kwargs):
