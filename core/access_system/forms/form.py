@@ -12,7 +12,9 @@ class UserForm(forms.ModelForm):
         
         widgets = {
             'password' : forms.PasswordInput(),
-            'date_birthday' : forms.DateInput()
+            'date_birthday' : forms.DateInput(attrs={
+                'type' : 'date'
+            })
         }
     
     #sobreescritura del método save para mandar al front-end los datos de estado del registro

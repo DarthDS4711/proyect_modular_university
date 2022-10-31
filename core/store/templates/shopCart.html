@@ -39,23 +39,31 @@
         </table>
         <div class="form-group">
             <h5>Dirección de envio</h5>
+            {% if directions.count > 0 %}
             <select id="direction" class="form-control">
                 {% for direction_user in directions %}
                 <option value="{{direction_user.id}}">{{direction_user.name}}</option>
                 {% endfor %}
             </select>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                <strong>Precaución: </strong> No puedes realizar el proceso de compra hasta tener una dirección <br>
+                <a href="{% url 'user:list_directions' %}">Ir a registrar una dirección</a>
+            </div>
+            {% endif %}
         </div>
         <h5>Subtotal</h5>
         <p id="subtotal"></p>
         <h5>Total (IVA 16%)</h5>
         <p id="total"></p>
         <div class="buttons">
-            <button class="btn btn-success" id="btn-purchase">Comprar articulos</button>
+            {% if directions.count > 0 %}
+                <button class="btn btn-success" id="btn-purchase">Comprar articulos</button>
+            {% endif%}
             <a href="{% url 'shop:main_shop' %}" class="btn btn-primary">Regresar a la tienda</a>
             <button class="btn btn-danger">Cancelar compra</button>
         </div>
         <input type="hidden" id="stripe-public-key" value="{{public_stripe}}">
-
     </div>
     {% include 'modal_edit_data.html' %}
 </div>
