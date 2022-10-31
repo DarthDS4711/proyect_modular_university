@@ -50,7 +50,7 @@ class DirectionUser(models.Model):
         MinValueValidator(10000)
     ], default=10000)
     exterior_number = models.CharField(max_length=15, verbose_name='Número exterior', default='')
-    interior_number = models.CharField(max_length=15, verbose_name='Núsmero interior', default='')
+    interior_number = models.CharField(max_length=15, verbose_name='Número interior', default='')
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     is_active = models.BooleanField(verbose_name='Activo?', default=True)
 

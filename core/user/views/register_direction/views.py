@@ -22,19 +22,26 @@ class RegisterDirectionUser(EmergencyModeMixin, LoginRequiredMixin, ObtainColorM
     def save_new_direction(self, request):
         data = {}
         try:
-            # obtención de los datos referentes a la dirección del usuario 
-            direction = request.POST['direction']
+            name = request.POST['name']
+            street = request.POST['street']
+            postal_code = int(request.POST['postal_code'])
+            exterior_number = request.POST['exterior_number']
+            interior_number = request.POST['interior_number']
             is_active = True if request.POST['is_active'] == 'on' else False
             direction_user = DirectionUser()
-            # creación de la instancia de las dirección del usuario
-            direction_user.user = self.request.user
-            direction_user.direction = direction
+            # actualización de la instancia de las dirección del usuario
+            direction_user.name = name
+            direction_user.street = street
+            direction_user.postal_code = postal_code
+            direction_user.exterior_number = exterior_number
+            direction_user.interior_number = interior_number
             direction_user.is_active = is_active
+            direction_user.user = self.request.user
             direction_user.save()
             if is_actual_state_autoreplication():
                 direction_user.save(using='mirror_database')
         except Exception as e:
-            data['error'] = str(e) 
+            data['error'] = str(e)
         return data
 
 
