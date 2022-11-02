@@ -31,17 +31,14 @@ $(document).ready(function () {
                 Swal.close();
                 let discount_predicted = '';
                 switch (response.class) {
-                    case 0:
-                        discount_predicted = "25%";
-                        break;
                     case 1:
-                        discount_predicted = "50%";
+                        discount_predicted = "descuento clásico: hasta un 25% de descuento";
                         break;
                     case -1:
-                        discount_predicted = "75%";
+                        discount_predicted = "descuento de remate: entre 26% y 50% de descuento";
                         break;
                     default:
-                        discount_predicted = "0%";
+                        discount_predicted = "descuento no determinado";
                         break;
                 }
                 document.getElementById("text_prediction").innerHTML = "Descuento predecido: " + discount_predicted;
