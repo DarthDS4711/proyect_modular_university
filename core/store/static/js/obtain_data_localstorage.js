@@ -74,6 +74,8 @@ $(document).ready(function () {
             //boton que nos ayuda a eliminar del local storage el item en cuestion
             buttonDrop.onclick = function () {
                 sessionStorage.removeItem(key);
+                localStorage.removeItem('subtotal');
+                localStorage.removeItem('total');
                 location.reload();
             };
             column7.appendChild(buttonEdit);
@@ -90,6 +92,8 @@ $(document).ready(function () {
         }
     }
     document.getElementById('subtotal').innerHTML = subtotal;
-    subtotal = subtotal + (subtotal * 0.16);
+    const total = subtotal + (subtotal * 0.16);
     document.getElementById('total').innerHTML = subtotal.toFixed(2);
+    localStorage.setItem('subtotal', subtotal.toString());
+    localStorage.setItem('total', total.toString());
 });

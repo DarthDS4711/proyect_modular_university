@@ -26,37 +26,75 @@ class RegisterProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessio
 
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+    
+    # función secundaria para realizar el calculo de la normalización
+    def __compute_data_to_normalize(self, minimun, maximun, data_non_normalized):
+        data_normalized = (data_non_normalized - minimun) / (maximun - minimun)
+        return data_normalized
+    
+    # función secundaria que normaliza los datos de cada conjunto de datos
+    def __normalize_data_to_predict(self, category_for_prediction, supplier_for_prediction):
+        list_product_disc, list_product_disc2 = self.__get_products_with__discount()
+        # minimos y máximos de los proveedores 
+        minimun_id_supplier = Supplier.objects.get(id = 1).id
+        maximun_id_supplier = Supplier.objects.last().id
+        print(f'Proveedor    Minimo: {minimun_id_supplier}, Maximo: {maximun_id_supplier}')
+        # minimos y máximos de los productos
+        minimun_id_category = Category.objects.get(id = 1).id
+        maximun_id_category = Category.objects.last().id
+        print(f'Categoria    Minimo: {minimun_id_category}, Maximo: {maximun_id_category}')
+
+        # normalizar los datos de la predicción
+        category_for_prediction = self.__compute_data_to_normalize(minimun_id_category, maximun_id_category, category_for_prediction)
+        supplier_for_prediction = self.__compute_data_to_normalize(minimun_id_supplier, maximun_id_supplier, supplier_for_prediction)
+
+        # lista normalizadas
+        list_normalized_class1_X1 = []
+        list_normalized_class1_X2 = []
+        list_normalized_class2_X1 = []
+        list_normalized_class2_X2 = []
+
+        # proceso de normalización de los datos
+        for data in list_product_disc:
+            x1 = data.category.id
+            x2 = data.supplier_id.id
+            # actualización de los valores 
+            x1 = self.__compute_data_to_normalize(minimun_id_category, maximun_id_category, x1)
+            x2 = self.__compute_data_to_normalize(minimun_id_supplier, maximun_id_supplier, x2)
+            print(f'Class1    x1: {x1}, Maximo: {x2}')
+            list_normalized_class1_X1.append(x1)
+            list_normalized_class1_X2.append(x2)
+        for data in list_product_disc2:
+            x1 = data.category.id
+            x2 = data.supplier_id.id
+            # actualización de los valores 
+            x1 = self.__compute_data_to_normalize(minimun_id_category, maximun_id_category, x1)
+            x2 = self.__compute_data_to_normalize(minimun_id_supplier, maximun_id_supplier, x2)
+            print(f'Class2    x1: {x1}, Maximo: {x2}')
+            list_normalized_class2_X1.append(x1)
+            list_normalized_class2_X2.append(x2)
+        return list_normalized_class1_X1, list_normalized_class1_X2, list_normalized_class2_X1, list_normalized_class2_X2, category_for_prediction, supplier_for_prediction
 
     
     # funcion secundaria para obtener los productos con un descuento del 25%
     def __get_products_with__discount(self):
         list_product1 = []
         list_product_2 = []
-        list_product_3 = []
-        products_discount = Product.objects.filter(discount=0.25, is_active=False)[:5]
-        products_discount_50 = Product.objects.filter(discount=0.5, is_active=False).order_by('-name') [:5]
-        products_discount_75 = Product.objects.filter(discount=0.75, is_active=False).order_by('-id')[:5]
+        products_discount = Product.objects.filter(discount__lte=0.25, is_active=False)[:5]
+        products_discount_50 = Product.objects.filter(discount__gt=0.25, discount__lt=0.5, is_active=False).order_by('-name') [:5]
         current_products = 0
         for product in products_discount:
-            if current_products < 2:
+            if current_products < 3:
                 list_product1.append(product)
                 current_products += 1
                 print(f'category 1 {product.category.id}   supplier: {product.supplier_id.id}')
-
         current_products = 0
         for product in products_discount_50:
-            if current_products < 2:
+            if current_products < 3:
                 list_product_2.append(product)
                 current_products += 1
                 print(f'category 2 {product.category.id}   supplier: {product.supplier_id.id}')
-        
-        current_products = 0
-        for product in products_discount_75:
-            if current_products < 2:
-                list_product_3.append(product)
-                current_products += 1
-                print(f'category 3 {product.category.id}   supplier: {product.supplier_id.id}')
-        return list_product1, list_product_2, list_product_3
+        return list_product1, list_product_2
     
 
 
@@ -64,33 +102,19 @@ class RegisterProductView(EmergencyModeMixin, LoginRequiredMixin, ValidateSessio
     def send_api_ia_products_to_learn(self, request : HttpRequest):
         data = {}
         if request.POST['category_selected'] != '' and request.POST['supplier_selected'] != '':
-            list_25_percent, list_50_percent, list_75_percent = self.__get_products_with__discount()
-            list_dataclass1_X1 = []
-            list_dataclass2_X1 = []
-            list_dataclass3_X1 = []
-            list_dataclass1_X2 = []
-            list_dataclass2_X2 = []
-            list_dataclass3_X2 = []
-            for data in list_25_percent:
-                list_dataclass1_X1.append(data.category.id)
-                list_dataclass1_X2.append(data.supplier_id.id)
-            
-            for data in list_50_percent:
-                list_dataclass2_X1.append(data.category.id)
-                list_dataclass2_X2.append(data.supplier_id.id)
-            
-            for data in list_75_percent:
-                list_dataclass3_X1.append(data.category.id)
-                list_dataclass3_X2.append(data.supplier_id.id)
-            data_predict = [int(request.POST['category_selected']), int(request.POST['supplier_selected'])]
+            category_for_prediction = int(request.POST['category_selected'])
+            supplier_for_prediction =  int(request.POST['supplier_selected'])
+            print(f'Category to predict: {category_for_prediction}  Supplier to predict: {supplier_for_prediction}')
+            list_dataclass1_X1,list_dataclass1_X2,list_dataclass2_X1,list_dataclass2_X2, category_for_prediction, supplier_for_prediction = self.__normalize_data_to_predict(category_for_prediction, supplier_for_prediction)
+        
+            data_predict = [supplier_for_prediction, category_for_prediction]
+            print(f'Category to predict: {category_for_prediction}  Supplier to predict: {supplier_for_prediction}')
 
             body = {
                 "data_class1_X1" : list_dataclass1_X1,
                 "data_class2_X1" : list_dataclass2_X1,
-                "data_class3_X1" : list_dataclass3_X1,
                 "data_class1_X2" : list_dataclass1_X2,
                 "data_class2_X2" : list_dataclass2_X2,
-                "data_class3_X2" : list_dataclass3_X2,
                 "data_predict" : data_predict
             }   
             url = "http://localhost:8080/products/prediction-discount/"

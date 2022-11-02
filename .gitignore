@@ -3,3 +3,7 @@ config/stripe
 .vscode/*
 media/*
 *.sqlite3
+deploy/*
+env/*
+staticfiles/*
+config/production.py
