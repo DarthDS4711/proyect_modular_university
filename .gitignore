@@ -8,3 +8,4 @@ env/*
 staticfiles/*
 config/production.py
 config/wsgi.py
+config/settings.py
