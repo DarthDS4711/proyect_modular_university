@@ -7,3 +7,4 @@ deploy/*
 env/*
 staticfiles/*
 config/production.py
+config/wsgi.py
