@@ -6,8 +6,8 @@ $(document).ready(function () {
     console.log(products.length)
     if(products.length > 0){
       const url = document.getElementById("url").value;
-      const subtotal = Number(sessionStorage.getItem('subtotal'));
-      const total = Number(sessionStorage.getItem('total'));
+      const subtotal = localStorage.getItem('subtotal');
+      const total = localStorage.getItem('total');
       const direction_user = document.getElementById('direction').value;
       const token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
       $.ajax({
