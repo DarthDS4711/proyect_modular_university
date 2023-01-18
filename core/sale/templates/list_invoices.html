@@ -1,0 +1,66 @@
+{% extends 'baseView.html' %} 
+{% load static %} 
+
+{% block head %} 
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="{% static 'js/proceed_payment.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+  <h1>{{title}}</h1>
+  <div class="box-content">
+    <img src="{% static image %}" alt="" class="img-style" />
+    <h4>Filtrar por fecha</h4>
+    <form action="{{url}}" method="get">
+      {% csrf_token %}
+      <div class="flex-item">
+        <div class="cols-3">
+          <input type="date" name="initial_date" style="width: 98%;" required>
+        </div>
+        <div class="cols-3">
+          <input type="date" name="final_date" style="width: 98%;" required>
+        </div>
+        <div class="cols-3">
+          <button type="submit" class="btn btn-success">Filtrar</button>
+        </div>
+      </div>
+    </form>
+    <input type="hidden" id="stripe-public-key" value="{{public_stripe}}">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>N° Factura</th>
+          <th>Total</th>
+          <th>Fecha</th>
+          <th>¿Pagada?</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for invoice in page_obj %}
+          <td>{{invoice.id}}</td>
+          <td>${{invoice.total}}</td>
+          <td>{{invoice.date_sale}}</td>
+          {% if invoice.is_completed %}
+          <td>Pagada</td>
+          {% else %}
+          <td>Sin pagar</td>
+          {% endif %}
+          <td>
+            <a href="../detail-invoice/{{invoice.id}}" class="btn btn-danger">Detalles</a>
+            <a href="../render-pdf-invoice/{{invoice.id}}" class="btn btn-success">PDF</a>
+            {% if invoice.is_completed == False %}
+            <button class="btn btn-warning"  onclick="proceedPayment('{{invoice.id}}')">Pagar</button>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% include 'pagination_list_filter_date.html' %}
+  </div>
+</div>
+{% endblock %}

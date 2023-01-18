@@ -1,0 +1,17 @@
+.input-style:hover{
+    box-shadow: 2px 2px 2px green;
+}
+h1{
+    font-size: 60px;
+    text-align: center;
+    margin-top: 5%;
+}
+.image{
+    text-align: center;
+}
+#user-image{
+    width: 30%;
+    height: 30%;
+    border-radius: 999px;
+}
+

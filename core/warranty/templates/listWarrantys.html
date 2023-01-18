@@ -1,0 +1,45 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/list_categories/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="img-style">
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th class="w-5">ID</th>
+                    <th class="w-25">Nombre garantia</th>
+                    <th class="w-25">Meses cubiertos</th>
+                    <th class="w-25">Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warranty in page_obj %}
+                <tr>
+                    <td scope="row">{{warranty.id}}</td>
+                    <td>{{warranty.name}}</td>
+                    <td>{{warranty.months_coverred}}</td>
+                    {% if warranty.is_active == True %}
+                    <td><strong>Activo</strong></td>
+                    {% endif %}
+                    {% if warranty.is_active == False %}
+                    <td><strong>Baja</strong></td>
+                    {% endif %}
+                    <td><a class="btn btn-warning" href="../edit/{{warranty.id}}">Editar</a>
+                    <a class="btn btn-success" href="../show-warranty/{{warranty.id}}">Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'warranty:create' %}" class="btn btn-primary">Agregar nueva garantia</a>
+        {% include 'pagination_btns.html' %}
+    </div>
+</div>
+{% endblock %}

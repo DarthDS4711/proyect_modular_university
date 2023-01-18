@@ -1,0 +1,16 @@
+h1{
+    margin-top: 5%;
+    text-align: center;
+}
+p{
+    text-align: justify;
+}
+.container{
+    padding: 3%;
+}
+.main-text{
+    margin: 0%;
+}
+.main-image{
+    width: 98%;
+}

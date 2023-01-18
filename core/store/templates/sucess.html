@@ -1,0 +1,24 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<script>
+  $(function () {
+    sessionStorage.clear();
+  });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+  <h1>Pago exítoso</h1>
+  <div class="box-content">
+    <img src="{% static 'img/payment_success.png' %}" class="img-style">
+    <p>Gracias por haber comprando con nosotros, nos llena de alegría 
+      que hayas decidido hacerlo. Tu factura ya se encuentra generada.
+      Esperamos tu proxima compra.
+    </p>
+    <a href="{% url 'shop:main_shop' %}" class="btn btn-primary">Ir a la tienda</a>
+  </div>
+</div>
+{% endblock %}

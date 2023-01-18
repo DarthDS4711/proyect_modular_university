@@ -1,0 +1,26 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/email.png' %}" class="img-style">
+        <div class="card text-left">
+          <div class="card-body">
+            <h4 class="card-title"><strong>Ayuda</strong></h4>
+            <p class="card-text">El envio de correos masivos, le enviará al tipo de usuario 
+                seleccionado, según sea la opción, un correo a dichos usuarios, donde por
+                ejemplo, se envie a los usuarios que promociones habrá, etc.
+            </p>
+          </div>
+        </div>
+        <h3>Usuarios inactivos</h3>
+        <a href="../massive-email/send/inactive" class="btn btn-primary">Notificación inactividad</a>
+        <h3>Usuarios activos</h3>
+        <a href="../massive-email/send/active" class="btn btn-primary">Correo informativo</a>
+        <h3>Administrativo</h3>
+        <a href="../massive-email/send/admin" class="btn btn-primary">Notificación página</a>
+    </div>
+</div>
+{% endblock %}

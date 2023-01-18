@@ -1,0 +1,48 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/user.png' %}" class="img-style">
+        <input type="hidden" id="value" value="{% url 'user:make_inactive' %}">
+        <input type="hidden" id="action" value="{{action}}">
+        <div class="card text-left">
+            <div class="card-body">
+              <h4 class="card-title"><strong>Ayuda</strong></h4>
+              <p class="card-text">Para dar de baja tu cuenta es necesario que estes consiente de la desición 
+                a tomar, debido a que posteriormente de aceptar, tu cuenta seguira registrada en nuestro sistema 
+                pero ya no te será posible iniciar sesión de nuevo, si por alguna razón necesitas que tu cuenta 
+                sea abierta nuevamente, contacta al siguiente correo electrónico someemailtest@gmail.com.
+              </p>
+            </div>
+          </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-check">
+                <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="is_active" id="" value="False">
+                Quiero eliminar mi cuenta 
+              </label>
+              <br>
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="is_active" id="" value="True">
+                Quiero continuar en mi cuenta
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-submit" disabled>{{btn}}</button>
+            <a href="{% url 'app_views:dashboard_user' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/enable_btn_submit.js' %}"></script>
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

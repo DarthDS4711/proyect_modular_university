@@ -1,0 +1,35 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="image-class">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción status</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for status in page_obj %}
+                <tr>
+                    <td scope="row">{{status.id}}</td>
+                    <td>{{status.description}}</td>
+                    <td><a class="btn btn-warning" href="../edit/{{status.id}}">Editar</a>
+                    <a class="btn btn-danger" href="../drop/{{status.id}}">Eliminar</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{create_status}}" class="btn btn-primary">Agregar nuevo status</a>
+        {% include 'pagination_btns.html' %}
+    </div>
+</div>
+{% endblock %}

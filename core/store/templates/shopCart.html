@@ -1,0 +1,74 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesShopCart.css' %}">
+<script src="{% static 'js/payment.js' %}"></script>
+<script src="{% static 'js/edit_drop_data_cart.js' %}"></script>
+<script src="{% static 'js/obtain_data_localstorage.js' %}"></script>
+<script src="{% static 'js/obtain_data_radio_input.js' %}"></script>
+<script src="{% static 'js/make_json_array_product.js' %}"></script>
+<script src="{% static 'js/make_purchase.js' %}"></script>
+<script src="{% static 'js/validate_stock.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    {% csrf_token %}
+    <div class="box-content">
+        <img src="{% static image %}" class="image-cart">
+        <input type="hidden" id="url" value="{% url 'shop:shop_cart' %}">
+        <table class="table table-striped table-responsive" id="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Imagen</th>
+                    <th>Cantidad</th>
+                    <th>Color</th>
+                    <th>Precio</th>
+                    <th>Talla</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="t_data">
+
+            </tbody>
+        </table>
+        <div class="form-group">
+            <h5>Dirección de envio</h5>
+            {% if directions.count > 0 %}
+            <select id="direction" class="form-control">
+                {% for direction_user in directions %}
+                <option value="{{direction_user.id}}">{{direction_user.name}}</option>
+                {% endfor %}
+            </select>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                <strong>Precaución: </strong> No puedes realizar el proceso de compra hasta tener una dirección <br>
+                <a href="{% url 'user:list_directions' %}">Ir a registrar una dirección</a>
+            </div>
+            {% endif %}
+        </div>
+        <h5>Subtotal</h5>
+        <p id="subtotal"></p>
+        <h5>Total (IVA 16%)</h5>
+        <p id="total"></p>
+        <div class="buttons">
+            {% if directions.count > 0 %}
+                <button class="btn btn-success" id="btn-purchase">Comprar articulos</button>
+            {% endif%}
+            <a href="{% url 'shop:main_shop' %}" class="btn btn-primary">Regresar a la tienda</a>
+            <button class="btn btn-danger">Cancelar compra</button>
+        </div>
+        <input type="hidden" id="stripe-public-key" value="{{public_stripe}}">
+    </div>
+    {% include 'modal_edit_data.html' %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/modal_shop_cart.js' %}"></script>
+<script src="{% static 'js/do_the_purchase.js' %}"></script>
+{% endblock %}

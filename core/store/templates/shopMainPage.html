@@ -1,0 +1,42 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/stylesMainShop.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+	<h1>{{title}}</h1>
+	<div class="box-content">
+		<div class="flex-search">
+			<input type="search" name="" class="form-control" id="search-input" class="flex-item">
+			<button class="btn btn-success flex-item" id="btn-submit">Buscar</button>
+		</div>
+		<h2>Recomendados</h2>
+		<div class="cards-box">
+			{% for product in best %}
+			<div class="card card-product">
+				<img class="image-style" src="{{product.get_image}}">
+				<div class="card-body">
+					<h4 class="card-title">{{product.name}}</h4>
+					<p class="card-text">${{product.pvp}}MXN</p>
+				</div>
+				<a href="detail-product/{{product.id}}" class="btn btn-primary">Ver</a>
+			</div>
+			{% endfor %}
+		</div>
+		<h4>Opciones tienda</h4>
+		<div class="row row-btns">
+			<a href="{{category}}" class="btn btn-category orange-btn">Ver todas las categorías</a>
+			<a href="{{best_products}}" class="btn btn-category orange-btn">Productos mejor valorados</a>
+			<a href="#" class="btn btn-category orange-btn">Producto del mes</a>
+			<a href="{{discount}}" class="btn btn-category orange-btn">Descuentos</a>
+			<a href="{{list}}" class="btn btn-category orange-btn" style="width: 94%;">Todos los productos</a>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/search.js' %}"></script>
+{% endblock %}

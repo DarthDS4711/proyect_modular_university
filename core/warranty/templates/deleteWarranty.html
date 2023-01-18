@@ -1,0 +1,23 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" id="image-class">
+        <div class="alert alert-danger" role="alert">
+            <strong>Precaución: </strong>Estas a punto de eliminar una garantía, el no hacerlo
+            de manera consciente, puede ocasionar pérdida de datos, ¿Estás seguro de continuar?
+        </div>
+        <form>
+            <button type="button" class="btn btn-success">Eliminar</button>
+            <a href="#" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

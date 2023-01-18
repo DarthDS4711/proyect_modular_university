@@ -1,0 +1,51 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="card text-left">
+          <div class="card-body">
+            <h4 class="card-title"><strong>Ayuda</strong></h4>
+            <p class="card-text">Al dar de baja un usuario, si bien no se eliminará del sistema este
+                ya no accederá con su cuenta actual, siendo así, que solo aparezca referenciado por
+                comentarios (username), o en estadísticas de usuarios dados de baja.
+            </p>
+          </div>
+        </div>
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
+        {% if object.is_active == True %}
+        <div class="alert alert-success" role="alert">
+            <strong>Notificación </strong> El usuario: {{object.username}} esta activo en el sitio
+        </div>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Notificación </strong> El usuario: {{object.username}} esta dado de baja del sitio.
+        </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Rol a elegir</label>
+            <select name="status" id="status" class="form-control">
+                <option value="True">Dar de alta en el sitio</option>
+                <option value="False">Dar de baja del sitio</option>
+            </select>
+            <div class="row" style="padding: 1%;">
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a href="{% url 'app_views:dashboard_admin' %}" class="btn btn-danger">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

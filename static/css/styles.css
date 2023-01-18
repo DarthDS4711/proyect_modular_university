@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'Roboto', sans-serif;
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+strong{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+}
+.footer-class{
+    background-color: darkorange;
+    height: 6vh;
+    text-align: center;
+    color: white;
+}
+#nav-styles{
+    box-shadow: 2px 2px 2px gray;
+}
+.color-style{
+    background-color: orange;
+}
+.box-layout{
+    margin-top: 5%;
+    min-height: calc(100vh - 50px);
+}
+h1{
+    text-align: center;
+}
+.box-content{
+    box-shadow: 3px 3px 3px 5px gray;
+    width: 85%;
+    margin: 0 auto;
+    padding: 5%;
+    margin-bottom: 2%;
+    border-radius: 28px;
+}
+#image-class{
+    margin: 0 auto;
+    display: block;
+    width: 30%;
+    height: 30%;
+}
+.flex-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.cols-1{
+    width: 100%;
+    margin: 1%;
+}
+.cols-2{
+    width: 50%;
+    margin: 1%;
+}
+.cols-3{
+    width: 33%;
+    margin: 1%;
+}
+.cols-4{
+    width: 25%;
+    margin: 1%;
+}
+.image-profile{
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+}
+.pagination{
+    margin-top: 1%;
+}
+.img-style{
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+    height: 30%;
+    margin-bottom: 2%;
+}
+.img-detail{
+    width: 75%;
+    height: 75%;
+}
+.image-list{
+    width: 30%;
+    height: 35%;
+}
+#search-input{
+	width: 90%;
+}
+.flex-search{
+	display: flex;
+	margin: 0 auto;
+	justify-content: center;
+}

@@ -1,0 +1,44 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" alt="" class="img-style">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="w-5">ID</th>
+                    <th class="w-50">Dirección</th>
+                    <th class="w-20">Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for direction_user in page_obj %}
+                <tr>
+                    <td scope="row">{{direction_user.id}}</td>
+                    <td>{{direction_user.name}}</td>
+                    {% if direction_user.is_active == True %}
+                    <td><strong>Activo</strong></td>
+                    {% else %}
+                    <td><strong>Baja</strong></td>
+                    {% endif %}
+                    <td><a class="btn btn-warning" href="../edit-direction/{{direction_user.id}}">Editar</a>
+                    <a class="btn btn-success" href="#">Detalles</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'user:register_direction' %}" class="btn btn-primary">Agregar nueva dirección</a>
+        {% include 'pagination_btns.html' %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

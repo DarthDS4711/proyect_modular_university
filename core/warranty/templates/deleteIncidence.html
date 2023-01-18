@@ -1,0 +1,23 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesDeleteIncidence.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static image %}" class="image-style">
+        <div class="alert alert-danger" role="alert">
+            <strong>Alerta: </strong>Estas a punto de eliminar una incidencia, consulta previamente 
+            a un administrador del sistema antes de realizar este movimiento
+        </div>
+        <form action="">
+            <button type="submit" class="btn btn-success">Eliminar incidencia</button>
+            <a href="#" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

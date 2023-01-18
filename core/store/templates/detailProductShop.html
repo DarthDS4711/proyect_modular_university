@@ -1,0 +1,69 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesDetailProduct.css' %}">
+<script src="{% static 'js/obtain_data_radio_input.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-flex">
+        <div class="image-product">
+            <img src="{{object.get_image}}" class="image-style">
+        </div>
+        <input type="hidden" id="url" value="../detail-product/{{object.id}}">
+        {% csrf_token %}
+        <div class="description-product">
+            <h4>Descripción</h4>
+            <p>{{object.description}}</p>
+            <h4>Colores</h4>
+            <span style="background-color: {{object.primary_color}};" class="btn"></span>
+            <span style="background-color: {{object.secondary_color}};" class="btn"></span>
+            <span style="background-color: {{object.last_color}};" class="btn"></span>
+            {% include 'rankProduct.html' %}
+            <p><strong>Precio: </strong>${{object.get_pvp_with_discount}} MXN</p>
+            {% if object.get_discount_product > 0.00 %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Descuento: </strong> {{object.get_discount_product}}%
+            </div>
+            {% endif %}
+            <input type="hidden" id="price" value="{{object.get_pvp_with_discount}}">
+            {% if stock %}
+            <button class="btn btn-success" id="btn-buy">Agregar al carrito</button>
+            {% endif %}
+            {% if warranty != 'None' %}
+            <a href="../../warranty/show-warranty/{{warranty.id}}" class="btn btn-primary">Ver garantía</a>
+            {% endif %}
+            <a class="btn btn-warning" id="btn-comment" href="../add-comment-product/{{object.id}}">Valorar producto</a>
+
+        </div>
+        {% include 'modal_buy.html' %}
+    </div>
+    <h4>Tallas disponibles</h4>
+    <ul>
+        {% for size in object.size.all %}
+        <li>{{ size }}</li>
+        {% endfor %}
+    </ul>
+    <div>
+        <h3>Comentarios</h3>
+        {% if comment != "None" %}
+        <div class="main-comment">
+            <h4>Usuario {{comment.user.username}}:</h4>
+            <p>{{comment.description}}</p>
+            {% include 'rank_comment_product.html' %}
+        </div>
+        <div class="button">
+            <a class="btn btn-primary" href="../view-comments-product/{{object.id}}">Cargar más comentarios...</a>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/validate_stock.js' %}"></script>
+<script src="{% static 'js/modal_local_storage.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'listUser.html' %}
+{% load static %}
+{% block users %}
+
+{% block user_header %}
+<tr>
+    <th>ID</th>
+    <th>Nombre usuario</th>
+    <th>¿Administrador?</th>
+    <th>Acción</th>
+</tr>
+{% endblock %}
+
+{% for user in page_obj %}
+<tr>
+    <td scope="row">{{user.id}}</td>
+    <td>{{user.username}}</td>
+    {% if user.is_admin_user %}
+    <td>Administrador</td>
+    {% else %}
+    <td>Usuario promedio</td>
+    {% endif %}
+    <td>
+        <a class="btn btn-warning" href="../../update/admin-user/{{user.id}}">Cambiar estatus</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/search_users.js' %}"></script>
+{% endblock %}

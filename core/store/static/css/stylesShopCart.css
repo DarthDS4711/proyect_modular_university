@@ -1,0 +1,35 @@
+.image-cart{
+    display: block;
+    margin: 0 auto;
+    width: 24%;
+    height: 24%;
+    margin-bottom: 2%;
+}
+#table{
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 10%;
+}
+.color-span{
+    background-color: maroon;
+}
+.buttons{
+    display: flex;
+    justify-content: space-between;
+    padding: 3%;
+}
+input[type="radio"]:checked + .swatch{box-shadow: inset 0 0 0 2px white;}
+.swatch{
+    display:inline-block;
+    vertical-align: middle;
+    height: 30px;
+    width:30px;
+    margin: 0 5px 0 0 ;
+    border: 1px solid #d4d4d4;
+}
+/* Diseño responsive */
+@media screen and (max-width: 586){
+    .btn{
+        font-size: 12px;
+    }
+}

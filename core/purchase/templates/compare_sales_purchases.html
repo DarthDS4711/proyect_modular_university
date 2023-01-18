@@ -1,0 +1,39 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/income.png' %}" class="img-style">
+        <h2>Mes {{month}}</h2>
+        <div>
+            <h4>Ingresos</h4>
+            <p>${{sales}}</p>
+        </div>
+        <div>
+            <h4>Gastos</h4>
+            <p>${{purchases}}</p>
+        </div>
+        <div>
+            <h4>Comparativa</h4>
+            {% if is_bigger_than == True %}
+            <div class="alert alert-success" role="alert">
+                <strong>Felicitaciones </strong> Las ventas de este mes han superado a los gastos
+                aunque eso no quiere decir que haya sido una diferencia abrumadora (en ocasiones)
+            </div>
+            <a href="#">Resumen de ventas</a>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                <strong>Alerta </strong> Las ventas de este mes no han sido lo suficientes para cubrir
+                los gatos, realiza promociones, cambia estrategías, para revertir la situación
+            </div>
+            <a href="#">Resumen de gastos</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

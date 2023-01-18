@@ -1,0 +1,72 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/dashboard_user/styles.css' %}">
+<script src="{% static 'js/array_color.js' %}"></script>
+<script src="{% static 'js/dashboard_user/chart.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="main-box">
+        <h2>Opciones usuario</h2>
+        {% csrf_token %}
+        <div class="flex-item">
+            <div class="cols-3 box-shadowed">
+                <h3>Perfil</h3>
+                <p><a href="{% url 'user:view_profile' %}" class="btn orange-btn btn-style">Ver perfil</a></p>
+                <p> <a href="{% url 'user:profile_edit' %}" class="btn orange-btn btn-style">Editar perfil</a></p>
+                <p><a href="{% url 'user:edit_password' %}" class="btn orange-btn btn-style">Cambiar contraseña</a></p>
+                <p><a href="{% url 'user:list_directions' %}" class="btn orange-btn btn-style">Agenda de direcciones</a></p>
+            </div>
+            <div class="cols-3 box-shadowed">
+                <h3>Compras</h3>
+                <p><a href="{% url 'sale:list_invoices' %}" class="btn orange-btn btn-style">Facturas</a></p>
+                <p> <a href="{% url 'status_send:list_status_send_user' %}" class="btn orange-btn btn-style">Estado envio productos</a></p>
+                <p><a href="{% url 'shop:list_discount' %}" class="btn orange-btn btn-style">Mejores ofertas</a></p>
+                <p><a href="{% url 'shop:list_best_products' %}" class="btn orange-btn btn-style">Mejores productos</a></p>
+            </div>
+            <div class="cols-3 box-shadowed">
+                <h3>En desarrollo...</h3>
+                <p><a href="{% url 'user:make_inactive' %}" class="btn orange-btn btn-style">Dar de baja la cuenta</a></p>
+                <p> <a href="{% url 'app_views:support_team' %}" class="btn orange-btn btn-style">Contacto con el equipo administrador</a></p>
+                <p><a href="{% url 'access:logout_all' %}" class="btn orange-btn btn-style">Cerrar todas las sesiones: {{number_sessions}}</a></p>
+                <p><a href="" class="btn orange-btn btn-style">Más...</a></p>
+            </div>
+        </div>
+        <h3>Ultimos productos comprados</h3>
+        <div class="flex-item">
+            {% for product in last_products %}
+            <div class="cols-{{class_css}} card-product">
+                <h5>{{product.name}}</h5>
+                <img src="{{product.get_image}}" alt="" class="image-card">
+                <a class="btn btn-primary" href="../shop/detail-product/{{product.id}}">Ver más</a>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'sale:list_invoices' %}" class="btn btn-success">Ver todas las compras</a>
+        <h3>Perfil de usuario</h3>
+        <div class="flex-item information-user">
+            <div class="cols-2">
+                <img src="{{ request.user.get_image }}" class="image-profile">
+            </div>
+            <div class="cols-2">
+                <p><strong>Fecha de último inicio de sesión: </strong>{{last_login_date}}</p>
+                <p><strong>Fecha ultíma compra: </strong>{{date_last_bought}}</p>
+                <p><strong>Nombre: </strong>{{request.user.first_name}}</p>
+                <p><strong>Apellidos: </strong>{{request.user.last_name}}</p>
+                <a href="{% url 'user:view_profile' %}" class="btn btn-warning">Más información</a>
+                <a href="{% url 'user:list_directions' %}" class="btn btn-primary">Agenda direcciones</a>
+                <a href="{% url 'user:edit_password' %}" class="btn btn-danger">Cambiar contraseña</a>
+            </div>
+        </div>
+        <h3>Estadisticas de compras por categoría</h3>
+        <canvas id="graphic"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+<link href="{% static 'libs/select2-4.0.13/css/select2.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'libs/select2-4.0.13/css/select2-bootstrap4.min.css' %}" rel="stylesheet"/>
+<script src="{% static 'libs/select2-4.0.13/js/select2.min.js' %}"></script>
+<script src="{% static 'libs/select2-4.0.13/js/i18n/es.js' %}"></script>
+<script src="{% static 'js/products/search_supplier.js' %}"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/product.png' %}" class="img-style">
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
+        {% include 'modal_discount.html' %}
+        <form method="post" enctype="multipart/form-data" id="form_data">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="{{action}}">
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label>{{ field.label }}:</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">{{btn}}</button>
+            <a href="{{list}}" class="btn btn-danger">Cancelar</a>
+        </form>
+        <button class="btn btn-secondary" id="predict_discount">Predicción de descuento</button>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+<script src="{% static 'js/products/predict_discount.js' %}"></script>
+<script src="{% static 'js/limit_img_size.js' %}"></script>
+{% endblock %}

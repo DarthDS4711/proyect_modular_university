@@ -1,0 +1,78 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/dashboard_admin/styles.css' %}">
+<script src="{% static 'js/array_color.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/chart.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/bar_chart.js' %}"></script>
+<script src="{% static 'js/dashboard_admin/filled_line_chart.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-dashboard">
+        {% csrf_token %}
+        {% include 'modal_predictions.html' %}
+        {% include 'modal_predictions_month.html' %}
+        <h2>Opciones administrador</h2>
+        <div class="flex-item">
+            <div class="cols-4 box-shadowed">
+                <h3>Administración</h3>
+                <p><a href="{% url 'color:update_page' %}" class="btn orange-btn btn-style">Color página</a></p>
+                <p> <a href="{% url 'purchase:options' %}" class="btn orange-btn btn-style">Compras</a></p>
+                <p><a href="{{stock}}" class="btn orange-btn btn-style">Stock</a></p>
+                <p><a href="{% url 'admin_site:update_emergency_app' %}" class="btn orange-btn btn-style">Modo de emergencia</a></p>
+            </div>
+            <div class="cols-4 box-shadowed">
+                <h3>Usuarios</h3>
+                <p><a href="{% url 'user_admin:list_super_user' %}" class="btn orange-btn btn-style">Super Usuarios</a></p>
+                <p><a href="{% url 'user_admin:list_admin_user' %}" class="btn orange-btn btn-style">Usuarios administradores</a></p>
+                <p><a href="{% url 'user_admin:list_block_user' %}" class="btn orange-btn btn-style">Eliminar usuarios</a></p>
+                <p><a href="{% url 'user_admin:massive_email' %}" class="btn orange-btn btn-style">Correos masivos</a></p>
+            </div>
+            <div class="cols-4 box-shadowed">
+                <h3>Tienda</h3>
+                <p><a href="{{supplier}}" class="btn orange-btn btn-style">Proveedores</a></p>
+                <p><a href="{% url 'warranty:options_warranty' %}" class="btn orange-btn btn-style">Garantías</a></p>
+                <p><a href="{% url 'product:options' %}" class="btn orange-btn btn-style">Productos</a></p>
+                <p><a href="{% url 'status_send:options' %}" class="btn orange-btn btn-style">Estados de envio</a></p>
+            </div>
+            <div class="cols-4 box-shadowed">
+                <h3>Opciones</h3>
+                <p><a href="{% url 'data:update_rep' %}" class="btn orange-btn btn-style">Respaldos automáticos</a></p>
+                <p><a href="{% url 'app_views:flow_users' %}" class="btn orange-btn btn-style">Flujo de usuarios</a></p>
+                <p><a href="{% url 'app_views:state_page' %}" class="btn orange-btn btn-style">Estado página</a></p>
+                <p><a href="{% url 'app_views:state_databases' %}" class="btn orange-btn btn-style">Estado bases de datos</a></p>
+            </div>
+        </div>
+        <h2>Estádisticas</h2>
+        <div class="chart-style">
+            <h3>Ventas de la semana</h3>
+            <canvas id="myChart"></canvas>
+            <button class="btn btn-primary" id="predict_sales_week">Predicción de ventas</button>
+            <hr>
+        </div>
+        <div class="chart-style">
+            <h3>Ventas del mes</h3>
+            <canvas id="line-chart"></canvas>
+            <button class="btn btn-primary" id="predict_sales_month">Predicción de ventas</button>
+            <hr>
+        </div>
+        <div class="chart-style">
+            <h3>Categorias más vendidas</h3>
+            <canvas id="graphic"></canvas>
+            <a class="btn btn-primary" href="#">Más detalles</a>
+            <a class="btn btn-warning" href="#">Administración</a>
+            <button class="btn btn-outline-dark" id="categories">Obtener categorias</button>
+            <hr>
+        </div>
+        <input type="hidden" id="url" value="{% url 'app_views:dashboard_admin' %}">
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/dashboard_admin/requestIA.js' %}"></script>
+{% endblock %}

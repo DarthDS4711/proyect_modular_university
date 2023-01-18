@@ -1,0 +1,35 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+<!--Bloque de archivos estáticos tales como javascript-->
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/registerSupplier.css' %}">
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<div class="box-layout">
+    <img src="{% static image %}" class="img-register"/>
+    <input type="hidden" id="value" value="{{list}}">
+    <input type="hidden" id="action" value="{{action}}">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+            <label>{{ field.label }}:</label>
+            {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">{{btn}}</button>
+        <a href="{{list}}" class="btn btn-danger">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+<script src="{% static 'js/limit_img_size.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="form-group">
+            <label>Búsqueda</label>
+            <input type="hidden" id="url" value="{{url}}">
+            <div class="flex-search">
+                <input type="search" name="" class="form-control" id="search-input" class="flex-item" placeholder="Ingresa el username">
+                <button class="btn btn-success flex-item" id="btn-submit">Buscar</button>
+            </div>
+        </div>
+        </form>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                {% block user_header %}
+                {% endblock %}
+            </thead>
+            <tbody>
+                {% block users %}
+                {% endblock %}
+            </tbody>
+        </table>
+        <a class="btn btn-danger" href="{% url 'user_admin:list_super_user' %}">Cancelar búsqueda</a>
+    </div>
+</div>
+{% include 'pagination_list_btns.html' %}
+{% endblock %}

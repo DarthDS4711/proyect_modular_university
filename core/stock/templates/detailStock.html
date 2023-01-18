@@ -1,0 +1,34 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+{% endblock %}
+
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h3>Stock producto {{object.product.name}}</h3>
+        <div class="flex-item">
+            <div class="cols-2">
+                <img src="{{object.product.get_image}}" alt="" class="img-detail">
+            </div>
+            <div class="cols-2">
+                <p><strong>Proveedor: </strong>{{object.product.supplier_id.get_name}}</p>
+                <p><strong>Unidades disponibles: </strong>{{object.amount}}</p>
+                {% if object.is_activte == True %}
+                    <p><strong>Estado stock: </strong>Activo</p>
+                {% else %}
+                    <p><strong>Estado stock: </strong>Baja</p>
+                {% endif %}
+            </div>
+        </div>
+        <p>Más detalles del producto:</p>
+        <a href="../../product/detail/{{object.product.id}}" class="btn btn-primary">Detalles</a>
+        <p>Más detalles del proveedor:</p>
+        <a href="../../supplier/details/{{object.product.supplier_id.id}}" class="btn btn-primary">Detalles</a>
+    </div>
+</div>
+{% endblock %}

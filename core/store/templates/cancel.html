@@ -1,0 +1,21 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<script src="{% static 'js/processDataPaymentRejected.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+  <h1>Error en el pago</h1>
+  <div class="box-content">
+    <img src="{% static 'img/payment_fail.png' %}" class="img-style">
+    <p>
+      Por alguna razón, tu pago no pudo ser procesado, tal vez se deba a 
+      fondos insuficientes, errores al momento de comunicarnos con tu 
+      banco, etc. No te preocupes se arreglará pronto.
+    </p>
+    <a href="{% url 'shop:main-shop' %}" class="btn btn-primary">Ir a la tienda</a>
+  </div>
+</div>
+{% endblock %}

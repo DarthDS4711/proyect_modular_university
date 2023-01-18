@@ -1,17 +1,23 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>{{title}}</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <!-- Font Awesome Icons -->
+    <!--Logo company-->
+    <link rel="shortcut icon" type="image/x-icon"  href="{% static 'img/SHOPIAONLINE.ico' %}">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{% static 'libs/adminlte-3.0.4/plugins/font-awesome-5.11.1/css/all.min.css' %}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'libs/adminlte-3.0.4/css/adminlte.min.css' %}">
+    <!--Basic theme for the main page-->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!--Responsive styles-->
+    <link rel="stylesheet" href="{% static 'css/responsive_design.css' %}">
     <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- jQuery -->
     <script src="{% static 'libs/adminlte-3.0.4/plugins/jquery/jquery.min.js' %}"></script>
     <!-- Bootstrap 4 -->
@@ -23,14 +29,39 @@
     <!-- Jquery Confirm -->
     <link rel="stylesheet" href="{% static 'libs/jquery-confirm-v3.3.4/jquery-confirm.min.css' %}">
     <script src="{% static 'libs/jquery-confirm-v3.3.4/jquery-confirm.min.js' %}"></script>
-    {% block head %}<!--Librerias que otras plantillas pueden modificar para cambiar el comportamiento-->
+    <!--Libreria para las gráficas en js-->
+    <script src="{% static 'libs/ChartJS/Chart.min.js' %}"></script>
+    {% if color == 1 %}
+    <link rel="stylesheet" href="{% static 'css/blue_btn.css' %}">
+    {% elif color == 2 %}
+    <link rel="stylesheet" href="{% static 'css/green_btn.css' %}">
+    {% elif color == 3 %}
+    <link rel="stylesheet" href="{% static 'css/red_btn.css' %}">
+    {% elif color == 4 %}
+    <link rel="stylesheet" href="{% static 'css/orange_btn.css' %}">
+    {% endif %}
+
+    {% block head %}
+    <!--Librerias que otras plantillas pueden modificar para cambiar el comportamiento-->
     {% endblock %}
-  </head>
-  <body>
-    {% block content %}<!--Bloque principal de la plantilla-->
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+    <!--Bloque principal de la plantilla-->
     {% endblock %}
 
-    {% block scripts %}<!--Bloque de scripts empleados para otras plantillas-->
-    {% endblock %}
-  </body>
+    <script src="{% static 'js/delete_localstorage.js' %}"></script>
+
+</body>
+<!--Bloque del footer-->
+<footer class="footer-class orange-btn">
+    Developed by: Bluereadmon software
+</footer>
+
+{% block scripts %}
+<!--Bloque de scripts empleados para otras plantillas-->
+{% endblock %}
+
 </html>

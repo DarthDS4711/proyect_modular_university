@@ -1,0 +1,22 @@
+h1{
+    text-align: center;
+}
+p{
+    text-align: justify;
+}
+.box{
+    box-shadow: 3px 3px 3px 3px lightgray;
+    width: 80%;
+    margin: 0 auto;
+    padding: 5%;
+}
+.alert-style{
+    margin: 0 auto;
+}
+.image-style{
+    width: 30%;
+    height: 30%;
+    display: block;
+    margin: 0 auto;
+    margin-top: 3%;
+}

@@ -1,0 +1,55 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <img src="{% static 'img/list.png' %}" alt="" class="img-style">
+        <h4>Filtrar por fecha</h4>
+        <form action="{{url}}" method="get">
+            <div class="flex-item">
+                <div class="cols-3">
+                    <input type="date" name="initial_date" style="width: 98%;" required>
+                </div>
+                <div class="cols-3">
+                    <input type="date" name="final_date" style="width: 98%;" required>
+                </div>
+                <div class="cols-3">
+                    <button type="submit" class="btn btn-success">Filtrar</button>
+                </div>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-responsive-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Factura</th>
+                        <th scope="col">Estado de envio</th>
+                        <th scope="col">Fecha inicio envio</th>
+                        <th scope="col">Fecha actual estado</th>
+                        <th scope="col">Fecha llegada envio</th>
+                        <th scope="col">Dirección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for status in page_obj %}
+                    <tr>
+                        <td scope="row">{{status.sale.id}}</td>
+                        <td>{{status.status_send}}</td>
+                        <td>{{status.date_deliver_start}}</td>
+                        <td>{{status.date_actual_state}}</td>
+                        <td>{{status.date_arrival}}</td>
+                        <td>{{status.sale.direction}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% include 'pagination_list_filter_date.html' %}
+    </div>
+</div>
+{% endblock %}

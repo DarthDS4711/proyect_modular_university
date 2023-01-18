@@ -1,0 +1,26 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/options/styles.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h3>Panel de administración</h3>
+        <div class="flex-item">
+            <div class="cols-2">
+                <img src="{% static 'img/tools.png' %}" class="image-style">
+            </div>
+            <div class="cols-2">
+                <p><a href="{% url 'warranty:list_incidences' %}" class="btn orange-btn">Incidencias</a></p>
+                <p><a href="{% url 'warranty:list_warranty' %}" class="btn orange-btn">Garantías(Usuarios)</a></p>
+                <p><a href="{% url 'warranty:list_warrantyproduct' %}" class="btn orange-btn">Garantías(Productos)</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

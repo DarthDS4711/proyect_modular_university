@@ -1,0 +1,11 @@
+config/data_access
+config/stripe
+.vscode/*
+media/*
+*.sqlite3
+deploy/*
+env/*
+staticfiles/*
+config/production.py
+config/wsgi.py
+config/settings.py

@@ -1,0 +1,46 @@
+<div class="modal" tabindex="-1" id="modal"">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Agregar al producto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <h5>Cantidad </h5>
+                    <input type="number" id="amount" class="form-control" min="1"value="1" />
+                </div>
+                <div class="form-group">
+                    <h5>Color</h5>
+                    <label>
+                        <input type="radio" name="color" value="" id="color1" checked>
+                        <span class="swatch"></span>
+                    </label>
+                    <label>
+                        <input type="radio" name="color" value="" id="color2">
+                        <span class="swatch"></span>
+                    </label>
+                    <label>
+                        <input type="radio" name="color" value="" id="color3">
+                        <span class="swatch"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <h5>Talla</h5>
+                <select class="form-control" id="size">
+                  
+                </select>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="id_product" value="">
+                <input type="hidden" id="price" value="">
+                <input type="hidden" id="id_local" value="">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" id="btn-add">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>

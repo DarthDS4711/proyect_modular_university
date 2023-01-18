@@ -1,0 +1,50 @@
+{% extends 'baseView.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block head %}
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="card text-left">
+          <div class="card-body">
+            <h4 class="card-title"><strong>Ayuda</strong></h4>
+            <p class="card-text">
+               El modo de emergencia, es un modo de la aplicación el cual, para evitar dar de baja el sistema
+               por motivos relacionados a las bases de datos. Mostrará una sola página que impida acceder a la 
+               aplicación.
+            </p>
+          </div>
+        </div>
+        <input type="hidden" id="value" value="{{list}}">
+        <input type="hidden" id="action" value="{{action}}">
+        {% if emergency_mode == True %}
+        <div class="alert alert-warning" role="alert">
+            <strong>Notificación </strong> El modo de emergencia se encuentra activo
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+            <strong>Notificación </strong> El modo de emergencia se encuentra inactivo
+        </div>
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="">Modo de emergencia</label>
+            <select name="status" id="status" class="form-control">
+                <option value="activated">Activar modo de emergencia</option>
+                <option value="desactivated">Desactivar modo emergencia</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
+            <a href="{% url 'app_views:dashboard_admin' %}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+{% endblock %}

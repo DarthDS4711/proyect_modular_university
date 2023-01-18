@@ -1,0 +1,25 @@
+{% extends 'baseView.html' %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h3>Base de datos principal</h3>
+        <div class="alert alert-{{state_main.type}}" role="alert">
+            <strong>Notificación </strong>{{state_main.message}}
+        </div>
+        <h3>Base de datos stock</h3>
+        <div class="alert alert-{{state_stock.type}}" role="alert">
+            <strong>Notificación </strong>{{state_stock.message}}
+        </div>
+        <h3>Base de datos color</h3>
+        <div class="alert alert-{{state_color.type}}" role="alert">
+            <strong>Notificación </strong>{{state_color.message}}
+        </div>
+        <h3>Base de datos espejo</h3>
+        <div class="alert alert-{{state_mirror.type}}" role="alert">
+            <strong>Notificación </strong>{{state_mirror.message}}
+        </div>
+    </div>
+</div>
+{% endblock %}

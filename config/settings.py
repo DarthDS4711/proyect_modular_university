@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-from config.databases import DATABASES_APPLICATION
-from config.secretkey import SECRET_KEY as SECRET_KEY_APP
 import os
-
+from config.data_access.secretkey import SECRET_KEY as SECRET_KEY_APP
+from config.data_access.databases import DATABASES_APPLICATION
+from config.data_access.email_data import EMAIL_HOST_PASSWORD as PASSWORD
+from config.data_access.email_data import EMAIL_HOST_USER as USER
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,7 +28,7 @@ SECRET_KEY = SECRET_KEY_APP
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,15 +41,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # libraries
+    'widget_tweaks',
+    'django_crontab',
     # apps
     'core.product',
+    'core.homepage',
     'core.sale',
     'core.status_send',
     'core.supplier',
     'core.user',
     'core.warranty',
     'core.stock',
-    'core.access_system'
+    'core.access_system',
+    'core.store',
+    'core.purchase',
+    'core.colorpage',
+    'core.data',
+    'core.user_admin',
+    'core.admin_site'
 ]
 
 MIDDLEWARE = [
@@ -59,7 +69,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'crum.CurrentRequestUserMiddleware'
+    'crum.CurrentRequestUserMiddleware',
+    # personal middleware for remove older sessions
+    'django_session_timeout.middleware.SessionTimeoutMiddleware'
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -111,9 +123,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 
@@ -154,11 +166,22 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 
 # correo de la aplicación a usar
-EMAIL_HOST_USER = 'testkeyloogeer1@gmail.com'
+EMAIL_HOST_USER = USER
 
 # contraseña del correo de la aplicación 
-EMAIL_HOST_PASSWORD = 'D9aNvgy4Y2VFjmU'
+EMAIL_HOST_PASSWORD = PASSWORD
 
 # variable de dominio el cual contendrá el nombre del dominio cuando
 # el sitio se encuentre en la red
 DOMAIN = ''
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_REDIRECT_URL = "/"  # new
+
+# sección de la duración de la sesión en la página
+# hacer que la sesión despues de un periodo de inactividad comience 
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+# tiempo (minutos) que dura la sesión despues de no tener actividad (24 horas en este caso) 
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY_GRACE_PERIOD = 1440

@@ -1,0 +1,37 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h2>Nuestra historia</h2>
+        <div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                Integer vel tempus massa. Pellentesque at mauris ac lectus lobortis suscipit. 
+                Proin fermentum lacinia sem ac vestibulum. Sed scelerisque iaculis erat, et fringilla mauris lobortis sed. Curabitur molestie consequat diam, ac blandit nibh. Phasellus non urna nec metus tempus congue eget at nisi. Nulla quis turpis nunc. Fusce nulla lacus, iaculis at metus vitae, vestibulum rutrum ligula. Nunc erat lectus, luctus quis fermentum non, pulvinar quis nulla. Maecenas mauris est, mollis varius congue et, congue egestas justo. Donec vulputate sem nec elit ultrices ultricies. Proin at mollis neque, nec interdum magna. Maecenas vitae odio justo.
+            </p>
+        </div>
+        <h2 style="text-align: center;">Nuestro fundador/a</h2>
+        <div class="flex-item">
+            <div class="cols-2">
+                Praesent auctor nisl nunc, ac pharetra ipsum ultrices cursus. 
+                Proin placerat, enim ornare tempus luctus, odio metus luctus arcu, ac fermentum mauris diam non orci. Orci varius natoque penatibus et 
+                magnis dis parturient montes, nascetur ridiculus mus. Pellentesque aliquam sit amet 
+                nisi nec ultrices. Nullam risus lectus, ultricies ut nibh sed, venenatis pellentesque odio. 
+                Aliquam convallis bibendum placerat. Vivamus malesuada pharetra eros, et bibendum tortor 
+                lacinia vitae. Orci varius natoque penatibus et magnis dis parturient montes, nascetur 
+                ridiculus mus. Mauris placerat lectus et congue volutpat. Orci varius natoque penatibus et 
+                magnis dis parturient montes, nascetur ridiculus mus. Aenean nisi eros, suscipit ut dictum vitae, 
+                ultricies non nisi. Donec quam nunc, dapibus eu ante sed, viverra vulputate ex. 
+                Phasellus blandit bibendum nulla at accumsan. Ut blandit mauris eu bibendum sollicitudin.
+                 Phasellus lobortis purus lorem.
+            </div>
+            <div class="cols-2">
+                <img src="{% static 'img/user.png' %}" class="img-style">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

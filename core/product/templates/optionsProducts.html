@@ -1,0 +1,26 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/options/styles.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h3>Panel de administración</h3>
+        <div class="flex-item">
+            <div class="cols-2">
+                <img src="{% static 'img/tools.png' %}" class="image-style">
+            </div>
+            <div class="cols-2">
+                <p><a href="{% url 'product:list_product' %}" class="btn orange-btn">Productos</a></p>
+                <p><a href="{% url 'product:list_cat' %}" class="btn orange-btn">Categoías</a></p>
+                <p><a href="{% url 'product:list_sizes' %}" class="btn orange-btn">Tamaños</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

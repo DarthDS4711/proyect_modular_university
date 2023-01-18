@@ -1,0 +1,38 @@
+{% extends 'baseView.html'%}
+{% load static %}
+{% load widget_tweaks %}
+
+<!-- bloque de archivos estaticos a cargar -->
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/signin/styles.css' %}">
+<script src="{% static 'js/functions.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <div class="image">
+            <img src="{% static 'img/user.png' %}" id="user-image">
+        </div>
+        <input type="hidden" id="value" value="{{success}}">
+        <input type="hidden" id="action" value="{{action}}">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+            <div class="form-group">
+                <label>{{ field.label }}:</label>
+                {{ field|add_class:'form-control'|attr:'autocomplete:off'}}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">{{btn}}</button>
+            <a href="{{cancel}}" class="btn btn-danger">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/validate_action.js' %}"></script>
+<script src="{% static 'js/limit_img_size.js' %}"></script>
+{% endblock %}

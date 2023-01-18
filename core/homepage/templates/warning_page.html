@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'libs/adminlte-3.0.4/css/adminlte.min.css' %}">
+    <title>Error del sistema</title>
+</head>
+<body>
+    <div class="box-layout">
+        <h1>{{title}}</h1>
+        <div class="box-content">
+            <img src="{% static 'img/error_page.png' %}" class="img-style">
+            <div class="alert alert-warning" role="alert">
+                <h4>Advertencia: </h4> Han ocurrido errores en el sistema, que han obligado al administrador
+                del sistema, ha poner un modo de emergencia. Esto significa que no podras acceder al sistema, debido a
+                algún error que impida que se cargue correctamente el recurso que nos solicitaste. Pero descuida, será temporal
+                y prontamente lo corregiremos. Le agradecemos su comprensión. 
+            </div>
+        </div>
+    </div>
+</body>
+</html>

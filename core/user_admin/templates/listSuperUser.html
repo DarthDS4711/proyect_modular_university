@@ -1,0 +1,32 @@
+{% extends 'listUser.html' %}
+{% block users %}
+{% load static %}
+
+{% block user_header %}
+<tr>
+    <th>ID</th>
+    <th>Nombre usuario</th>
+    <th>¿Superusuario?</th>
+    <th>Acción</th>
+</tr>
+{% endblock %}
+
+{% for user in page_obj %}
+<tr>
+    <td scope="row">{{user.id}}</td>
+    <td>{{user.username}}</td>
+    {% if user.is_superuser %}
+    <td>Superusuario</td>
+    {% else %}
+    <td>Usuario normal</td>
+    {% endif %}
+    <td>
+        <a class="btn btn-warning" href="../../update-superuser/{{user.id}}">Cambiar tipo</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/search_users.js' %}"></script>
+{% endblock %}

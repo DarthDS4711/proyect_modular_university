@@ -1,0 +1,71 @@
+.main-box{
+    padding: 2%;
+}
+.image-card{
+    width: 80%;
+    height: 75%;
+}
+.card-product{
+    margin: 4%;
+    box-shadow: 3px 3px 3px 3px lightgray;
+    padding: 1%;
+}
+#graphic{
+    height: 20%;
+}
+.checked{
+    color: gold;
+}
+.box-shadowed{
+    margin: 0 auto;
+    box-shadow: 3px 3px 3px 5px rgb(173, 173, 173);
+    margin: 1%;
+    padding: 1%;
+    border-radius: 15px;
+}
+.btn-style{
+    width: 100%;
+}
+@media screen and (max-width: 1064px){
+    .card-product{
+        height: 10%;
+    }
+	.card-product div p{
+		font-size: 14px;
+	}
+	.card-product div h4{
+		font-size: 16px;
+	}
+}
+@media screen and (max-width: 968px){
+	.card-product div p{
+		font-size: 10px;
+	}
+	.card-product div h4{
+		font-size: 12px;
+	}
+}
+@media screen and (max-width: 602px){
+	.card-product div p{
+		font-size: 8px;
+	}
+	.card-product div h4{
+		font-size: 10px;
+	}
+	.image-style{
+		width: 70%;
+    	height: 70%;
+	}
+}
+@media screen and (max-width: 512px){
+	.card-product div p{
+		font-size: 7px;
+	}
+	.card-product div h4{
+		font-size: 9px;
+	}
+	.image-style{
+		width: 70%;
+    	height: 70%;
+	}
+}

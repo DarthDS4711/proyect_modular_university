@@ -1,0 +1,36 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stylesListProductShop.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="product-box">
+        <form action="{{url}}" method="get">
+            <div class="form-group">
+              <label>Ordenar por</label>
+              <select class="form-control" name="order" id="options">
+                <option value="1">Precio (menor-mayor)</option>
+                <option value="2">Precio (mayor menor)</option>
+                <option value="3">Nombre</option>
+                <option value="4">Puntuación</option>
+              </select>
+            </div>
+            <input type="hidden" value="{{name}}" name="name">
+            <button class="btn btn-primary" type="submit">Ordenar</button>
+          </form>
+          
+        <input type="hidden" id="search-input" value="{{url}}" >
+        <div id="list-prod">
+            {% include 'productList_and_btns.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/order.js' %}"></script>
+{% endblock %}

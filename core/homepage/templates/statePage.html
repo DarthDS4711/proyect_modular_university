@@ -1,0 +1,53 @@
+{% extends 'baseView.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="box-layout">
+    <h1>{{title}}</h1>
+    <div class="box-content">
+        <h4>Mejor producto</h4>
+        <div class="flex-item">
+            <div class="cols-2">
+                <h5>{{best_product.name}}</h5>
+                <label>Puntuación</label>
+                <p>{{best_product.product_rating}} sobre 5 estrellas</p>
+            </div>
+            <div class="cols-2">
+                <img src="{{best_product.get_image}}" class="img-detail">
+            </div>
+        </div>
+        <hr>
+        <h4>Usuario más nuevo</h4>
+        <div class="flex-item">
+            <div class="cols-2">
+                <h5>{{newest_user.username}}</h5>
+                <label>Fecha de creación</label>
+                <p>{{newest_user.date_joined}}</p>
+                <label>Fecha cumpleaños</label>
+                <p>{{newest_user.date_birthday}}</p>
+            </div>
+            <div class="cols-2">
+                <img src="{% static 'img/user.png' %}" class="img-detail">
+            </div>
+        </div>
+        <hr>
+        <h4>Peor producto</h4>
+        <div class="flex-item">
+            <div class="cols-2">
+                <h5>{{worst_product.name}}</h5>
+                <label>Puntuación</label>
+                <p>{{worst_product.product_rating}} sobre 5 estrellas</p>
+            </div>
+            <div class="cols-2">
+                <img src="{{worst_product.get_image}}" class="img-detail">
+            </div>
+        </div>
+        <h4>Número de usuarios son la sesión iniciada el día de hoy</h4>
+        <div>
+            <label>Número usuarios</label>
+            <p>{{users_session}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
